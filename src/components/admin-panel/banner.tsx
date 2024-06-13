@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BannerText from "./bannerText";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Slider from "react-slick";
 
 import bannerone from "@/images/bannerone.png";
 import bannertwo from "@/images/bannertwo.png";
@@ -13,6 +12,8 @@ import bannerthree from "@/images/bannerthree.png";
 import { useStore } from "@/hooks/use-store";
 import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
 import { cn } from "@/lib/utils";
+import Slider from "react-slick";
+
 const Banner = () => {
   const sidebar = useStore(useSidebarToggle, (state) => state);
 
