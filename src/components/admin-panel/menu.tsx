@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { Ellipsis, LogOut } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { getMenuList } from "@/lib/menu-list";
@@ -22,9 +23,18 @@ interface MenuProps {
 
 export function Menu({ isOpen }: MenuProps) {
   const pathname = usePathname();
-  const menuList = getMenuList(pathname);
+  const searchParams = useSearchParams();
+  const [activePath, setActivePath] = useState("");
+
+  useEffect(() => {
+    const params = searchParams.toString();
+    setActivePath(`${pathname}${params ? `?${params}` : ""}`);
+  }, [pathname, searchParams]);
+
+  const menuList = getMenuList(activePath);
   const isLogin = false;
   const router = useRouter();
+
   const LogOutHandler = () => {
     console.log("i want to sign out");
   };
@@ -60,8 +70,8 @@ export function Menu({ isOpen }: MenuProps) {
                 <p className="pb-2"></p>
               )}
               {menus.map(
-                ({ href, label, icon: Icon, active, submenus }, index) =>
-                  submenus.length === 0 ? (
+                ({ href, label, icon: Icon, active, submenus }, index) => {
+                  return submenus.length === 0 ? (
                     <div className="w-full" key={index}>
                       <TooltipProvider disableHoverableContent>
                         <Tooltip delayDuration={100}>
@@ -108,7 +118,8 @@ export function Menu({ isOpen }: MenuProps) {
                         isOpen={isOpen}
                       />
                     </div>
-                  )
+                  );
+                }
               )}
             </li>
           ))}

@@ -16,7 +16,7 @@ interface NavbarProps {
   title: string;
 }
 
-export function Navbar({ title }: NavbarProps) {
+export function Navbar() {
   const [value, setValue] = useState("");
   const user = true;
 
