@@ -125,14 +125,13 @@ const ProductDetail = () => {
             <p className="text-gray-700">{product.description}</p>
             <div className="flex gap-4 mt-4 relative w-full h-full lg:h-auto">
               {product.images.map((image, index) => (
-                <div key={index} className="w-24">
+                <div key={index} className="">
                   <Image
                     src={image}
                     alt={`${product.title} ${index}`}
                     // This will be automatically adjusted based on the width
                     objectFit="cover"
-                    width={400}
-                    height={400} // This will be automatically adjusted based on the width
+                    // This will be automatically adjusted based on the width
                     layout="responsive"
                     className="rounded-lg shadow-md"
 

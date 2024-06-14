@@ -81,7 +81,7 @@ export function Footer() {
         </DrawerTrigger>
 
         <DrawerContent className="max-w-screen-lg mx-auto p-10  ">
-          <div className=" max-h-[80vh] overflow-y-auto">
+          <div className=" max-h-[60vh] overflow-y-auto">
             <div className=" flex flex-col">
               <h1 className="font-bold pl-3 text-yellow-500">Brand Category</h1>
               {brandDirectory.map((category, index) => (
