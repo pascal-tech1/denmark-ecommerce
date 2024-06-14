@@ -1,3 +1,4 @@
+import { Button } from "../ui/button";
 import Container from "./Container";
 import { motion } from "framer-motion";
 
@@ -29,12 +30,15 @@ const BannerText = ({ title }: { title: string }) => {
           transition={{ duration: 0.7 }}
           className="flex gap-x-4 lg:mt-2"
         >
-          <button className="md:py-3 whitespace-nowrap py-1 px-3 lg:px-6 rounded-full bg-slate-200 text-gray-900 hover:bg-white duration-200 text-sm  font-semibold">
+          <Button variant={"default"} className=" whitespace-nowrap ">
             Find out more
-          </button>
-          <button className="md:py-3 whitespace-nowrap py-1  px-3 lg:px-6 rounded-full bg-slate-200 hover:bg-white text-gray-900 duration-200 text-sm  font-semibold">
+          </Button>
+          <Button
+            variant={"default"}
+            className=" whitespace-nowrap bg-yellow-300 text-black dark:bg-yellow-200 "
+          >
             Shop Now
-          </button>
+          </Button>
         </motion.div>
       </div>
     </div>
