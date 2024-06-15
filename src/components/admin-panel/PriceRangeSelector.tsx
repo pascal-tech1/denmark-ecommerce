@@ -29,7 +29,7 @@ const PriceRangeSelector = ({ images }: any) => {
   };
   return (
     <div className=" flex flex-col gap-8">
-      <form onSubmit={handleSubmit} className="">
+      <form onSubmit={handleSubmit} className=" pl-4">
         <div className="flex flex-col gap-4 ">
           <h1 className=" mt-4 mb-2 font-bold ">Filter By Price</h1>
           <div className=" flex items-start ">

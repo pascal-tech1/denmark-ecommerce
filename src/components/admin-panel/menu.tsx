@@ -16,6 +16,7 @@ import {
   TooltipContent,
   TooltipProvider
 } from "@/components/ui/tooltip";
+import { ModeToggle } from "../mode-toggle";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -123,6 +124,10 @@ export function Menu({ isOpen }: MenuProps) {
               )}
             </li>
           ))}
+          <div className=" md:hidden">
+
+            <ModeToggle />
+          </div>
           <li className="w-full grow flex items-end">
             <TooltipProvider disableHoverableContent>
               <Tooltip delayDuration={100}>
@@ -152,6 +157,7 @@ export function Menu({ isOpen }: MenuProps) {
             </TooltipProvider>
           </li>
         </ul>
+
       </nav>
     </ScrollArea>
   );

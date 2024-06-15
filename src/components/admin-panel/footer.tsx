@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, ArrowUp01, ArrowUp, Bold, AlignEndHorizontal } from "lucide-react";
 import {
   Drawer,
   DrawerClose,
@@ -74,10 +74,10 @@ const brandDirectory = [
 
 export function Footer() {
   return (
-    <footer className="fixed bottom-0 right-0 pt-3 pb-8 mx-4 sm:mx-6  bg-neutral-50 p-10 dark:bg-neutral-900 dark:text-gray-300">
+    <footer className="fixed bottom-0 lg:bottom-10 right-0   ">
       <Drawer>
-        <DrawerTrigger asChild>
-          <Button>footer</Button>
+        <DrawerTrigger asChild className=" relative w-screen bg-transparent lg:h-14 lg:w-14  lg:rounded-full  lg:shadow-md ">
+          <Button variant={"outline"} className=" text-foreground bg-background hover:text-yellow-400"> <AlignEndHorizontal /> Footer</Button>
         </DrawerTrigger>
 
         <DrawerContent className="max-w-screen-lg mx-auto p-10  ">
@@ -114,7 +114,7 @@ export function Footer() {
                   {section.items.map((item: any, idx: any) => (
                     <div key={idx} className="py-2 flex items-center">
                       {section.section === "CONTACT" &&
-                      typeof item !== "string" ? (
+                        typeof item !== "string" ? (
                         <div className="flex items-center gap-4 my-2">
                           <item.icon className="w-6 h-6 mr-2" />
                           <span>{item.text}</span>
@@ -133,15 +133,7 @@ export function Footer() {
               </p>
             </div>
           </div>
-          <DrawerFooter>
-            <p>
-              Dragdown, click outside of the drawer or click close button to
-              close
-            </p>
-            <DrawerClose>
-              <Button variant="destructive">Close</Button>
-            </DrawerClose>
-          </DrawerFooter>
+
         </DrawerContent>
       </Drawer>
     </footer>

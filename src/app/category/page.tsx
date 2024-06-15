@@ -83,30 +83,34 @@ export default function CategoryPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <div className={cn(showFeatures ? "hidden  " : "items-center ml-auto")}>
+
+      </div>
+      <div>
+        <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 ")}>
           <CategorySheet images={images} />
         </div>
-      </div>
-      <div className="grid  grid-cols-2 md:grid-cols-11 gap-12 mt-6 pr-2 top-div dark:text-gray-400 ">
-        <div
-          className={cn(
-            showFeatures
-              ? "col-start-1 col-span-7"
-              : "col-start-1 col-span-full"
-          )}
-        >
-          <Products images={images} />
-        </div>
-        <div
-          className={cn(
-            showFeatures
-              ? "inline-block col-start-8 col-span-full flex, flex-col gap-6"
-              : "hidden"
-          )}
-        >
-          <div className="sticky top-16 left-0 flex  rounded-lg flex-col gap-4">
-            <div className=" p-3">
-              <PriceRangeSelector images={images} />
+        <div className="grid  grid-cols-2 md:grid-cols-11 gap-12 pr-2 top-div dark:text-gray-400 ">
+
+          <div
+            className={cn(
+              showFeatures
+                ? "col-start-1 col-span-7"
+                : "col-start-1 col-span-full"
+            )}
+          >
+            <Products images={images} />
+          </div>
+          <div
+            className={cn(
+              showFeatures
+                ? "inline-block col-start-8 col-span-full flex, flex-col gap-6"
+                : "hidden"
+            )}
+          >
+            <div className="sticky top-16 left-0 flex  rounded-lg flex-col gap-4">
+              <div className=" p-3">
+                <PriceRangeSelector images={images} />
+              </div>
             </div>
           </div>
         </div>
