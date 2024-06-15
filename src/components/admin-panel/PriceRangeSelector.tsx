@@ -30,7 +30,7 @@ const PriceRangeSelector = ({ images }: any) => {
   return (
     <div className=" flex flex-col gap-8">
       <form onSubmit={handleSubmit} className="">
-        <div className="flex flex-col ">
+        <div className="flex flex-col gap-4 ">
           <h1 className=" mt-4 mb-2 font-bold ">Filter By Price</h1>
           <div className=" flex items-start ">
             <input
@@ -54,7 +54,7 @@ const PriceRangeSelector = ({ images }: any) => {
           <Button
             variant={"default"}
             type="submit"
-            className=" mt-2 bg-orange-500 text-white rounded-large hover:bg-orange-600"
+            className=" mt-2 bg-yellow-500 self-start text-white rounded-large hover:bg-yellow-600"
           >
             Apply
           </Button>
