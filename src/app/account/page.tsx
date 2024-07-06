@@ -143,8 +143,8 @@ export default function ProductForm() {
   };
 
   useEffect(() => {
-    if (beforeDivRef.current) {
-      const beforeDivHeight = beforeDivRef.current.clientHeight + 30 || 0;
+    if (beforeDivRef) {
+      const beforeDivHeight = beforeDivRef?.current?.clientHeight as number + 30 ?? 0;
       const formContent = document.querySelector(".form-content") as HTMLDivElement;
       if (formContent) {
         if (quillIsFocus) {
