@@ -3,11 +3,19 @@ import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import SideProducts from "./SideProducts";
+import { useQuery } from "@tanstack/react-query";
 
 const PriceRangeSelector = ({ images }: any) => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const minPriceLimit = 1;
+  const { isPending, error, data } = useQuery({
+    queryKey: ['newProduct'],
+    queryFn: () =>
+      fetch("/routes/fetchAllProducts").then((res) =>
+        res.json(),
+      ),
+  })
 
   const handleMinPriceChange = (e: any) => {
     const value = e.target.value;
@@ -85,7 +93,7 @@ const PriceRangeSelector = ({ images }: any) => {
           </RadioGroup>
         </div>
       </form>
-      <SideProducts images={images} heading="Staff Recommendations" />
+      <SideProducts images={data?.allProducts || []} heading="Street comforts" isMutating={isPending} error={error} />
     </div>
   );
 };
