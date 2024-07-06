@@ -12,7 +12,6 @@ export const GET = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
     const productId = searchParams.get("productId");
 
-    console.log("productid:", productId);
     const product = await Product.findById(productId).select("-user");
 
     return NextResponse.json(

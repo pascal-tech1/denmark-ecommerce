@@ -153,7 +153,7 @@ export default function ProductForm() {
           formContent.style.marginTop = "0";
         }
       }
-      console.log(beforeDivHeight);
+
     }
   }, [quillIsFocus]);
 
