@@ -1,25 +1,4 @@
 "use client";
-
-type Submenu = {
-  href: string;
-  label: string;
-  active: boolean;
-};
-
-type Menu = {
-  href: string;
-  label: string;
-  active: boolean;
-  submenus: Submenu[];
-};
-
-type Group = {
-  groupLabel: string;
-  menus: Menu[];
-};
-
-
-
 import * as React from "react";
 
 import Image from "next/image";
@@ -66,6 +45,7 @@ import { handleImageUpload } from "@/hooks/handleImageUpload";
 import { modulesObject } from "@/hooks/modulesObjects";
 import { Loader2 } from "lucide-react";
 import useUploadMutation from "@/hooks/useUploadMutation";
+import { subcategoryToCategoryMap } from "@/components/admin-panel/menuSubCategory";
 
 Quill.register("modules/imageUploader", ImageUploader);
 
@@ -79,25 +59,7 @@ const formSchema = z.object({
   blurImage: z.string().nonempty({ message: "blur Image string is required." }),
 });
 
-export function subcategoryToCategoryMap(submenuLabel: string): string {
-  const menuList = getMenuList("/");
-  console.log(menuList)
-  for (const group of menuList) {
-    for (const menu of group.menus) {
-      if (menu.label === submenuLabel) {
-        return submenuLabel; // The passed string is a parent label itself
-      }
-      for (const submenu of menu.submenus) {
-        if (submenu.label === submenuLabel) {
-          return menu.label; // Return the parent label
-        }
-      }
-    }
-  }
 
-  return "Label not found"; // If the label is not found in the menu list
-}
-console.log(subcategoryToCategoryMap("Others"))
 
 
 export default function ProductForm() {
@@ -373,3 +335,22 @@ export default function ProductForm() {
     </Form>
   );
 }
+
+
+type Submenu = {
+  href: string;
+  label: string;
+  active: boolean;
+};
+
+type Menu = {
+  href: string;
+  label: string;
+  active: boolean;
+  submenus: Submenu[];
+};
+
+type Group = {
+  groupLabel: string;
+  menus: Menu[];
+};
