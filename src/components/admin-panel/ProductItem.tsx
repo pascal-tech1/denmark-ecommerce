@@ -25,7 +25,7 @@ const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage,
 
   return (
     <div className="border border-neutral-200 dark:border-neutral-800 rounded-md  max-w-[300px] p-2 md:p-4 relative group">
-      <div onClick={handleCardClick} className="overflow-hidden cursor-pointer  rounded-md relative h-48">
+      <div onClick={handleCardClick} className="overflow-hidden cursor-pointer  rounded-md relative h-[10rem] lg:h-[13rem]">
         <Image
           src={imageUrl}
           alt={title}

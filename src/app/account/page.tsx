@@ -143,13 +143,15 @@ export default function ProductForm() {
   };
 
   useEffect(() => {
-    if (beforeDivRef) {
-      const beforeDivHeight = beforeDivRef?.current?.clientHeight as number + 30 ?? 0;
+    if (beforeDivRef.current) {
+      const beforeDivHeight = beforeDivRef.current.clientHeight + 30 || 0;
       const formContent = document.querySelector(".form-content") as HTMLDivElement;
-      if (quillIsFocus) {
-        formContent.style.marginTop = `-${beforeDivHeight}px`;
-      } else {
-        formContent.style.marginTop = "0";
+      if (formContent) {
+        if (quillIsFocus) {
+          formContent.style.marginTop = `-${beforeDivHeight}px`;
+        } else {
+          formContent.style.marginTop = "0";
+        }
       }
       console.log(beforeDivHeight);
     }

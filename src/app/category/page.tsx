@@ -43,11 +43,12 @@ export default function CategoryPage() {
   }, [category, subcategory]);
 
   const { isPending, error, data } = useQuery({
-    queryKey: [subcategory],
+    queryKey: [category, subcategory],
     queryFn: () =>
-      fetch(`/routes/fetchAllProducts?category=${category}&subcategory=${subcategory || ""}`).then((res) =>
-        res.json(),
-      ),
+      fetch(`/routes/fetchAllProducts?category=${category}&subcategory=${subcategory || ""}`)
+        .then((res) =>
+          res.json(),
+        ),
   })
 
   if (data) {
