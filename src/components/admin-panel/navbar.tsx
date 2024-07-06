@@ -1,18 +1,35 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { ModeToggle } from "@/components/mode-toggle";
-import { UserNav } from "@/components/admin-panel/user-nav";
 import { SheetMenu } from "@/components/admin-panel/sheet-menu";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SearchIcon, ShoppingCartIcon, X } from "lucide-react";
 import { Input } from "../ui/input";
+import { useLoginUser } from "@/hooks/use-User";
+import { useStore } from "zustand";
+import Link from "next/link";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useTheme } from "next-themes";
+
+
+
+
+
 
 export function Navbar() {
   const [value, setValue] = useState<string>("");
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+
+
+
+
+
+
+
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,8 +101,21 @@ export function Navbar() {
           </form>
         </div>
         <div className={cn(isSearch ? "hidden" : "flex", "items-center space-x-4")}>
-          <ShoppingCartIcon />
-          <UserNav />
+          <Link href="/cart">
+
+            <ShoppingCartIcon />
+          </Link>
+          <div>
+            <SignedOut>
+              <Button variant={"secondary"}>
+                <Link href="/sign-in">Login</Link>
+              </Button>
+            </SignedOut>
+          </div>
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
         <div className={cn(isSearch ? "hidden" : " hidden md:flex")}>
 

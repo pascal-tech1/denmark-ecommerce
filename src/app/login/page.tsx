@@ -25,13 +25,28 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+import { useStore } from "zustand";
+import { useLoginUser } from "@/hooks/use-User";
+
+import { useEffect } from "react";
+import useUploadMutation from "@/hooks/useUploadMutation";
+
+
 export default function Login() {
   const formSchema = z.object({
     password: z.string().nonempty({ message: "Password is required." }),
-    email: z.string().email()
+    email: z.string().email().nonempty({ message: "email is required" })
   });
 
-  // 1. Define your form.
+  const { isSuccess, data, error, mutate, isPending } = useUploadMutation("/routes/login", [])
+
+  const { toast } = useToast()
+
+  const { updatUser } = useStore(useLoginUser, (state) => state);
+
+  // 1. Define  form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,14 +54,30 @@ export default function Login() {
       email: ""
     }
   });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await mutate(values);
+    } catch (err: any) {
+      console.error('Error submitting form:', err);
+    }
+  };
+  useEffect(() => {
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+    if (isSuccess) {
+      toast({
 
+        description: 'Login Successfully',
+        action:
+          <ToastAction altText="Home">
+            <Button>
+              <Link href="/">Home</Link>
+            </Button>
+          </ToastAction>
+      })
+
+      updatUser(data?.data?.user)
+    }
+  }, [data, toast, updatUser, isSuccess])
   return (
     <ContentLayout title="Login">
       <Breadcrumb>
@@ -92,7 +123,10 @@ export default function Login() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? 'Submitting...' : 'Submit'}
+            </Button>
+            {error && <p className="text-red-500">{error.message}</p>}
           </form>
         </Form>
         <p className=" mt-6">

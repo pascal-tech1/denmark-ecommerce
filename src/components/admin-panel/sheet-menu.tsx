@@ -27,7 +27,7 @@ export function SheetMenu() {
             variant="link"
             asChild
           >
-            <Link href="/dashboard" className="">
+            <Link href="/" className="">
               <div className=" p-3 rounded-lg mt-4 dark:bg-transparent bg-gray-800">
                 <Image src={logo} width={120} height={120} alt="denmark logo" />
               </div>

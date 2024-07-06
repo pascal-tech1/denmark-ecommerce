@@ -17,6 +17,13 @@ import {
   TooltipProvider
 } from "@/components/ui/tooltip";
 import { ModeToggle } from "../mode-toggle";
+import { useLoginUser } from "@/hooks/use-User";
+import { useStore } from "zustand";
+import useSendPostRequest from "@/hooks/useSignUp";
+import { ToastAction } from "../ui/toast";
+import { useToast } from "../ui/use-toast";
+import useUploadMutation from "@/hooks/useUploadMutation";
+import { SignedOut, SignInButton } from "@clerk/nextjs";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -33,17 +40,31 @@ export function Menu({ isOpen }: MenuProps) {
   }, [pathname, searchParams]);
 
   const menuList = getMenuList(activePath);
-  const isLogin = false;
+  const { user, updatUser } = useStore(useLoginUser, (state) => state);
+  const { data, error, mutate, isPending } = useUploadMutation("/routes/logout", [])
+
   const router = useRouter();
 
+  const { toast } = useToast()
   const LogOutHandler = () => {
-    console.log("i want to sign out");
+    mutate({})
+    toast({
+
+      description: 'You have Successfully Logout',
+      action:
+        <ToastAction altText="Home">
+          <Button>
+            <Link href="/">Home</Link>
+          </Button>
+        </ToastAction>
+    })
+    updatUser({})
+
   };
 
   const LoginHandler = () => {
-    router.push("/login");
+    router.push("/sign-in");
   };
-
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
       <nav className="mt-8 h-full w-full">
@@ -81,6 +102,7 @@ export function Menu({ isOpen }: MenuProps) {
                               variant={active ? "secondary" : "ghost"}
                               className="w-full justify-start h-10 mb-1"
                               asChild
+                              disabled={isPending}
                             >
                               <Link href={href}>
                                 <span
@@ -128,34 +150,6 @@ export function Menu({ isOpen }: MenuProps) {
 
             <ModeToggle />
           </div>
-          <li className="w-full grow flex items-end">
-            <TooltipProvider disableHoverableContent>
-              <Tooltip delayDuration={100}>
-                <TooltipTrigger asChild>
-                  <Button
-                    onClick={isLogin ? LogOutHandler : LoginHandler}
-                    variant="outline"
-                    className="w-full justify-center h-10 mt-5"
-                  >
-                    <span className={cn(isOpen === false ? "" : "mr-4")}>
-                      <LogOut size={18} />
-                    </span>
-                    <p
-                      className={cn(
-                        "whitespace-nowrap",
-                        isOpen === false ? "opacity-0 hidden" : "opacity-100"
-                      )}
-                    >
-                      {isLogin ? "Sign Out" : "Login / Sign Up"}
-                    </p>
-                  </Button>
-                </TooltipTrigger>
-                {isOpen === false && (
-                  <TooltipContent side="right">Sign out</TooltipContent>
-                )}
-              </Tooltip>
-            </TooltipProvider>
-          </li>
         </ul>
 
       </nav>

@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import { PanelsTopLeft } from "lucide-react";
 
@@ -32,7 +33,7 @@ export function Sidebar() {
           variant="link"
           asChild
         >
-          <Link href="/home" className="">
+          <Link href="/" className="">
             <div className=" p-3 rounded-lg mt-4 dark:bg-transparent bg-gray-800">
               <Image src={logo} width={120} height={120} alt="denmark logo" />
             </div>

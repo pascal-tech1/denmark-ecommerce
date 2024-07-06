@@ -1,39 +1,94 @@
-import Link from "next/link";
+"use client";
 
-import PlaceholderContent from "@/components/demo/placeholder-content";
-import { ContentLayout } from "@/components/admin-panel/content-layout";
+
+
+
+type Submenu = {
+  href: string;
+  label: string;
+  active: boolean;
+};
+
+type Menu = {
+  href: string;
+  label: string;
+  active: boolean;
+  submenus: Submenu[];
+};
+
+type Group = {
+  groupLabel: string;
+  menus: Menu[];
+};
+
+
+
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator
-} from "@/components/ui/breadcrumb";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { getMenuList } from "@/lib/menu-list";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-export default function UsersPage() {
+export default function DropdownMenuRadioGroupDemo() {
+  const [selectedItem, setSelectedItem] = React.useState("");
+  const menuList = getMenuList("");
+
+  const renderCategoryItems = (groupLabel: string, menus: Menu[]) => {
+    return (
+      <>
+        <DropdownMenuLabel>{groupLabel}</DropdownMenuLabel>
+        {menus.map((menu) => (
+          <React.Fragment key={menu.label}>
+            {menu.submenus.length > 0 && (
+              <>
+                <DropdownMenuLabel>{menu.label}</DropdownMenuLabel>
+                {menu.submenus.map((submenu) => (
+                  <DropdownMenuRadioItem
+                    key={submenu.label}
+                    value={submenu.label}
+                  >
+                    {submenu.label}
+                  </DropdownMenuRadioItem>
+                ))}
+                <DropdownMenuSeparator />
+              </>
+            )}
+          </React.Fragment>
+        ))}
+      </>
+    );
+  };
+
   return (
-    <ContentLayout title="Users">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/">Home</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/dashboard">Dashboard</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Users</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      {/* <PlaceholderContent /> */}
-    </ContentLayout>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">{selectedItem || "Select an option"}</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <ScrollArea>
+          <DropdownMenuRadioGroup
+            value={selectedItem}
+            onValueChange={setSelectedItem}
+            className=" overflow-y-auto h-[60vh] overflow-x-hidden"
+          >
+            {menuList
+              .filter((group) => group.groupLabel === "Category")
+              .map((group) => (
+                <React.Fragment key={group.groupLabel}>
+                  {renderCategoryItems(group.groupLabel, group.menus)}
+                </React.Fragment>
+              ))}
+          </DropdownMenuRadioGroup>
+        </ScrollArea>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

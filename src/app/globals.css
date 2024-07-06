@@ -66,6 +66,15 @@
   }
 }
 
+.cl-internal-lqfubk {
+  display: none;
+}
+.cl-internal-11ttlho {
+  display: none;
+}
+.cl-internal-16rjnjd{
+  display: none
+}
 @layer base {
   * {
     @apply border-border;

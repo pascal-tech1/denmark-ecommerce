@@ -13,32 +13,47 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import Banner from "@/components/admin-panel/banner";
-import Products from "@/components/admin-panel/Products";
+
 import { imageData } from "@/hooks/data";
 import { useSearchParams } from "next/navigation";
 import PriceRangeSelector from "@/components/admin-panel/PriceRangeSelector";
 import { cn } from "@/lib/utils";
 import { CategorySheet } from "@/components/admin-panel/categorySheet";
+import { useQuery } from "@tanstack/react-query";
+import Products from "@/components/admin-panel/Products";
 
 
 export default function CategoryPage() {
   const images = imageData
   const [showFeatures, setShowFeatures] = useState(false);
   const searchParams = useSearchParams();
-  const category = searchParams.get("category");
-  const subcategory = searchParams.get("subcategory");
+  const category = searchParams?.get("category");
+  const subcategory = searchParams?.get("subcategory");
 
   const [categoryState, setCategoryState] = useState<string | undefined>(
-    undefined
+    category as string
   );
   const [subcategoryState, setSubcategoryState] = useState<string | undefined>(
-    undefined
+    subcategory as string
   );
 
   useEffect(() => {
     setCategoryState(category || "");
     setSubcategoryState(subcategory || "");
   }, [category, subcategory]);
+
+  const { isPending, error, data } = useQuery({
+    queryKey: [subcategory],
+    queryFn: () =>
+      fetch(`/routes/fetchAllProducts?category=${category}&subcategory=${subcategory || ""}`).then((res) =>
+        res.json(),
+      ),
+  })
+
+  if (data) {
+    console.log(data)
+  }
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -98,7 +113,7 @@ export default function CategoryPage() {
                 : "col-start-1 col-span-full"
             )}
           >
-            <Products images={images} />
+            <Products products={data?.allProducts || []} isMutating={isPending} error={error} />
           </div>
           <div
             className={cn(

@@ -5,14 +5,15 @@ import "./globals.css";
 
 import { ThemeProvider } from "@/providers/theme-provider";
 import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.APP_URL
       ? `${process.env.APP_URL}`
       : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : `http://localhost:${process.env.PORT || 3000}`
+        ? `https://${process.env.VERCEL_URL}`
+        : `http://localhost:${process.env.PORT || 3000}`
   ),
   title: "Men's Fashion Store",
   description:
@@ -58,8 +59,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={GeistSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AdminPanelLayout>{children}</AdminPanelLayout>
+          <AdminPanelLayout>
+            {children}
+          </AdminPanelLayout>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

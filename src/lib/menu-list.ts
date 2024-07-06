@@ -37,9 +37,9 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: "",
       menus: [
         {
-          href: "/home",
+          href: "/",
           label: "Home",
-          active: pathname.includes("/home"),
+          active: pathname === "/",
           icon: Home,
           submenus: []
         }
@@ -118,11 +118,11 @@ export function getMenuList(pathname: string): Group[] {
                 pathname === "/category?category=footwear&subcategory=sandals"
             },
             {
-              href: "/category?category=footwear&subcategory=formal-shoes",
+              href: "/category?category=footwear&subcategory=formal shoes",
               label: "Formal Shoes",
               active:
                 pathname ===
-                "/category?category=footwear&subcategory=formal-shoes"
+                "/category?category=footwear&subcategory=formal shoes"
             }
           ]
         },
@@ -160,10 +160,10 @@ export function getMenuList(pathname: string): Group[] {
           icon: HardHat,
           submenus: [
             {
-              href: "/category?category=cap&subcategory=baseball-caps",
+              href: "/category?category=cap&subcategory=baseball caps",
               label: "Baseball Caps",
               active:
-                pathname === "/category?category=cap&subcategory=baseball-caps"
+                pathname === "/category?category=cap&subcategory=baseball caps"
             },
             {
               href: "/category?category=cap&subcategory=beanies",
@@ -191,18 +191,18 @@ export function getMenuList(pathname: string): Group[] {
                 pathname === "/category?category=glasses&subcategory=sunglasses"
             },
             {
-              href: "/category?category=glasses&subcategory=reading-glasses",
+              href: "/category?category=glasses&subcategory=reading glasses",
               label: "Reading Glasses",
               active:
                 pathname ===
-                "/category?category=glasses&subcategory=reading-glasses"
+                "/category?category=glasses&subcategory=reading glasses"
             },
             {
-              href: "/category?category=glasses&subcategory=contact-lenses",
+              href: "/category?category=glasses&subcategory=contact lenses",
               label: "Contact Lenses",
               active:
                 pathname ===
-                "/category?category=glasses&subcategory=contact-lenses"
+                "/category?category=glasses&subcategory=contact lenses"
             }
           ]
         },

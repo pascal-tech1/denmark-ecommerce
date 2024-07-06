@@ -1,19 +1,18 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
+
+import PriceRangeSelector from "./PriceRangeSelector";
+import { ScrollArea } from "../ui/scroll-area";
+import { Filter } from "lucide-react";
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
+
   SheetFooter,
-  SheetHeader,
-  SheetTitle,
+
   SheetTrigger
-} from "@/components/ui/sheet";
-import PriceRangeSelector from "./PriceRangeSelector";
-import { ScrollArea } from "../ui/scroll-area";
-import { Filter } from "lucide-react";
+} from "../ui/sheet";
+import { Button } from "../ui/button";
 
 export function CategorySheet({ images }: any) {
   return (

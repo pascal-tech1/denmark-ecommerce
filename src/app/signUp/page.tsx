@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import PlaceholderContent from "@/components/demo/placeholder-content";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
@@ -12,12 +13,11 @@ import {
 } from "@/components/ui/breadcrumb";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { number, z } from "zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,34 +26,38 @@ import {
 import { Input } from "@/components/ui/input";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+// Import the custom hook
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
+import useUploadMutation from "@/hooks/useUploadMutation";
+
+const formSchema = z.object({
+  firstName: z.string().nonempty({ message: "name is required" }),
+  lastName: z.string().nonempty({ message: "lastname is required" }),
+  email: z.string().nonempty({ message: "email is required" }).email(),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long." })
+    .regex(/[A-Z]/, {
+      message: "Password must contain at least one uppercase letter."
+    })
+    .regex(/[a-z]/, {
+      message: "Password must contain at least one lowercase letter."
+    })
+    .regex(/\d/, { message: "Password must contain at least one number." })
+    .regex(/[@$!%*?&#]/, {
+      message: "Password must contain at least one special character."
+    })
+    .nonempty({ message: "Password is required." }),
+  phoneNumber: z
+    .string()
+    .nonempty({ message: "Phone number is required" })
+    .refine((value) => isValidPhoneNumber(value), {
+      message: "Invalid phone number format"
+    })
+});
 
 export default function SignUp() {
-  const formSchema = z.object({
-    firstName: z.string().nonempty({ message: "name is required" }),
-    lastName: z.string().nonempty({ message: "lastname is required" }),
-    email: z.string().nonempty({ message: "email is required" }).email(),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters long." })
-      .regex(/[A-Z]/, {
-        message: "Password must contain at least one uppercase letter."
-      })
-      .regex(/[a-z]/, {
-        message: "Password must contain at least one lowercase letter."
-      })
-      .regex(/\d/, { message: "Password must contain at least one number." })
-      .regex(/[@$!%*?&#]/, {
-        message: "Password must contain at least one special character."
-      })
-      .nonempty({ message: "Password is required." }),
-    phoneNumber: z
-      .string()
-      .nonempty({ message: "Phone number is required" })
-      .refine((value) => isValidPhoneNumber(value), {
-        message: "Invalid phone number format"
-      })
-  });
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,10 +68,29 @@ export default function SignUp() {
       phoneNumber: ""
     }
   });
+  const { toast } = useToast()
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const { data, error, mutate, isPending } = useUploadMutation("/routes/signup", [])
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await mutate(values);
+      toast({
+
+        description: 'You have successfully created your Account',
+        action:
+          <ToastAction altText="Login">
+            <Button>
+              <Link href="/login">Login</Link>
+            </Button>
+          </ToastAction>
+      })
+
+      console.log('Success:', values);
+    } catch (err: any) {
+      console.error('Error submitting form:', err);
+    }
+  };
 
   return (
     <ContentLayout title="Sign Up">
@@ -88,7 +111,7 @@ export default function SignUp() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 p-10  border  border-opacity-20"
+            className="space-y-6 p-10 border border-opacity-20"
           >
             <FormField
               control={form.control}
@@ -165,7 +188,10 @@ export default function SignUp() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? 'Submitting...' : 'Submit'}
+            </Button>
+            {error && <p className="text-red-500">{error.message}</p>}
           </form>
         </Form>
         <p className="mt-6">
@@ -174,6 +200,7 @@ export default function SignUp() {
             Log In
           </Link>
         </p>
+
       </PlaceholderContent>
     </ContentLayout>
   );

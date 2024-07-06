@@ -1,16 +1,22 @@
 import React from "react";
 import ProductItem from "./ProductItem";
 
-const Products = ({ images }: any) => {
+import { SkeletonCard } from "./productLoadingSkeleton";
+
+
+const Products = ({ products, isMutating, error }: any) => {
+  // const isMutating = true
+  console.log(isMutating)
+  const SkeletonLength = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+  console.log(error)
+
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(9rem,1fr))]   md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-4 h-max  rounded-lg">
-      {images.map((image: any, index: number) => (
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]   md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max  rounded-lg">
+      {error && <h1 className=" ml-10">failed to fetch Products try again </h1>}
+      {isMutating ? SkeletonLength.map((_, index) => <SkeletonCard key={index} />) : products?.map((product: any, index: number) => (
         <ProductItem
           key={index}
-          image={image.src}
-          description={image.description}
-          price={image.price}
-          category={image.category}
+          {...product}
         />
       ))}
     </div>
