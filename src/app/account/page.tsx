@@ -142,20 +142,20 @@ export default function ProductForm() {
     setQuillIsFocus(false);
   };
 
-  useEffect(() => {
-    if (beforeDivRef) {
-      const beforeDivHeight = beforeDivRef?.current?.clientHeight as number + 30 ?? 0;
-      const formContent = document.querySelector(".form-content") as HTMLDivElement;
-      if (formContent) {
-        if (quillIsFocus) {
-          formContent.style.marginTop = `-${beforeDivHeight}px`;
-        } else {
-          formContent.style.marginTop = "0";
-        }
-      }
+  // useEffect(() => {
+  //   if (beforeDivRef) {
+  //     const beforeDivHeight = beforeDivRef?.current?.clientHeight as number + 30 ?? 0;
+  //     const formContent = document.querySelector(".form-content") as HTMLDivElement;
+  //     if (formContent) {
+  //       if (quillIsFocus) {
+  //         formContent.style.marginTop = `-${beforeDivHeight}px`;
+  //       } else {
+  //         formContent.style.marginTop = "0";
+  //       }
+  //     }
 
-    }
-  }, [quillIsFocus]);
+  //   }
+  // }, [quillIsFocus]);
 
   const renderCategoryItems = (groupLabel: string, menus: Menu[]) => {
 
