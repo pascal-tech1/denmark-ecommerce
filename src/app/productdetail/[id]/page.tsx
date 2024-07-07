@@ -71,7 +71,7 @@ const ProductDetail = () => {
   if (isPending) {
     return <h1>loading</h1>
   }
-  console.log(data)
+
   return (
     <ContentLayout title="Sign Up">
       <Breadcrumb>
@@ -96,7 +96,7 @@ const ProductDetail = () => {
               <Image
                 src={data?.data?.product?.imageUrl}
                 alt={data?.data?.product?.title}
-              layout="fill"
+                layout="fill"
                 blurDataURL={`data:image/jpeg;base64,${data?.data?.product?.blurImage}`}
                 placeholder="blur"
                 className={cn("object-cover h-full w-full  rounded-md transition-transform group-hover:scale-125")}

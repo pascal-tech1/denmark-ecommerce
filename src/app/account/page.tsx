@@ -8,7 +8,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
+// import Quill from "quill";
 import Resizer from "react-image-file-resizer";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,7 +38,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 // Register the Quill ImageUploader module
-import ImageUploader from "quill-image-uploader";
+
 import "quill-image-uploader/dist/quill.imageUploader.min.css";
 
 import { handleImageUpload } from "@/hooks/handleImageUpload";
@@ -46,8 +46,9 @@ import { modulesObject } from "@/hooks/modulesObjects";
 import { Loader2 } from "lucide-react";
 import useUploadMutation from "@/hooks/useUploadMutation";
 import { subcategoryToCategoryMap } from "@/components/admin-panel/menuSubCategory";
+// import ImageUploader from "quill-image-uploader";
 
-Quill.register("modules/imageUploader", ImageUploader);
+// Quill.register("modules/imageUploader", ImageUploader);
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required." }),
@@ -60,12 +61,19 @@ const formSchema = z.object({
 });
 
 
-
-
 export default function ProductForm() {
+
+  useEffect(() => {
+    import('quill').then(({ default: Quill }) => {
+      import('quill-image-uploader').then(({ default: ImageUploader }) => {
+        Quill.register('modules/imageUploader', ImageUploader);
+      });
+    });
+  }, []);
+
   const [isFetchingImage, setIsFetchingImage] = useState(false);
   const [quillIsFocus, setQuillIsFocus] = useState(false);
-  // const { trigger, isMutating, error, data } = useSendPostRequest("/routes/create-product");
+
   const { toast } = useToast();
 
   const { data, error, mutate, isPending } = useUploadMutation("/routes/create-product", ["newProduct", "featuredProduct"])
@@ -142,20 +150,20 @@ export default function ProductForm() {
     setQuillIsFocus(false);
   };
 
-  // useEffect(() => {
-  //   if (beforeDivRef) {
-  //     const beforeDivHeight = beforeDivRef?.current?.clientHeight as number + 30 ?? 0;
-  //     const formContent = document.querySelector(".form-content") as HTMLDivElement;
-  //     if (formContent) {
-  //       if (quillIsFocus) {
-  //         formContent.style.marginTop = `-${beforeDivHeight}px`;
-  //       } else {
-  //         formContent.style.marginTop = "0";
-  //       }
-  //     }
+  useEffect(() => {
+    if (beforeDivRef) {
+      const beforeDivHeight = beforeDivRef?.current?.clientHeight as number + 30 ?? 0;
+      const formContent = document.querySelector(".form-content") as HTMLDivElement;
+      if (formContent) {
+        if (quillIsFocus) {
+          formContent.style.marginTop = `-${beforeDivHeight}px`;
+        } else {
+          formContent.style.marginTop = "0";
+        }
+      }
 
-  //   }
-  // }, [quillIsFocus]);
+    }
+  }, [quillIsFocus]);
 
   const renderCategoryItems = (groupLabel: string, menus: Menu[]) => {
 

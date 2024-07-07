@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import PlaceholderContent from "@/components/demo/placeholder-content";
@@ -22,10 +22,7 @@ import { CategorySheet } from "@/components/admin-panel/categorySheet";
 import { useQuery } from "@tanstack/react-query";
 import Products from "@/components/admin-panel/Products";
 
-
-export default function CategoryPage() {
-  const images = imageData
-  const [showFeatures, setShowFeatures] = useState(false);
+function Searchparam() {
   const searchParams = useSearchParams();
   const category = searchParams?.get("category");
   const subcategory = searchParams?.get("subcategory");
@@ -37,24 +34,7 @@ export default function CategoryPage() {
     subcategory as string
   );
 
-  useEffect(() => {
-    setCategoryState(category || "");
-    setSubcategoryState(subcategory || "");
-  }, [category, subcategory]);
-
-  const { isPending, error, data } = useQuery({
-    queryKey: [category, subcategory],
-    queryFn: () =>
-      fetch(`/routes/fetchAllProducts?category=${category}&subcategory=${subcategory || ""}`)
-        .then((res) =>
-          res.json(),
-        ),
-  })
-
-  if (data) {
-    console.log(data)
-  }
-
+  const [showFeatures, setShowFeatures] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -71,66 +51,89 @@ export default function CategoryPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  return (
-    <ContentLayout title={subcategoryState || categoryState}>
-      <div className=" flex items-center flex-wrap ">
-        <Breadcrumb className=" pb-4">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/">Home</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/category">All Products</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href={`/category?category=${categoryState}`}>{categoryState}</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{subcategory}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+  useEffect(() => {
+    setCategoryState(category || "");
+    setSubcategoryState(subcategory || "");
+  }, [category, subcategory]);
 
+  const { isPending, error, data } = useQuery({
+    queryKey: [category, subcategory],
+    queryFn: () =>
+      fetch(`/routes/fetchAllProducts?category=${category}&subcategory=${subcategory || ""}`)
+        .then((res) =>
+          res.json(),
+        ),
+  })
+  return <ContentLayout title={subcategoryState || categoryState}>
+    <div className=" flex items-center flex-wrap ">
+      <Breadcrumb className=" pb-4">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/category">All Products</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/category?category=${categoryState}`}>{categoryState}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{subcategory}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+    </div>
+    <div>
+      <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 ")}>
+        <CategorySheet />
       </div>
-      <div>
-        <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 ")}>
-          <CategorySheet images={images} />
-        </div>
-        <div className="grid  grid-cols-2 md:grid-cols-11 gap-12 pr-2 top-div dark:text-gray-400 ">
+      <div className="grid  grid-cols-2 md:grid-cols-11 gap-12 pr-2 top-div dark:text-gray-400 ">
 
-          <div
-            className={cn(
-              showFeatures
-                ? "col-start-1 col-span-7"
-                : "col-start-1 col-span-full"
-            )}
-          >
-            <Products products={data?.allProducts || []} isMutating={isPending} error={error} />
-          </div>
-          <div
-            className={cn(
-              showFeatures
-                ? "inline-block col-start-8 col-span-full flex, flex-col gap-6"
-                : "hidden"
-            )}
-          >
-            <div className="sticky top-16 left-0 flex  rounded-lg flex-col gap-4">
-              <div className=" p-3">
-                <PriceRangeSelector images={images} />
-              </div>
+        <div
+          className={cn(
+            showFeatures
+              ? "col-start-1 col-span-7"
+              : "col-start-1 col-span-full"
+          )}
+        >
+          <Products products={data?.allProducts || []} isMutating={isPending} error={error} />
+        </div>
+        <div
+          className={cn(
+            showFeatures
+              ? "inline-block col-start-8 col-span-full flex, flex-col gap-6"
+              : "hidden"
+          )}
+        >
+          <div className="sticky top-16 left-0 flex  rounded-lg flex-col gap-4">
+            <div className=" p-3">
+              <PriceRangeSelector />
             </div>
           </div>
         </div>
       </div>
-    </ContentLayout>
+    </div>
+  </ContentLayout >
+}
+
+
+
+export default function CategoryPage() {
+
+
+  return (
+    <Suspense>
+      <Searchparam />
+    </Suspense>
   );
 }
