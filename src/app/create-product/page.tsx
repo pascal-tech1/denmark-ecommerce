@@ -44,6 +44,7 @@ import { uptimizeCloudinaryImage } from "@/hooks/imageCloudinaryOptimizer";
 import { Button } from '@/components/ui/button';
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
+import useUploadMutation from "@/hooks/useUploadMutation";
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required." }),
