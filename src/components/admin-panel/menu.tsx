@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Ellipsis, LogOut } from "lucide-react";
+import { Ellipsis, } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -17,13 +17,7 @@ import {
   TooltipProvider
 } from "@/components/ui/tooltip";
 import { ModeToggle } from "../mode-toggle";
-import { useLoginUser } from "@/hooks/use-User";
-import { useStore } from "zustand";
-import useSendPostRequest from "@/hooks/useSignUp";
-import { ToastAction } from "../ui/toast";
-import { useToast } from "../ui/use-toast";
-import useUploadMutation from "@/hooks/useUploadMutation";
-import { SignedOut, SignInButton } from "@clerk/nextjs";
+
 
 interface MenuProps {
   isOpen: boolean | undefined;
