@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutGrid, LogOut, ShoppingBagIcon, ShoppingCartIcon, User } from "lucide-react";
+import {  LogOut, ShoppingCartIcon, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import useSendPostRequest from "@/hooks/useSignUp";
+
 import { useStore } from "zustand";
 import { useLoginUser } from "@/hooks/use-User";
 
