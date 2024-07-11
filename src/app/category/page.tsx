@@ -12,9 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
-import Banner from "@/components/admin-panel/banner";
 
-import { imageData } from "@/hooks/data";
 import { useSearchParams } from "next/navigation";
 import PriceRangeSelector from "@/components/admin-panel/PriceRangeSelector";
 import { cn } from "@/lib/utils";
