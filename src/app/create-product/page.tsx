@@ -34,7 +34,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 // Dynamically import React Quill
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-import "quill-image-uploader/dist/quill.imageUploader.min.css";
+
 import { handleImageUpload } from "@/hooks/handleImageUpload";
 import { Loader2 } from "lucide-react";
 import useUploadMutation from "@/hooks/useUploadMutation";
