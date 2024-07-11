@@ -149,7 +149,7 @@ const ProductDetail = () => {
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-4">More Products</h3>
             <div className="">
-              <Products images={imageData} />
+              {/* <Products images={imageData} /> */}
             </div>
           </div>
         </div>
