@@ -37,7 +37,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 import { handleImageUpload } from "@/hooks/handleImageUpload";
 import { Loader2 } from "lucide-react";
-import useUploadMutation from "@/hooks/useUploadMutation";
+
 import { subcategoryToCategoryMap } from "@/components/admin-panel/menuSubCategory";
 import axios from "axios";
 import { uptimizeCloudinaryImage } from "@/hooks/imageCloudinaryOptimizer";
@@ -60,7 +60,7 @@ export default function ProductForm() {
   const [quillIsFocus, setQuillIsFocus] = useState(false);
 
   const { toast } = useToast();
-  const { data, error, mutate, isPending } = useUploadMutation("/routes/create-product", ["newProduct", "featuredProduct"])
+
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const form = useForm<z.infer<typeof formSchema>>({

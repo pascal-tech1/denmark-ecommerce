@@ -1,22 +1,16 @@
-"use client";
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { imageData } from "@/hooks/data";
+
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import Banner from "@/components/admin-panel/banner";
-import SideProducts from "@/components/admin-panel/SideProducts";
+
 import { cn } from "@/lib/utils";
 import Products from "@/components/admin-panel/Products";
-import useSendPostRequest from "@/hooks/useSignUp";
-import useFetchData from "@/hooks/sendGetRequest";
+
 import { useQuery } from "@tanstack/react-query";
-import { CategorySheet } from "@/components/admin-panel/categorySheet";
+
 import { CategorySuggestion, CategorySuggestionSheet } from "@/components/admin-panel/categorySuggestionSheet";
 
 export default function DashboardPage() {
   const [showFeatures, setShowFeatures] = useState(false);
-  const images = imageData;
 
 
   const { isPending: featuredProductIsPending, error: featuredProductError, data: featuredProductData } = useQuery({

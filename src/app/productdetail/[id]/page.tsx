@@ -11,10 +11,10 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
-import PlaceholderContent from "@/components/demo/placeholder-content";
+
 import Link from "next/link";
 import Products from "@/components/admin-panel/Products";
-import { imageData } from "@/hooks/data";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
