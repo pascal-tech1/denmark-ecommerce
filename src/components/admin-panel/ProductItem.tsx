@@ -1,3 +1,4 @@
+"use client"
 import { useCartStore } from "@/hooks/use-cart";
 import { cn } from "@/lib/utils";
 import { ShoppingCartIcon } from "lucide-react";
