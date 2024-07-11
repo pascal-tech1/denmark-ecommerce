@@ -2,6 +2,8 @@ import axios from "axios";
 import { useMemo } from "react";
 import { uptimizeCloudinaryImage } from "./imageCloudinaryOptimizer";
 
+
+
 // Memoize the modules object to prevent unnecessary re-renders
 export const modulesObject = {
   toolbar: [

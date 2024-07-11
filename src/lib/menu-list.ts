@@ -9,7 +9,8 @@ import {
   Luggage,
   Home,
   HardHat,
-  ListCollapse
+  ListCollapse,
+  PencilLine
 } from "lucide-react";
 
 type Submenu = {
@@ -223,20 +224,20 @@ export function getMenuList(pathname: string): Group[] {
       ]
     },
     {
-      groupLabel: "Settings",
+      groupLabel: "Admin Tools",
       menus: [
+        // {
+        //   href: "/users",
+        //   label: "Users Profile",
+        //   active: pathname.includes("/users"),
+        //   icon: Users,
+        //   submenus: []
+        // },
         {
-          href: "/users",
-          label: "Users Profile",
-          active: pathname.includes("/users"),
-          icon: Users,
-          submenus: []
-        },
-        {
-          href: "/account",
-          label: "Account",
+          href: "/create-product",
+          label: "Create Product",
           active: pathname.includes("/account"),
-          icon: Settings,
+          icon: PencilLine,
           submenus: []
         }
       ]

@@ -38,33 +38,12 @@ export function Menu({ isOpen }: MenuProps) {
     const params = searchParams.toString();
     setActivePath(`${pathname}${params ? `?${params}` : ""}`);
   }, [pathname, searchParams]);
-
   const menuList = getMenuList(activePath);
-  const { user, updatUser } = useStore(useLoginUser, (state) => state);
-  const { data, error, mutate, isPending } = useUploadMutation("/routes/logout", [])
-
   const router = useRouter();
 
-  const { toast } = useToast()
-  const LogOutHandler = () => {
-    mutate({})
-    toast({
 
-      description: 'You have Successfully Logout',
-      action:
-        <ToastAction altText="Home">
-          <Button>
-            <Link href="/">Home</Link>
-          </Button>
-        </ToastAction>
-    })
-    updatUser({})
 
-  };
 
-  const LoginHandler = () => {
-    router.push("/sign-in");
-  };
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
       <nav className="mt-8 h-full w-full">
@@ -72,9 +51,9 @@ export function Menu({ isOpen }: MenuProps) {
           {menuList.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
-                <p className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
+                <div className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
                   {groupLabel}
-                </p>
+                </div>
               ) : !isOpen && isOpen !== undefined && groupLabel ? (
                 <TooltipProvider>
                   <Tooltip delayDuration={100}>
@@ -84,7 +63,7 @@ export function Menu({ isOpen }: MenuProps) {
                       </div>
                     </TooltipTrigger>
                     <TooltipContent side="right">
-                      <p>{groupLabel}</p>
+                      <div>{groupLabel}</div>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -102,7 +81,7 @@ export function Menu({ isOpen }: MenuProps) {
                               variant={active ? "secondary" : "ghost"}
                               className="w-full justify-start h-10 mb-1"
                               asChild
-                              disabled={isPending}
+
                             >
                               <Link href={href}>
                                 <span

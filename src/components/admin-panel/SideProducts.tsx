@@ -24,15 +24,15 @@ const SideProducts = ({
   return (
     <div>
 
-      {isMutating ? <SideProductSkeletonLoading heading={heading} /> : <div className="flex flex-col border dark:border-neutral-800 p-4 rounded-lg">
-        <div className="flex items-center text-center mt-3 drop-shadow-lg font-bold flex-col">
+      {isMutating ? <SideProductSkeletonLoading heading={heading} /> : <div className="flex flex-col gap-4  rounded-lg">
+        <div className="flex items-center text-center drop-shadow-lg pt-6 font-bold flex-col">
           {heading}
-          <div className="border-b border-b-yellow-400 w-28 pt-2"></div>
+          <div className="border-b border-b-yellow-400 border-opacity-15 w-28 pt-2"></div>
         </div>
         {images.slice(0, 4).map((image, index) => (
           <div
             key={index}
-            className="w-full group py-2 px-2 flex gap-6 items-center"
+            className="w-full group py-2 px-2 flex gap-4 items-center"
           >
             <div
               onClick={handleCardClick}

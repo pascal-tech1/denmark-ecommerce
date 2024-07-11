@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-
 import Image from "next/image";
 import { useEffect, useState, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -8,9 +7,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-// import Quill from "quill";
+import Quill from "quill";
 import Resizer from "react-image-file-resizer";
-import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -19,8 +18,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 
 import {
   DropdownMenu,
@@ -37,18 +34,16 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 // Dynamically import React Quill
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-// Register the Quill ImageUploader module
-
 import "quill-image-uploader/dist/quill.imageUploader.min.css";
-
 import { handleImageUpload } from "@/hooks/handleImageUpload";
-import { modulesObject } from "@/hooks/modulesObjects";
 import { Loader2 } from "lucide-react";
 import useUploadMutation from "@/hooks/useUploadMutation";
 import { subcategoryToCategoryMap } from "@/components/admin-panel/menuSubCategory";
-// import ImageUploader from "quill-image-uploader";
-
-// Quill.register("modules/imageUploader", ImageUploader);
+import axios from "axios";
+import { uptimizeCloudinaryImage } from "@/hooks/imageCloudinaryOptimizer";
+import { Button } from '@/components/ui/button';
+import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required." }),
@@ -60,22 +55,11 @@ const formSchema = z.object({
   blurImage: z.string().nonempty({ message: "blur Image string is required." }),
 });
 
-
 export default function ProductForm() {
-
-  useEffect(() => {
-    import('quill').then(({ default: Quill }) => {
-      import('quill-image-uploader').then(({ default: ImageUploader }) => {
-        Quill.register('modules/imageUploader', ImageUploader);
-      });
-    });
-  }, []);
-
   const [isFetchingImage, setIsFetchingImage] = useState(false);
   const [quillIsFocus, setQuillIsFocus] = useState(false);
 
   const { toast } = useToast();
-
   const { data, error, mutate, isPending } = useUploadMutation("/routes/create-product", ["newProduct", "featuredProduct"])
 
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -88,24 +72,30 @@ export default function ProductForm() {
       image: "",
       category: "",
       subCategory: ""
-
     },
   });
+
   const [editorContent, setEditorContent] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const beforeDivRef = useRef<HTMLDivElement>(null); // Ref for the element with class 'beforeDiv'
+  const beforeDivRef = useRef<HTMLDivElement>(null);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     try {
       console.log(values)
       mutate(values);
-      toast({
-        description: "Product created successfully",
-      });
+
     } catch (err: any) {
       console.error("Error submitting form:", err);
     }
   };
+
+  useEffect(() => {
+    toast({
+      description: "Product created successfully",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
   const resizeFile = (file: File) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -121,20 +111,110 @@ export default function ProductForm() {
         "base64"
       );
     });
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsFetchingImage(true);
     const imageUrl = await handleImageUpload(e);
     const file = e.target.files?.[0] as File;
-
     const resizedImage: any = await resizeFile(file);
 
     form.setValue("blurImage", resizedImage.split(',')[1]);
     setImagePreview(imageUrl);
-
     setIsFetchingImage(false);
     form.setValue("image", imageUrl);
   };
 
+  // Image handler function
+  const imageHandler = function (this: { quill: Quill }) {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+    input.onchange = async () => {
+      if (!input.files || !input.files[0]) return;
+
+      const file = input.files[0];
+      console.log(file)
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'ml_default'); // Replace with your upload preset
+
+      try {
+        const response = await axios.post(
+          `https://api.cloudinary.com/v1_1/dztt3ldiy/image/upload`,
+          formData,
+          {}
+        );
+        console.log("response", response.data.url)
+        const imageUrl = await uptimizeCloudinaryImage("f_auto,q_auto", response.data.url);
+        console.log('imageUrl: ,', imageUrl)
+
+        if (this.quill) {
+          const selection = this.quill.getSelection();
+          if (selection) {
+            const cursorPosition = selection.index;
+            this.quill.insertEmbed(cursorPosition, 'image', imageUrl);
+          }
+        }
+      } catch (error) {
+        console.error("Image upload failed:", error);
+      }
+    };
+  };
+  // const imageHandler = function (this: { quill: Quill }) {
+  //   const input = document.createElement('input');
+  //   input.setAttribute('type', 'file');
+  //   input.setAttribute('accept', 'image/*');
+  //   input.click();
+  //   input.onchange = async () => {
+  //     if (!input.files || !input.files[0]) return;
+
+  //     const file = input.files[0];
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+
+  //     // Replace this with your actual image upload function
+  //     const uploadImage = async (formData: FormData) => {
+  //       return new Promise((resolve) => {
+  //         setTimeout(() => {
+  //           resolve(URL.createObjectURL(file));
+  //         }, 1000);
+  //       });
+  //     };
+
+  //     const imageUrl = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg";
+
+  //     if (this.quill) {
+  //       const selection = this.quill.getSelection();
+  //       if (selection) {
+  //         const cursorPosition = selection.index;
+  //         this.quill.insertEmbed(cursorPosition, 'image', imageUrl);
+  //       }
+  //     }
+  //   };
+  // };
+
+
+  // Modules object with updated image handler
+  const modulesObject = {
+    toolbar: {
+      container: [
+        [{ font: [] }, { size: [] }, { header: [1, 2, 3, 4, 5, 6] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ color: [] }, { background: [] }],
+        [{ script: 'sub' }, { script: 'super' }],
+        [{ header: 1 }, { header: 2 }, 'blockquote', 'code-block'],
+        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+        [{ direction: 'rtl' }, { align: [] }],
+        ['link', 'image', 'clean'],
+      ],
+      handlers: {
+        image: imageHandler,
+      },
+    },
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const modules = useMemo(() => modulesObject, []);
 
   const editing = (content: string, delta: any, source: string, editor: any) => {
@@ -161,15 +241,12 @@ export default function ProductForm() {
           formContent.style.marginTop = "0";
         }
       }
-
     }
   }, [quillIsFocus]);
 
   const renderCategoryItems = (groupLabel: string, menus: Menu[]) => {
-
     return (
       <>
-
         {menus.map((menu) => (
           <React.Fragment key={menu.label}>
             <>
@@ -279,7 +356,6 @@ export default function ProductForm() {
                           onValueChange={(value) => {
                             setSelectedCategory(value);
                             const parentCategory = subcategoryToCategoryMap(value);
-
                             form.setValue("category", parentCategory);
                             if (parentCategory !== value) {
                               form.setValue("subCategory", value);
@@ -323,15 +399,15 @@ export default function ProductForm() {
             name="description"
             control={form.control}
             render={({ field }) => (
-              <FormItem>
+              <FormItem >
                 <FormLabel>Description</FormLabel>
-                <FormControl >
+                <FormControl className={`${quillIsFocus ? "h-[75vh]  relative top-0 z-50" : "h-[30vh]"}`}>
                   <ReactQuill
                     value={editorContent}
                     onChange={(content, delta, source, editor) => editing(content, delta, source, editor)}
                     modules={modules}
                     theme="snow"
-                    className={`${quillIsFocus ? "h-[75vh]  relative top-0 z-50" : "h-[30vh]"}`}
+
                     onFocus={handleQuillFocus}
                     onBlur={handleOnBlur}
                   />
@@ -345,7 +421,6 @@ export default function ProductForm() {
     </Form>
   );
 }
-
 
 type Submenu = {
   href: string;

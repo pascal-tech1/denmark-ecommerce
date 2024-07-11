@@ -11,6 +11,9 @@ import { useStore } from "zustand";
 import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
+import { useCartStore } from "@/hooks/use-cart";
+import { useRouter } from "next/navigation";
+
 
 
 
@@ -23,20 +26,19 @@ export function Navbar() {
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const { cartItems } = useStore(useCartStore, (state) => state);
 
-
-
-
-
-
+  const router = useRouter()
 
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!value) return;
-    console.log(value);
-  };
 
+    // Construct the URL
+    const url = `/category?query=${value}`;
+    router.push(url);
+  };
   const onClear = () => {
     setValue("");
   };
@@ -101,8 +103,8 @@ export function Navbar() {
           </form>
         </div>
         <div className={cn(isSearch ? "hidden" : "flex", "items-center space-x-4")}>
-          <Link href="/cart">
-
+          <Link href="/cart" className=" relative" >
+            <div className=" absolute left-2 -top-3 text-yellow-500 animate-slideUp">{cartItems.length}</div>
             <ShoppingCartIcon />
           </Link>
           <div>

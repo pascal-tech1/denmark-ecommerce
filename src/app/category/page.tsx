@@ -26,15 +26,25 @@ function Searchparam() {
   const searchParams = useSearchParams();
   const category = searchParams?.get("category");
   const subcategory = searchParams?.get("subcategory");
-
+  const query = searchParams?.get("query");
+  const maxPrice = searchParams?.get("maxPrice");
+  const minPrice = searchParams?.get("minPrice");
+  const selectedSort = searchParams?.get("selectedSort");
   const [categoryState, setCategoryState] = useState<string | undefined>(
     category as string
   );
   const [subcategoryState, setSubcategoryState] = useState<string | undefined>(
     subcategory as string
   );
+  const [queryState, setQuerytate] = useState<string | undefined>(
+    query as string
+  );
+
 
   const [showFeatures, setShowFeatures] = useState(false);
+
+
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,15 +64,20 @@ function Searchparam() {
   useEffect(() => {
     setCategoryState(category || "");
     setSubcategoryState(subcategory || "");
-  }, [category, subcategory]);
+    setQuerytate(query || "")
+  }, [category, subcategory, query, minPrice, maxPrice, selectedSort]);
+  console.log(maxPrice, minPrice, selectedSort,category,subcategory)
 
   const { isPending, error, data } = useQuery({
-    queryKey: [category, subcategory],
+    queryKey: [category, subcategory, query, minPrice, maxPrice, selectedSort],
     queryFn: () =>
-      fetch(`/routes/fetchAllProducts?category=${category}&subcategory=${subcategory || ""}`)
+      fetch(`/routes/fetchAllProducts?category=${category || ''}
+        &subcategory=${subcategory || ''}&query=${query || ''}
+        &maxPrice=${maxPrice || ''}$minPrice=${minPrice || ''}$selectedSort=${selectedSort || ''}`)
         .then((res) =>
           res.json(),
         ),
+    staleTime: 0,
   })
   return <ContentLayout title={subcategoryState || categoryState}>
     <div className=" flex items-center flex-wrap ">

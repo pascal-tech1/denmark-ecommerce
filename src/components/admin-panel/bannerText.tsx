@@ -32,11 +32,11 @@ const BannerText = ({ title }: { title: string }) => {
         >
           <Button
             variant={"default"}
-            className=" whitespace-nowrap bg-yellow-400  hover:bg-yellow-500 dark:hover:bg-yellow-400 dark:bg-yellow-200 "
+            className=" whitespace-nowrap bg-yellow-600  hover:bg-yellow-500 dark:hover:bg-yellow-400 dark:bg-yellow-200 "
           >
             Shop Now
           </Button>
-          <Button variant={"ghost"} className=" border border-opacity-30 border-yellow-600 whitespace-nowrap ">
+          <Button variant={"ghost"} className=" text-white border border-opacity-30 border-yellow-600 whitespace-nowrap ">
             Find out more
           </Button>
 
