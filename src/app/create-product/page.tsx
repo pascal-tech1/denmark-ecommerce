@@ -60,7 +60,7 @@ export default function ProductForm() {
   const [quillIsFocus, setQuillIsFocus] = useState(false);
 
   const { toast } = useToast();
-
+  const { data, error, mutate, isPending } = useUploadMutation("/routes/create-product", ["newProduct", "featuredProduct"])
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const form = useForm<z.infer<typeof formSchema>>({
