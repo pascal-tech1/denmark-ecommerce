@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { CategorySuggestion, CategorySuggestionSheet } from "@/components/admin-panel/categorySuggestionSheet";
 import { useState } from 'react';
+import useEffect from 'react';
 
 export default function DashboardPage() {
   const [showFeatures, setShowFeatures] = useState(false);
