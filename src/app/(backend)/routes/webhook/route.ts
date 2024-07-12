@@ -27,6 +27,7 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ received: true });
 }
+// Cookies.remove("clerk_token");
 
 const handleUserCreated = async (user: any) => {
   console.log("user", user.email_addresses[0].email_address);

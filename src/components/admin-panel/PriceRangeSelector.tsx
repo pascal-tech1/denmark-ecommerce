@@ -16,10 +16,7 @@ const PriceRangeSelector = ({ images }: any) => {
   const searchParams = useSearchParams();
   const { isPending, error, data } = useQuery({
     queryKey: ["newProduct"],
-    queryFn: () =>
-      fetch("/routes/fetchAllProducts").then((res) =>
-        res.json()
-      ),
+    queryFn: () => fetch("/routes/fetchAllProducts").then((res) => res.json())
   });
 
   const handleMinPriceChange = (e: any) => {
@@ -47,10 +44,11 @@ const PriceRangeSelector = ({ images }: any) => {
     const params = new URLSearchParams(searchParams.toString());
 
     // Update the parameters with the new values
-    params.set('minPrice', minPrice);
-    params.set('maxPrice', maxPrice);
-    params.set('selectedSort', selectedSort);
-    console.log(params)
+    console.log(selectedSort);
+    params.set("minPrice", minPrice);
+    params.set("maxPrice", maxPrice);
+    params.set("selectedSort", selectedSort);
+    console.log(params);
     // Construct the new URL with the updated parameters
     const url = `${pathname}?${params.toString()}`;
 
@@ -116,7 +114,12 @@ const PriceRangeSelector = ({ images }: any) => {
           Apply
         </Button>
       </form>
-      <SideProducts images={data?.allProducts || []} heading="Street comforts" isMutating={isPending} error={error} />
+      <SideProducts
+        images={data?.allProducts || []}
+        heading="Street comforts"
+        isMutating={isPending}
+        error={error}
+      />
     </div>
   );
 };

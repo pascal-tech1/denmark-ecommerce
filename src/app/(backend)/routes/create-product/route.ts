@@ -1,6 +1,7 @@
 import Product from "../../models/Product";
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateToken } from "../../middleWare/authMiddleWare";
+import { auth } from "@clerk/nextjs/server";
 
 // Define the POST handler
 export const POST = async (request: NextRequest) => {

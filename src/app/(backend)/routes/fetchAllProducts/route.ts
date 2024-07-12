@@ -7,25 +7,15 @@ export const GET = async (req: NextRequest) => {
     await connectDB();
 
     const { searchParams } = new URL(req.url);
-    const query = searchParams.get("query");
-    const subCategory = searchParams.get("subcategory");
-    const category = searchParams.get("category");
-    const minPrice = searchParams.get("minPrice");
-    const maxPrice = searchParams.get("maxPrice");
-    const selectedSort = searchParams.get("selectedSort");
-
+    const minPrice = searchParams.get("minPrice")?.trim();
+    const maxPrice = searchParams.get("maxPrice")?.trim();
+    const selectedSort = searchParams.get("selectedSort")?.trim();
+    const query = searchParams.get("query")?.trim();
+    const subCategory = searchParams.get("subcategory")?.trim();
+    const category = searchParams.get("category")?.trim();
     // Create a filter object
+
     const filter: any = {};
-    console.log("searchParams", searchParams.toString());
-    console.log(
-      "searchParams",
-      query,
-      subCategory,
-      category,
-      maxPrice,
-      minPrice,
-      selectedSort
-    );
 
     if (category) {
       filter.category = { $regex: new RegExp(category as string, "i") }; // Case-insensitive search
@@ -42,19 +32,16 @@ export const GET = async (req: NextRequest) => {
 
     // Price filtering
     if (minPrice) {
-      console.log("im inside minPrice", minPrice);
       filter.price = { ...filter.price, $gte: Number(minPrice) };
     }
 
     if (maxPrice) {
-      console.log("im inside maxPrice", maxPrice);
       filter.price = { ...filter.price, $lte: Number(maxPrice) };
     }
 
-    console.log("filter", filter);
-
     // Sorting
     let sort: any = {};
+    console.log("sort", selectedSort);
     if (selectedSort === "highest price") {
       sort.price = -1;
     } else if (selectedSort === "lowest price") {
@@ -62,11 +49,14 @@ export const GET = async (req: NextRequest) => {
     } else if (selectedSort === "most popular") {
       sort.numView = -1; // Assuming there is a 'popularity' field
     }
+    console.log("filter", filter);
+    console.log("sort", sort);
 
     const allProducts = await Product.find(filter)
       .select(["-description", "-user"])
       .sort(sort);
 
+    console.log(allProducts.length);
     return NextResponse.json(
       {
         message: "Products fetched successfully",
@@ -75,7 +65,7 @@ export const GET = async (req: NextRequest) => {
       { status: 200 }
     );
   } catch (error: any) {
-    console.log(error);
+    console.log("error", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };

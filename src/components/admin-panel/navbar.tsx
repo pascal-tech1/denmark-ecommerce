@@ -9,16 +9,11 @@ import { Input } from "../ui/input";
 import { useLoginUser } from "@/hooks/use-User";
 import { useStore } from "zustand";
 import Link from "next/link";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useCartStore } from "@/hooks/use-cart";
 import { useRouter } from "next/navigation";
-
-
-
-
-
-
+import Cookies from "js-cookie";
 
 export function Navbar() {
   const [value, setValue] = useState<string>("");
@@ -28,8 +23,21 @@ export function Navbar() {
 
   const { cartItems } = useStore(useCartStore, (state) => state);
 
-  const router = useRouter()
+  const router = useRouter();
+  const { getToken } = useAuth();
 
+  useEffect(() => {
+    const getTokennn = async () => {
+      const token = await getToken();
+      console.log(token);
+      // Save the token in a cookie
+      if (token) {
+        Cookies.set("clerk_token", token, { expires: 7 }); // Expires in 7 days
+      }
+    };
+
+    getTokennn();
+  }, [getToken]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,16 +86,24 @@ export function Navbar() {
           size="sm"
           variant="secondary"
           onClick={() => setIsSearch(!isSearch)}
-          className={cn(isSearch ? "hidden" : "inline-block", "rounded-l-none bg-transparent md:hidden")}
+          className={cn(
+            isSearch ? "hidden" : "inline-block",
+            "rounded-l-none bg-transparent md:hidden"
+          )}
         >
           <SearchIcon className="h-5 w-5" />
         </Button>
         <div ref={searchRef} className="flex-1">
-          <form onSubmit={onSubmit} className="relative w-full flex items-center">
+          <form
+            onSubmit={onSubmit}
+            className="relative w-full flex items-center"
+          >
             <Input
               ref={inputRef}
               value={value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setValue(e.target.value)
+              }
               placeholder="Search product name"
               className={cn(
                 isSearch ? "w-full opacity-100" : "w-0 opacity-0",
@@ -102,9 +118,13 @@ export function Navbar() {
             )}
           </form>
         </div>
-        <div className={cn(isSearch ? "hidden" : "flex", "items-center space-x-4")}>
-          <Link href="/cart" className=" relative" >
-            <div className=" absolute left-2 -top-3 text-yellow-500 animate-slideUp">{cartItems.length}</div>
+        <div
+          className={cn(isSearch ? "hidden" : "flex", "items-center space-x-4")}
+        >
+          <Link href="/cart" className=" relative">
+            <div className=" absolute left-2 -top-3 text-yellow-500 animate-slideUp">
+              {cartItems.length}
+            </div>
             <ShoppingCartIcon />
           </Link>
           <div>
@@ -120,7 +140,6 @@ export function Navbar() {
           </SignedIn>
         </div>
         <div className={cn(isSearch ? "hidden" : " hidden md:flex")}>
-
           <ModeToggle />
         </div>
       </div>

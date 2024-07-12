@@ -14,9 +14,14 @@ export const GET = async (req: NextRequest) => {
 
     const product = await Product.findById(productId).select("-user");
 
+    if (product) {
+      product.numView = (product.numView || 0) + 1;
+      await product.save();
+    }
+
     return NextResponse.json(
       {
-        message: "product fetched successfully",
+        message: "Product fetched successfully",
         product
       },
       { status: 200 }
