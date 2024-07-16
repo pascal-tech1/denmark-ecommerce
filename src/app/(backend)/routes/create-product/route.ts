@@ -2,18 +2,23 @@ import Product from "../../models/Product";
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateToken } from "../../middleWare/authMiddleWare";
 import { auth } from "@clerk/nextjs/server";
-
+import { currentUser } from "@clerk/nextjs/server";
+import User from "../../models/User";
+import { connectDB } from "../../config/MongoDbConfig";
 // Define the POST handler
 export const POST = async (request: NextRequest) => {
   try {
-    const user: any = await authenticateToken(request);
-    if (!user) {
+    const loginUser = await currentUser();
+
+    if (loginUser?.privateMetadata?.admin !== true) {
       return NextResponse.json(
-        { message: "No token provided" },
+        { message: "You are not allowed to perform this operation" },
         { status: 401 }
       );
     }
-
+    connectDB();
+    const dbUser = await User.findOne({ clerk_id: loginUser.id });
+    console.log(dbUser);
     // Parse the request body
     const reqBody = await request.json();
     const {
@@ -25,17 +30,16 @@ export const POST = async (request: NextRequest) => {
       blurImage,
       subCategory
     } = reqBody;
-    console.log(subCategory);
 
     // Create the new product
-    const product = await Product.create({
+    await Product.create({
       title,
       price,
       description,
       subCategory,
       imageUrl: image,
       numView: 0,
-      user: user.user._id,
+      user: dbUser._id,
       category,
       blurImage
     });
@@ -46,7 +50,7 @@ export const POST = async (request: NextRequest) => {
       { status: 201 }
     );
   } catch (error: any) {
-    console.log(error);
+    console.log("error", error);
     // Handle errors
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

@@ -226,13 +226,13 @@ export function getMenuList(pathname: string): Group[] {
     {
       groupLabel: "Admin Tools",
       menus: [
-        // {
-        //   href: "/users",
-        //   label: "Users Profile",
-        //   active: pathname.includes("/users"),
-        //   icon: Users,
-        //   submenus: []
-        // },
+        {
+          href: "/users",
+          label: "Users Profile",
+          active: pathname.includes("/users"),
+          icon: Users,
+          submenus: []
+        },
         {
           href: "/create-product",
           label: "Create Product",

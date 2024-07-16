@@ -24,20 +24,6 @@ export function Navbar() {
   const { cartItems } = useStore(useCartStore, (state) => state);
 
   const router = useRouter();
-  const { getToken } = useAuth();
-
-  useEffect(() => {
-    const getTokennn = async () => {
-      const token = await getToken();
-      console.log(token);
-      // Save the token in a cookie
-      if (token) {
-        Cookies.set("clerk_token", token, { expires: 7 }); // Expires in 7 days
-      }
-    };
-
-    getTokennn();
-  }, [getToken]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();

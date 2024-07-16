@@ -62,7 +62,7 @@ export default function ProductForm() {
   const [quillIsFocus, setQuillIsFocus] = useState(false);
 
   const { toast } = useToast();
-  const { data, error, mutate, isPending } = useUploadMutation(
+  const { data, error, isSuccess, mutate, isPending } = useUploadMutation(
     "/routes/create-product",
     ["newProduct", "featuredProduct"]
   );
@@ -85,13 +85,15 @@ export default function ProductForm() {
   const beforeDivRef = useRef<HTMLDivElement>(null);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    try {
-      console.log(values);
-      mutate(values);
-    } catch (err: any) {
-      console.error("Error submitting form:", err);
-    }
+    mutate(values);
   };
+  useEffect(() => {
+    isSuccess &&
+      toast({
+        description: "Product created successfully"
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess]);
 
   const resizeFile = (file: File) =>
     new Promise((resolve) => {
@@ -131,7 +133,7 @@ export default function ProductForm() {
       if (!input.files || !input.files[0]) return;
 
       const file = input.files[0];
-      console.log(file);
+
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", "ml_default"); // Replace with your upload preset
@@ -142,12 +144,11 @@ export default function ProductForm() {
           formData,
           {}
         );
-        console.log("response", response.data.url);
+
         const imageUrl = await uptimizeCloudinaryImage(
           "f_auto,q_auto",
           response.data.url
         );
-        console.log("imageUrl: ,", imageUrl);
 
         if (this.quill) {
           const selection = this.quill.getSelection();
@@ -156,9 +157,7 @@ export default function ProductForm() {
             this.quill.insertEmbed(cursorPosition, "image", imageUrl);
           }
         }
-      } catch (error) {
-        console.error("Image upload failed:", error);
-      }
+      } catch (error) {}
     };
   };
   // const imageHandler = function (this: { quill: Quill }) {

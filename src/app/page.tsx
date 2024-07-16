@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import Banner from "@/components/admin-panel/banner";
 
@@ -8,27 +7,24 @@ import Products from "@/components/admin-panel/Products";
 
 import { useQuery } from "@tanstack/react-query";
 
-import { CategorySuggestion, CategorySuggestionSheet } from "@/components/admin-panel/categorySuggestionSheet";
-import { useState, useEffect } from 'react';
-
+import {
+  CategorySuggestion,
+  CategorySuggestionSheet
+} from "@/components/admin-panel/categorySuggestionSheet";
+import { useState, useEffect } from "react";
+import { Footer } from "@/components/admin-panel/footer";
 
 export default function DashboardPage() {
   const [showFeatures, setShowFeatures] = useState(false);
 
-
-  const { isPending: featuredProductIsPending, error: featuredProductError, data: featuredProductData } = useQuery({
-    queryKey: ['featuredProduct'],
-    queryFn: () =>
-      fetch("/routes/fetchAllProducts").then((res) =>
-        res.json(),
-      ),
-  })
-
-
-
-
-
-
+  const {
+    isPending: featuredProductIsPending,
+    error: featuredProductError,
+    data: featuredProductData
+  } = useQuery({
+    queryKey: ["featuredProduct"],
+    queryFn: () => fetch("/routes/fetchAllProducts").then((res) => res.json())
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,13 +41,6 @@ export default function DashboardPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
-
-
-
-
-
-
   return (
     <ContentLayout title="Home">
       <Banner />
@@ -60,17 +49,29 @@ export default function DashboardPage() {
           <CategorySuggestionSheet />
         </div>
         <div className="grid  grid-cols-2 md:grid-cols-11 gap-16  justify-between place-content-around  pr-2 top-div dark:text-gray-400 ">
-
           <div
             className={cn(
               showFeatures
                 ? "col-start-1 col-span-7"
-                : "col-start-1 col-span-full ", ""
+                : "col-start-1 col-span-full ",
+              ""
             )}
           >
-            <Products products={featuredProductData?.allProducts || []} isMutating={featuredProductIsPending} error={featuredProductError} />
-            <Products products={featuredProductData?.allProducts || []} isMutating={featuredProductIsPending} error={featuredProductError} />
-            <Products products={featuredProductData?.allProducts || []} isMutating={featuredProductIsPending} error={featuredProductError} />
+            <Products
+              products={featuredProductData?.allProducts || []}
+              isMutating={featuredProductIsPending}
+              error={featuredProductError}
+            />
+            <Products
+              products={featuredProductData?.allProducts || []}
+              isMutating={featuredProductIsPending}
+              error={featuredProductError}
+            />
+            <Products
+              products={featuredProductData?.allProducts || []}
+              isMutating={featuredProductIsPending}
+              error={featuredProductError}
+            />
           </div>
           <div
             className={cn(
@@ -89,6 +90,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </ContentLayout>
   );
 }

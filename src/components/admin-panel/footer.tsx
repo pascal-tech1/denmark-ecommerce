@@ -74,14 +74,14 @@ const brandDirectory = [
 
 export function Footer() {
   return (
-    <footer className="fixed bottom-0 lg:bottom-10 right-0   ">
-      <Drawer>
+    <footer className=" bottom-0 lg:bottom-10 right-0   ">
+      {/* <Drawer>
         <DrawerTrigger asChild className=" relative w-screen bg-transparent lg:h-14 lg:w-14  lg:rounded-full  lg:shadow-md ">
           <Button variant={"outline"} className=" text-foreground bg-background hover:text-yellow-400"> <AlignEndHorizontal /> Footer</Button>
         </DrawerTrigger>
 
-        <DrawerContent className="max-w-screen-lg mx-auto p-10  ">
-          <div className=" max-h-[60vh] overflow-y-auto">
+        <DrawerContent className="max-w-screen-lg mx-auto p-10  "> */}
+          <div className=" ">
             <div className=" flex flex-col">
               <h1 className="font-bold pl-3 text-yellow-500">Brand Category</h1>
               {brandDirectory.map((category, index) => (
@@ -134,8 +134,8 @@ export function Footer() {
             </div>
           </div>
 
-        </DrawerContent>
-      </Drawer>
+        {/* </DrawerContent> */}
+      {/* </Drawer> */}
     </footer>
   );
 }
