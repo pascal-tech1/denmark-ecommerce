@@ -6,7 +6,7 @@ import SideProducts from "./SideProducts";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const PriceRangeSelector = ({ images }: any) => {
+const PriceRangeSelector = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [selectedSort, setSelectedSort] = useState("highest price"); // State for selected radio group
@@ -14,10 +14,7 @@ const PriceRangeSelector = ({ images }: any) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { isPending, error, data } = useQuery({
-    queryKey: ["newProduct"],
-    queryFn: () => fetch("/routes/fetchAllProducts").then((res) => res.json())
-  });
+
 
   const handleMinPriceChange = (e: any) => {
     const value = e.target.value;
@@ -44,11 +41,11 @@ const PriceRangeSelector = ({ images }: any) => {
     const params = new URLSearchParams(searchParams.toString());
 
     // Update the parameters with the new values
-    console.log(selectedSort);
+
     params.set("minPrice", minPrice);
     params.set("maxPrice", maxPrice);
     params.set("selectedSort", selectedSort);
-    console.log(params);
+
     // Construct the new URL with the updated parameters
     const url = `${pathname}?${params.toString()}`;
 
@@ -114,12 +111,8 @@ const PriceRangeSelector = ({ images }: any) => {
           Apply
         </Button>
       </form>
-      <SideProducts
-        images={data?.allProducts || []}
-        heading="Street comforts"
-        isMutating={isPending}
-        error={error}
-      />
+      <SideProducts heading="Street Comformts" />
+
     </div>
   );
 };

@@ -3,20 +3,17 @@ import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SideProductSkeletonLoading } from "./sideProductSkeletonLoading";
+import useFetchAllProductPaginated from "@/hooks/useFetchAllProductPaginated";
 
-const SideProducts = ({
-  images,
-  heading,
-  isMutating,
-  error
-}: {
-  images: { imageUrl: StaticImageData; blurImage: string; title: string; price: number }[];
-  heading: string,
-  isMutating: boolean,
-  error: any
-}) => {
+const SideProducts = ({ heading }: { heading: string }) => {
   const router = useRouter();
 
+  const {
+    data,
+    error,
+    isPending,
+
+  } = useFetchAllProductPaginated('', 1);
   const handleCardClick = () => {
     router.push("/productdetail/90");
   };
@@ -25,12 +22,12 @@ const SideProducts = ({
   return (
     <div>
 
-      {isMutating ? <SideProductSkeletonLoading heading={heading} /> : <div className="flex flex-col gap-4  rounded-lg">
+      {isPending ? <SideProductSkeletonLoading heading={heading} /> : <div className="flex flex-col gap-4  rounded-lg">
         <div className="flex items-center text-center drop-shadow-lg pt-6 font-bold flex-col">
           {heading}
           <div className="border-b border-b-yellow-400 border-opacity-15 w-28 pt-2"></div>
         </div>
-        {images.slice(0, 4).map((image, index) => (
+        {data?.pages[0].products.slice(0, 4).map((product: any, index: number) => (
           <div
             key={index}
             className="w-full group py-2 px-2 flex gap-4 items-center"
@@ -40,10 +37,10 @@ const SideProducts = ({
               className="relative bg-gray-300 overflow-hidden cursor-pointer rounded-md h-16 w-16 flex-shrink-0"
             >
               <Image
-                src={image.imageUrl}
-                alt={image.title}
+                src={product.imageUrl}
+                alt={product.title}
                 layout="fill"
-                blurDataURL={`data:image/jpeg;base64,${image.blurImage}`}
+                blurDataURL={`data:image/jpeg;base64,${product.blurImage}`}
                 placeholder="blur"
                 className="object-cover group-hover:scale-105 rounded-md"
               />
@@ -53,10 +50,10 @@ const SideProducts = ({
                 onClick={handleCardClick}
                 className=" hover:text-yellow-500 self-start items-start dark:hover:text-yellow-100 cursor-pointer transition-transform duration-300"
               >
-                {image.title}
+                {product.title}
               </h2>
               <p className=" whitespace-nowrap text-gray-800 dark:text-neutral-400">
-                Price: &#8358; {image.price}
+                Price: &#8358; {product.price}
               </p>
             </div>
           </div>

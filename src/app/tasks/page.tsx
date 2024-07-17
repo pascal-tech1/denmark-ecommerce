@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, ChevronDown, Loader2, MoreHorizontal } from "lucide-react"
 import moment from 'moment';
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -49,7 +49,7 @@ export default function AllProducts() {
     isSuccess,
   } = useQuery({
     queryKey: [], // Ensure sorting and columnFilters are dependencies
-    queryFn: () => fetch("/routes/fetchAllProducts").then((res) => res.json()),
+    queryFn: () => fetch("/routes/fetchAllProductAdmin").then((res) => res.json()),
   });
 
   if (isSuccess) {
@@ -164,9 +164,10 @@ export default function AllProducts() {
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
-                    className="h-24 text-center"
+                    className="h-24 text-center flex items-center justify-center"
                   >
-                    No results.
+                    {isPending ? <Loader2 className=" text-center h-6 w-6 animate-spin" /> : <h1>No results</h1>}
+
                   </TableCell>
                 </TableRow>
               )}

@@ -2,6 +2,8 @@ import { connectDB } from "../../config/MongoDbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Product from "../../models/Product";
 import User from "../../models/User";
+import { isValidObjectId } from "mongoose";
+import { ObjectId } from 'mongodb';
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -14,24 +16,24 @@ export const GET = async (req: NextRequest) => {
     const query = searchParams.get("query")?.trim();
     const subCategory = searchParams.get("subcategory")?.trim();
     const category = searchParams.get("category")?.trim();
-    // Create a filter object
+    const cursor = searchParams.get("cursor");
+    const limit = parseInt(searchParams.get("limit") || "3");
+    console.log("console", cursor, limit, minPrice, maxPrice, selectedSort, query, subCategory, category);
 
     const filter: any = {};
 
     if (category) {
-      filter.category = { $regex: new RegExp(category as string, "i") }; // Case-insensitive search
+      filter.category = { $regex: new RegExp(category as string, "i") };
     }
 
     if (subCategory) {
       filter.subCategory = { $regex: new RegExp(subCategory as string, "i") };
     }
 
-    // Full-text search if query is provided
     if (query) {
       filter.$text = { $search: query };
     }
 
-    // Price filtering
     if (minPrice) {
       filter.price = { ...filter.price, $gte: Number(minPrice) };
     }
@@ -40,7 +42,6 @@ export const GET = async (req: NextRequest) => {
       filter.price = { ...filter.price, $lte: Number(maxPrice) };
     }
 
-    // Sorting
     let sort: any = {};
 
     if (selectedSort === "highest price") {
@@ -48,23 +49,40 @@ export const GET = async (req: NextRequest) => {
     } else if (selectedSort === "lowest price") {
       sort.price = 1;
     } else if (selectedSort === "most popular") {
-      sort.numView = -1; // Assuming there is a 'popularity' field
+      sort.numView = -1;
     }
 
-    await User.find({})
-    const allProducts = await Product.find(filter).populate({
-      path: "user",
-      select: "first_name", // Select specific fields from user
-    })
+
+    if (cursor && cursor.length > 8) {
+      filter._id = { $gt: new ObjectId(cursor.trim()) };
+    }
+
+    await User.find({});
+
+    // Count the total number of matching products
+
+    const totalProducts = await Product.countDocuments(filter);
+
+    const allProducts = await Product.find(filter)
+      .populate({
+        path: "user",
+        select: "first_name",
+      })
       .select(["-description"])
-      .sort(sort);
-    console.log(allProducts)
-    console.log(allProducts.length);
+      .sort(sort)
+      .limit(limit + 1);
+
+
+    const hasNextPage = allProducts.length > limit;
+    const productsToSend = hasNextPage ? allProducts.slice(0, -1) : allProducts;
+    const nextCursor = hasNextPage ? productsToSend[productsToSend.length - 1]._id : null;
+
     return NextResponse.json(
       {
         message: "Products fetched successfully",
-        allProducts,
-
+        products: productsToSend,
+        nextCursor,
+        totalProducts, // Include total count in the response
       },
       { status: 200 }
     );

@@ -13,18 +13,22 @@ import {
 } from "@/components/admin-panel/categorySuggestionSheet";
 import { useState, useEffect } from "react";
 import { Footer } from "@/components/admin-panel/footer";
+import useFetchAllProductPaginated from "@/hooks/useFetchAllProductPaginated";
 
 export default function DashboardPage() {
   const [showFeatures, setShowFeatures] = useState(false);
 
-  const {
-    isPending: featuredProductIsPending,
-    error: featuredProductError,
-    data: featuredProductData
-  } = useQuery({
-    queryKey: ["featuredProduct"],
-    queryFn: () => fetch("/routes/fetchAllProducts").then((res) => res.json())
-  });
+  // const {
+  //   isPending: featuredProductIsPending,
+  //   error: featuredProductError,
+  //   data: featuredProductData,
+  //   isSuccess
+
+  // } = useQuery({
+  //   queryKey: ["featuredProduct"],
+  //   queryFn: () => fetch("/routes/fetchAllProducts").then((res) => res.json())
+  // });
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,6 +44,7 @@ export default function DashboardPage() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
 
   return (
     <ContentLayout title="Home">
@@ -57,21 +62,8 @@ export default function DashboardPage() {
               ""
             )}
           >
-            <Products
-              products={featuredProductData?.allProducts || []}
-              isMutating={featuredProductIsPending}
-              error={featuredProductError}
-            />
-            <Products
-              products={featuredProductData?.allProducts || []}
-              isMutating={featuredProductIsPending}
-              error={featuredProductError}
-            />
-            <Products
-              products={featuredProductData?.allProducts || []}
-              isMutating={featuredProductIsPending}
-              error={featuredProductError}
-            />
+            <Products />
+
           </div>
           <div
             className={cn(

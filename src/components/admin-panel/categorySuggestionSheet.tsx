@@ -17,20 +17,7 @@ import SideProducts from "./SideProducts";
 import { useQuery } from "@tanstack/react-query";
 
 export function CategorySuggestionSheet() {
-    const { isPending: newProductIsPending, error: newProductError, data: newProductData } = useQuery({
-        queryKey: ['newProduct'],
-        queryFn: () =>
-            fetch("/routes/fetchAllProducts").then((res) =>
-                res.json(),
-            ),
-    })
-    const { isPending: bestSellerProductIsPending, error: bestSellerProductError, data: bestSellerProductData } = useQuery({
-        queryKey: ['bestSellerProduct'],
-        queryFn: () =>
-            fetch("/routes/fetchAllProducts").then((res) =>
-                res.json(),
-            ),
-    })
+
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -40,8 +27,8 @@ export function CategorySuggestionSheet() {
             </SheetTrigger>
             <ScrollArea>
                 <SheetContent className=" h-screen overflow-y-auto flex flex-col items-center ">
-                    <SideProducts images={bestSellerProductData?.allProducts || []} heading="Best Sellers" isMutating={bestSellerProductIsPending} error={bestSellerProductError} />
-                    <SideProducts images={newProductData?.allProducts || []} heading="New Products" isMutating={newProductIsPending} error={newProductError} />
+                    <SideProducts />
+                    <SideProducts />
                     <SheetFooter className=" justify-self-end  self-end">
                         <SheetClose asChild>
                             <Button >close</Button>
@@ -54,24 +41,10 @@ export function CategorySuggestionSheet() {
 }
 
 export function CategorySuggestion() {
-    const { isPending: newProductIsPending, error: newProductError, data: newProductData } = useQuery({
-        queryKey: ['newProduct'],
-        queryFn: () =>
-            fetch("/routes/fetchAllProducts").then((res) =>
-                res.json(),
-            ),
-    })
-    const { isPending: bestSellerProductIsPending, error: bestSellerProductError, data: bestSellerProductData } = useQuery({
-        queryKey: ['bestSellerProduct'],
-        queryFn: () =>
-            fetch("/routes/fetchAllProducts").then((res) =>
-                res.json(),
-            ),
-    })
 
     return <div>
-        <SideProducts images={bestSellerProductData?.allProducts || []} heading="Best Sellers" isMutating={bestSellerProductIsPending} error={bestSellerProductError} />
-        <SideProducts images={newProductData?.allProducts || []} heading="New Products" isMutating={newProductIsPending} error={newProductError} />
+        <SideProducts />
+        <SideProducts />
     </div>
 
 }

@@ -57,6 +57,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
     "react-image-file-resizer": "^0.4.8",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-quill": "^2.0.0",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",

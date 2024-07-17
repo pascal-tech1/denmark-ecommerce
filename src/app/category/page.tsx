@@ -25,12 +25,11 @@ function Searchparam() {
   const category = searchParams?.get("category");
   const subcategory = searchParams?.get("subcategory");
   const query = searchParams?.get("query");
-  const maxPrice = searchParams?.get("maxPrice");
-  const minPrice = searchParams?.get("minPrice");
-  const selectedSort = searchParams?.get("selectedSort");
+
   const [categoryState, setCategoryState] = useState<string | undefined>(
     category as string
   );
+
   const [subcategoryState, setSubcategoryState] = useState<string | undefined>(
     subcategory as string
   );
@@ -59,19 +58,9 @@ function Searchparam() {
     setCategoryState(category || "");
     setSubcategoryState(subcategory || "");
     setQuerytate(query || "");
-  }, [category, subcategory, query, minPrice, maxPrice, selectedSort]);
-  console.log(maxPrice, minPrice, selectedSort, category, subcategory);
+  }, [category, subcategory, query]);
 
-  const { isPending, error, data } = useQuery({
-    queryKey: [category, subcategory, query, minPrice, maxPrice, selectedSort],
-    queryFn: () =>
-      fetch(`/routes/fetchAllProducts?category=${category || ""}
-        &subcategory=${subcategory || ""}&query=${query || ""}
-        &maxPrice=${maxPrice || ""}&minPrice=${minPrice || ""}&selectedSort=${
-        selectedSort || ""
-      }`).then((res) => res.json()),
-    staleTime: 0
-  });
+
   return (
     <ContentLayout title={subcategoryState || categoryState}>
       <div className=" flex items-center flex-wrap ">
@@ -115,11 +104,7 @@ function Searchparam() {
                 : "col-start-1 col-span-full"
             )}
           >
-            <Products
-              products={data?.allProducts || []}
-              isMutating={isPending}
-              error={error}
-            />
+            <Products />
           </div>
           <div
             className={cn(
