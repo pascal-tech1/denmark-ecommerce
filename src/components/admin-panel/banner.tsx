@@ -95,7 +95,7 @@ const Banner = () => {
               )}
               priority
             />
-            <BannerText title="Outware Picks" />
+            {/* <BannerText title="Outware Picks" /> */}
           </div>
           <div
             className={cn(
@@ -115,7 +115,7 @@ const Banner = () => {
                   : "lg:w-[calc(95vw-18rem)]"
               )}
             />
-            <BannerText title="Seasonal Offers" />
+            {/* <BannerText title="Seasonal Offers" /> */}
           </div>
           <div
             className={cn(
@@ -135,7 +135,7 @@ const Banner = () => {
                   : "lg:w-[calc(95vw-18rem)]"
               )}
             />
-            <BannerText title="Best for men" />
+            {/* <BannerText title="Best for men" /> */}
           </div>
         </Slider>
       </div>

@@ -1,6 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
-import bcryptjs from "bcryptjs";
-import { NextResponse } from "next/server";
+
 
 export interface IUser extends Document {
   clerk_id: string;
@@ -11,7 +10,6 @@ export interface IUser extends Document {
   email_addresses: string;
   external_accounts: string;
   isAdmin: boolean;
-  isPasswordCorrect(enteredPassword: string): Promise<boolean>;
 }
 
 const userSchema = new mongoose.Schema<IUser>(

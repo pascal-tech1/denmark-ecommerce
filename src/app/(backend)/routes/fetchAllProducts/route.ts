@@ -1,6 +1,7 @@
 import { connectDB } from "../../config/MongoDbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Product from "../../models/Product";
+import User from "../../models/User";
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -41,7 +42,7 @@ export const GET = async (req: NextRequest) => {
 
     // Sorting
     let sort: any = {};
-    console.log("sort", selectedSort);
+
     if (selectedSort === "highest price") {
       sort.price = -1;
     } else if (selectedSort === "lowest price") {
@@ -49,18 +50,21 @@ export const GET = async (req: NextRequest) => {
     } else if (selectedSort === "most popular") {
       sort.numView = -1; // Assuming there is a 'popularity' field
     }
-    console.log("filter", filter);
-    console.log("sort", sort);
 
-    const allProducts = await Product.find(filter)
-      .select(["-description", "-user"])
+    await User.find({})
+    const allProducts = await Product.find(filter).populate({
+      path: "user",
+      select: "first_name", // Select specific fields from user
+    })
+      .select(["-description"])
       .sort(sort);
-
+    console.log(allProducts)
     console.log(allProducts.length);
     return NextResponse.json(
       {
         message: "Products fetched successfully",
-        allProducts
+        allProducts,
+
       },
       { status: 200 }
     );
