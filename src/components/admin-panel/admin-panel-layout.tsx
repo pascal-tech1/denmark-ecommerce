@@ -38,7 +38,7 @@ export default function AdminPanelLayout({
     <>
       <QueryClientProvider client={queryClient}>
         <ClerkProvider appearance={themeToPassToClerk}>
-          <div className=" bg-yellow-300 font-bold  dark:bg-yellow-400 dark:bg-opacity-15 bg-opacity-20  lg:w-screen z-50 ">
+          {/* <div className=" bg-yellow-300 font-bold  dark:bg-yellow-400 dark:bg-opacity-15 bg-opacity-20  lg:w-screen z-50 ">
             <div className=" w-[70vw] tracking-wide moving-text text-sm flex justify-between gap-16 py-1 z-50">
               <a href="https://wa.me/+2349095606300" target="_blank" rel="noopener noreferrer" className="tracking-widest text-green-600 flex gap-2 items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 48 48">
@@ -55,7 +55,7 @@ export default function AdminPanelLayout({
                 denmarkmultibuzlimited@gmail.com
               </a>
             </div>
-          </div>
+          </div> */}
           <Sidebar />
 
           <main
@@ -75,7 +75,7 @@ export default function AdminPanelLayout({
           </footer>
         </ClerkProvider >
       </QueryClientProvider>
-      <style jsx>{`
+      {/* <style jsx>{`
         .gold-banner {
           background-color: gold;
           padding: 10px;
@@ -99,7 +99,7 @@ export default function AdminPanelLayout({
             transform: translateX(-100%);
           }
         }
-      `}</style>
+      `}</style> */}
     </>
   );
 }
