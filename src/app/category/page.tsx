@@ -94,8 +94,8 @@ function Searchparam() {
 
       </div>
       <div>{query && `All results matching your query ${query}`}</div>
-      <div>
-        <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 ")}>
+      <div className=" relative">
+        <div className={cn(showFeatures ? "hidden  " : "items-center mb-4   ")}>
           <CategorySheet />
         </div>
         <div className="grid  grid-cols-2 md:grid-cols-11 gap-12 pr-2 top-div dark:text-gray-400 ">
@@ -115,7 +115,7 @@ function Searchparam() {
                 : "hidden"
             )}
           >
-            <div className="sticky top-5 left-0 flex overflow-y-auto  h-[85vh] bg-neutral-900 shadow-inner  rounded-lg flex-col gap-4">
+            <div className="sticky top-5 left-0 flex overflow-y-auto  h-[85vh] bg-neutral-50 dark:bg-neutral-900 shadow-inner  rounded-lg flex-col gap-4">
               <div className=" p-3">
                 <PriceRangeSelector />
               </div>

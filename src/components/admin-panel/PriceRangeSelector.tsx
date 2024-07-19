@@ -63,14 +63,14 @@ const PriceRangeSelector = () => {
       <form onSubmit={handleSubmit} className="pl-4">
         <div className="flex flex-col gap-4">
           <h1 className="mt-4 mb-2 font-bold">Filter By Price</h1>
-          <div className="flex items-start">
+          <div className="flex items-start flex-wrap">
             <input
               type="number"
               value={minPrice}
               onChange={handleMinPriceChange}
               placeholder="Min"
               min={minPriceLimit}
-              className="w-28 px-2 py-1 border border-gray-300 rounded text-center mx-1"
+              className="w-24 px-2 py-1 border border-gray-300 rounded text-center mx-1"
             />
             <span className="mx-2">-</span>
             <input
@@ -79,7 +79,7 @@ const PriceRangeSelector = () => {
               onChange={handleMaxPriceChange}
               placeholder="Max"
               min={minPriceLimit}
-              className="w-28 px-2  py-1 border border-gray-300 rounded text-center mx-1"
+              className="w-24 px-2  py-1 border border-gray-300 rounded text-center mx-1"
             />
           </div>
         </div>

@@ -16,20 +16,17 @@ import { Button } from "../ui/button";
 
 export function CategorySheet({ images }: any) {
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" className=" flex gap-2 items-center">
-          Filter <Filter size={15} />
-        </Button>
-      </SheetTrigger>
-      <ScrollArea>
-        <SheetContent className=" h-screen overflow-y-auto">
+    <Sheet >
+      <div className=" relative">
+        <SheetTrigger asChild className="">
+          <Button variant="outline" className=" flex gap-2 items-center">
+            Filter <Filter size={15} />
+          </Button>
+        </SheetTrigger>
+      </div>
+      <ScrollArea className="">
+        <SheetContent className="h-screen overflow-y-auto  bg-neutral-50 dark:bg-neutral-900">
           <PriceRangeSelector />
-          <SheetFooter className=" mt-4">
-            <SheetClose asChild>
-              <Button type="submit">Save changes</Button>
-            </SheetClose>
-          </SheetFooter>
         </SheetContent>
       </ScrollArea>
     </Sheet>
