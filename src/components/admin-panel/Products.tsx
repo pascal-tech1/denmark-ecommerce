@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 
 import { SkeletonCard } from "./productLoadingSkeleton";
@@ -8,6 +8,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from 'react-infinite-scroller'
 import { Loader2 } from "lucide-react";
 
+export default function ProductsList() {
+  return <Suspense>
+    <Products />
+  </Suspense>
+}
 
 const Products = () => {
   const searchParams = useSearchParams();
@@ -92,5 +97,4 @@ const Products = () => {
   );
 };
 
-export default Products;
 
