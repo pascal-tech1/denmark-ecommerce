@@ -1,4 +1,6 @@
+import { Share1Icon } from '@radix-ui/react-icons';
 import React from 'react';
+import { Button } from '../ui/button';
 
 const ShareButton = ({ title, text, url }: any) => {
     const handleShare = async () => {
@@ -19,9 +21,9 @@ const ShareButton = ({ title, text, url }: any) => {
     };
 
     return (
-        <button onClick={handleShare}>
-            Share
-        </button>
+        <Button variant={"outline"} onClick={handleShare}>
+            <Share1Icon />
+        </Button>
     );
 };
 
