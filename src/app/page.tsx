@@ -13,23 +13,9 @@ import {
 } from "@/components/admin-panel/categorySuggestionSheet";
 import { useState, useEffect } from "react";
 import { Footer } from "@/components/admin-panel/footer";
-import useFetchAllProductPaginated from "@/hooks/useFetchAllProductPaginated";
 
 export default function DashboardPage() {
   const [showFeatures, setShowFeatures] = useState(false);
-
-  // const {
-  //   isPending: featuredProductIsPending,
-  //   error: featuredProductError,
-  //   data: featuredProductData,
-  //   isSuccess
-
-  // } = useQuery({
-  //   queryKey: ["featuredProduct"],
-  //   queryFn: () => fetch("/routes/fetchAllProducts").then((res) => res.json())
-  // });
-
-
   useEffect(() => {
     const handleResize = () => {
       const topDiv = document.querySelector(".top-div") as HTMLElement | null;
@@ -75,7 +61,6 @@ export default function DashboardPage() {
             <div className="sticky mx-auto top-16 left-0 flex rounded-lg flex-col gap-4">
               <div className=" p-3 mx-auto">
                 <div className="sticky top-16 left-0 flex rounded-lg flex-col gap-4 mx-auto">
-
                   <CategorySuggestion />
                 </div>
               </div>
