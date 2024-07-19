@@ -80,12 +80,11 @@ const Products = () => {
 
             return products.products.map((product: any, index: number) => {
 
-              return < div  >
-                <ProductItem
-                  key={product._id}
-                  {...product}
-                />
-              </div>
+              return <ProductItem
+                key={product._id}
+                {...product}
+              />
+
             })
           })}
         </InfiniteScroll>}
