@@ -53,7 +53,7 @@ export default function DashboardPage() {
         <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 ")}>
           <CategorySuggestionSheet />
         </div>
-        <div className="grid  grid-cols-2 md:grid-cols-11 gap-16  justify-between place-content-around  pr-2 top-div dark:text-gray-400 ">
+        <div className="grid place-content-between  grid-cols-2 md:grid-cols-11 gap-16  justify-between  pr-2 top-div dark:text-gray-400 ">
           <div
             className={cn(
               showFeatures
@@ -68,13 +68,14 @@ export default function DashboardPage() {
           <div
             className={cn(
               showFeatures
-                ? "inline-block col-start-8  dark:bg-neutral-900 rounded-lg shadow-md  col-span-full flex, flex-col gap-6"
+                ? "inline-block col-start-8   rounded-lg   col-span-full flex,  flex-col gap-6"
                 : "hidden"
             )}
           >
-            <div className="sticky top-16 left-0 flex rounded-lg flex-col gap-4">
-              <div className=" p-3">
-                <div className="sticky top-16 left-0 flex rounded-lg flex-col gap-4">
+            <div className="sticky mx-auto top-16 left-0 flex rounded-lg flex-col gap-4">
+              <div className=" p-3 mx-auto">
+                <div className="sticky top-16 left-0 flex rounded-lg flex-col gap-4 mx-auto">
+
                   <CategorySuggestion />
                 </div>
               </div>

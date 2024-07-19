@@ -10,7 +10,8 @@ import {
   Home,
   HardHat,
   ListCollapse,
-  PencilLine
+  PencilLine,
+  Wrench
 } from "lucide-react";
 
 type Submenu = {
@@ -227,10 +228,10 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: "Admin Tools",
       menus: [
         {
-          href: "/users",
-          label: "Users Profile",
-          active: pathname.includes("/users"),
-          icon: Users,
+          href: "/manage-products",
+          label: "Manage Products",
+          active: pathname.includes("/manage-product"),
+          icon: Wrench,
           submenus: []
         },
         {

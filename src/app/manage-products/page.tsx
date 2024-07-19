@@ -48,7 +48,7 @@ export default function AllProducts() {
     data: fetchData,
     isSuccess,
   } = useQuery({
-    queryKey: [], // Ensure sorting and columnFilters are dependencies
+    queryKey: ["AllProductTable"], // Ensure sorting and columnFilters are dependencies
     queryFn: () => fetch("/routes/fetchAllProductAdmin").then((res) => res.json()),
   });
 

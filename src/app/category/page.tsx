@@ -63,7 +63,7 @@ function Searchparam() {
 
   return (
     <ContentLayout title={subcategoryState || categoryState}>
-      <div className=" flex items-center flex-wrap ">
+      <div className=" flex items-center flex-wrap  ">
         <Breadcrumb className=" pb-4">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -91,7 +91,9 @@ function Searchparam() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
       </div>
+      <div>{query && `All results matching your query ${query}`}</div>
       <div>
         <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 ")}>
           <CategorySheet />
@@ -109,11 +111,11 @@ function Searchparam() {
           <div
             className={cn(
               showFeatures
-                ? "inline-block col-start-8 col-span-full flex, flex-col gap-6"
+                ? "inline-block col-start-8  col-span-full flex, flex-col gap-6"
                 : "hidden"
             )}
           >
-            <div className="sticky top-16 left-0 flex  rounded-lg flex-col gap-4">
+            <div className="sticky top-5 left-0 flex overflow-y-auto  h-[85vh] bg-neutral-900 shadow-inner  rounded-lg flex-col gap-4">
               <div className=" p-3">
                 <PriceRangeSelector />
               </div>
@@ -124,6 +126,12 @@ function Searchparam() {
     </ContentLayout>
   );
 }
+
+
+
+
+
+
 
 export default function CategoryPage() {
   return (

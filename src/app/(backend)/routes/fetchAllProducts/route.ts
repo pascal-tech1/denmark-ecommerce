@@ -1,9 +1,6 @@
 import { connectDB } from "../../config/MongoDbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import Product from "../../models/Product";
-import User from "../../models/User";
-import { isValidObjectId } from "mongoose";
-import { ObjectId } from 'mongodb';
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -16,78 +13,60 @@ export const GET = async (req: NextRequest) => {
     const query = searchParams.get("query")?.trim();
     const subCategory = searchParams.get("subcategory")?.trim();
     const category = searchParams.get("category")?.trim();
-    const cursor = searchParams.get("cursor");
-    const limit = parseInt(searchParams.get("limit") || "3");
-    console.log("console", cursor, limit, minPrice, maxPrice, selectedSort, query, subCategory, category);
-
-    const filter: any = {};
-
-    if (category) {
-      filter.category = { $regex: new RegExp(category as string, "i") };
-    }
-
-    if (subCategory) {
-      filter.subCategory = { $regex: new RegExp(subCategory as string, "i") };
-    }
-
-    if (query) {
-      filter.$text = { $search: query };
-    }
-
-    if (minPrice) {
-      filter.price = { ...filter.price, $gte: Number(minPrice) };
-    }
-
-    if (maxPrice) {
-      filter.price = { ...filter.price, $lte: Number(maxPrice) };
-    }
-
-    let sort: any = {};
-
-    if (selectedSort === "highest price") {
-      sort.price = -1;
-    } else if (selectedSort === "lowest price") {
-      sort.price = 1;
-    } else if (selectedSort === "most popular") {
-      sort.numView = -1;
-    }
+    const page = parseInt(searchParams.get("cursor") as string);
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const heading = searchParams.get("heading")
 
 
-    if (cursor && cursor.length > 8) {
-      filter._id = { $gt: new ObjectId(cursor.trim()) };
-    }
+    const matchStage: any = {};
+    if (category) matchStage.category = { $regex: new RegExp(category, "i") };
+    if (subCategory) matchStage.subCategory = { $regex: new RegExp(subCategory, "i") };
+    if (query) matchStage.$text = { $search: query };
+    if (minPrice) matchStage.price = { ...matchStage.price, $gte: Number(minPrice) };
+    if (maxPrice) matchStage.price = { ...matchStage.price, $lte: Number(maxPrice) };
 
-    await User.find({});
+    const sortStage: any = {};
+    if (selectedSort === "highest price") sortStage.price = -1;
+    else if (selectedSort === "lowest price") sortStage.price = 1;
+    else if (selectedSort === "most popular" || heading == "Best Sellers") sortStage.numView = -1;
+    else if (heading === "New Products") sortStage.updatedAt = -1
+    else sortStage._id = 1; // Default sort by _id to ensure there's always a sort key
+    const skip = (page) * limit;
 
-    // Count the total number of matching products
+    const aggregationPipeline = [
+      { $match: matchStage },
+      { $sort: sortStage },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: "$user" },
+      { $project: { description: 0, "user.password": 0 } },
+      { $skip: skip },
+      { $limit: limit + 1 },
+    ];
 
-    const totalProducts = await Product.countDocuments(filter);
-
-    const allProducts = await Product.find(filter)
-      .populate({
-        path: "user",
-        select: "first_name",
-      })
-      .select(["-description"])
-      .sort(sort)
-      .limit(limit + 1);
-
+    const allProducts = await Product.aggregate(aggregationPipeline);
 
     const hasNextPage = allProducts.length > limit;
-    const productsToSend = hasNextPage ? allProducts.slice(0, -1) : allProducts;
-    const nextCursor = hasNextPage ? productsToSend[productsToSend.length - 1]._id : null;
+    const productsToSend = hasNextPage ? allProducts.slice(0, limit) : allProducts;
+    const nextCursor = hasNextPage ? page + 1 : null;
 
     return NextResponse.json(
       {
         message: "Products fetched successfully",
         products: productsToSend,
         nextCursor,
-        totalProducts, // Include total count in the response
+        totalProducts: await Product.countDocuments(matchStage),
       },
       { status: 200 }
     );
   } catch (error: any) {
-    console.log("error", error);
+    console.log(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 };

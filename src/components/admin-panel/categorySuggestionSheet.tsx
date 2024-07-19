@@ -27,8 +27,8 @@ export function CategorySuggestionSheet() {
             </SheetTrigger>
             <ScrollArea>
                 <SheetContent className=" h-screen overflow-y-auto flex flex-col items-center ">
-                    <SideProducts />
-                    <SideProducts />
+                    <SideProducts heading="Best Sellers" />
+                    <SideProducts heading="New Products" />
                     <SheetFooter className=" justify-self-end  self-end">
                         <SheetClose asChild>
                             <Button >close</Button>
@@ -43,8 +43,8 @@ export function CategorySuggestionSheet() {
 export function CategorySuggestion() {
 
     return <div>
-        <SideProducts />
-        <SideProducts />
+        <SideProducts heading="Best Sellers" />
+        <SideProducts heading="New Products" />
     </div>
 
 }

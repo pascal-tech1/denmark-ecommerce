@@ -24,7 +24,7 @@ export function CategorySheet({ images }: any) {
       </SheetTrigger>
       <ScrollArea>
         <SheetContent className=" h-screen overflow-y-auto">
-          <PriceRangeSelector images={images} />
+          <PriceRangeSelector />
           <SheetFooter className=" mt-4">
             <SheetClose asChild>
               <Button type="submit">Save changes</Button>

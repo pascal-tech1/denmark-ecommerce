@@ -75,7 +75,7 @@ const brandDirectory = [
 
 export function Footer() {
   return (
-    <footer className="  mt-16 px-10 bg-neutral-900 border-t rounded-t-md border-opacity-20  ">
+    <footer className="  mt-16 px-10 dark:bg-neutral-900 border-t rounded-t-md border-opacity-10  ">
       <div className="">
         <div className=" flex flex-col py-4 md:py-10">
 

@@ -46,6 +46,10 @@ import { Input } from "@/components/ui/input";
 import useUploadMutation from "@/hooks/useUploadMutation";
 import { useAuth } from "@clerk/nextjs";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { modulesObject } from "@/components/admin-panel/modules";
+import { renderCategoryItems } from "@/components/admin-panel/renderCategoryItem";
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "Title is required." }),
@@ -60,12 +64,26 @@ const formSchema = z.object({
 export default function ProductForm() {
   const [isFetchingImage, setIsFetchingImage] = useState(false);
   const [quillIsFocus, setQuillIsFocus] = useState(false);
+  const searchParams = useSearchParams()
+  const id = searchParams.get("id")
+  console.log
+  const url = id ? `/routes/edit-product?productId=${id}` : "/routes/create-product"
+
+
+  const { isPending: fetchEditIsPending, error: fetchEditIsError, data: fetchEditIsData, isSuccess: fetchEditIsSuccess } = useQuery({
+    queryKey: [id],
+    queryFn: () => axios(`/routes/fetchSingleProduct?productId=${id}`)
+  });
+
 
   const { toast } = useToast();
+
+
   const { data, error, isSuccess, mutate, isPending } = useUploadMutation(
-    "/routes/create-product",
+    url,
     ["newProduct", "featuredProduct"]
   );
+
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const form = useForm<z.infer<typeof formSchema>>({
@@ -90,7 +108,7 @@ export default function ProductForm() {
   useEffect(() => {
     isSuccess &&
       toast({
-        description: "Product created successfully"
+        description: id ? "Product updated successfully" : "Product created successfully"
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
@@ -123,103 +141,11 @@ export default function ProductForm() {
     form.setValue("image", imageUrl);
   };
 
-  // Image handler function
-  const imageHandler = function (this: { quill: Quill }) {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
-    input.onchange = async () => {
-      if (!input.files || !input.files[0]) return;
 
-      const file = input.files[0];
-
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "ml_default"); // Replace with your upload preset
-
-      try {
-        const response = await axios.post(
-          `https://api.cloudinary.com/v1_1/dztt3ldiy/image/upload`,
-          formData,
-          {}
-        );
-
-        const imageUrl = await uptimizeCloudinaryImage(
-          "f_auto,q_auto",
-          response.data.url
-        );
-
-        if (this.quill) {
-          const selection = this.quill.getSelection();
-          if (selection) {
-            const cursorPosition = selection.index;
-            this.quill.insertEmbed(cursorPosition, "image", imageUrl);
-          }
-        }
-      } catch (error) {}
-    };
-  };
-  // const imageHandler = function (this: { quill: Quill }) {
-  //   const input = document.createElement('input');
-  //   input.setAttribute('type', 'file');
-  //   input.setAttribute('accept', 'image/*');
-  //   input.click();
-  //   input.onchange = async () => {
-  //     if (!input.files || !input.files[0]) return;
-
-  //     const file = input.files[0];
-  //     const formData = new FormData();
-  //     formData.append('file', file);
-
-  //     // Replace this with your actual image upload function
-  //     const uploadImage = async (formData: FormData) => {
-  //       return new Promise((resolve) => {
-  //         setTimeout(() => {
-  //           resolve(URL.createObjectURL(file));
-  //         }, 1000);
-  //       });
-  //     };
-
-  //     const imageUrl = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg";
-
-  //     if (this.quill) {
-  //       const selection = this.quill.getSelection();
-  //       if (selection) {
-  //         const cursorPosition = selection.index;
-  //         this.quill.insertEmbed(cursorPosition, 'image', imageUrl);
-  //       }
-  //     }
-  //   };
-  // };
-
-  // Modules object with updated image handler
-  const modulesObject = {
-    toolbar: {
-      container: [
-        [{ font: [] }, { size: [] }, { header: [1, 2, 3, 4, 5, 6] }],
-        ["bold", "italic", "underline", "strike"],
-        [{ color: [] }, { background: [] }],
-        [{ script: "sub" }, { script: "super" }],
-        [{ header: 1 }, { header: 2 }, "blockquote", "code-block"],
-        [
-          { list: "ordered" },
-          { list: "bullet" },
-          { indent: "-1" },
-          { indent: "+1" }
-        ],
-        [{ direction: "rtl" }, { align: [] }],
-        ["link", "image", "clean"]
-      ],
-      handlers: {
-        image: imageHandler
-      }
-    }
-  };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const modules = useMemo(() => modulesObject, []);
-  const { getToken } = useAuth();
+
 
   const editing = (
     content: string,
@@ -256,33 +182,23 @@ export default function ProductForm() {
     }
   }, [quillIsFocus]);
 
-  const renderCategoryItems = (groupLabel: string, menus: Menu[]) => {
-    return (
-      <>
-        {menus.map((menu) => (
-          <React.Fragment key={menu.label}>
-            <>
-              <DropdownMenuLabel>{menu.label}</DropdownMenuLabel>
-              {menu.submenus.length === 0 && (
-                <DropdownMenuRadioItem value={menu.label}>
-                  {menu.label}
-                </DropdownMenuRadioItem>
-              )}
-              {menu.submenus.map((submenu) => (
-                <DropdownMenuRadioItem
-                  key={submenu.label}
-                  value={submenu.label}
-                >
-                  {submenu.label}
-                </DropdownMenuRadioItem>
-              ))}
-              <DropdownMenuSeparator />
-            </>
-          </React.Fragment>
-        ))}
-      </>
-    );
-  };
+  useEffect(() => {
+    if (fetchEditIsSuccess && fetchEditIsData?.data?.product) {
+      const product = fetchEditIsData.data.product;
+      form.reset({
+        title: product.title,
+        price: product.price.toString(),
+        description: product.description,
+        image: product.imageUrl,
+        category: product.category,
+        subCategory: product.subCategory,
+        blurImage: product.imageUrl,
+      });
+      setImagePreview(product.imageUrl);
+      setEditorContent(product.description);
+      setSelectedCategory(product.category);
+    }
+  }, [fetchEditIsSuccess, fetchEditIsData, form]);
 
   return (
     <ContentLayout title={"create product"}>
@@ -431,11 +347,10 @@ export default function ProductForm() {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl
-                    className={`${
-                      quillIsFocus
-                        ? "h-[75vh]  relative top-0 z-50"
-                        : "h-[30vh]"
-                    }`}
+                    className={`${quillIsFocus
+                      ? "h-[75vh]  relative top-0 z-50"
+                      : "h-[30vh]"
+                      }`}
                   >
                     <ReactQuill
                       value={editorContent}

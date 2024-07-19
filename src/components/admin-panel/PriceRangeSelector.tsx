@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import SideProducts from "./SideProducts";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { getMenuList } from "@/lib/menu-list";
 
 const PriceRangeSelector = () => {
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [selectedSort, setSelectedSort] = useState("highest price"); // State for selected radio group
+  const searchParams = useSearchParams();
+  const maxPriceParam = searchParams?.get("maxPrice");
+  const minPriceParam = searchParams?.get("minPrice");
+  const selectedSortParam = searchParams?.get("selectedSort");
+  const selectedCategoryParam = searchParams?.get("category");
+
+  const [minPrice, setMinPrice] = useState(minPriceParam || "");
+  const [maxPrice, setMaxPrice] = useState(maxPriceParam || "");
+  const [selectedSort, setSelectedSort] = useState(selectedSortParam || "");
+  const [selectedCategory, setSelectedCategory] = useState(selectedCategoryParam || "");
+
   const minPriceLimit = 1;
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-
 
   const handleMinPriceChange = (e: any) => {
     const value = e.target.value;
@@ -30,26 +36,25 @@ const PriceRangeSelector = () => {
     }
   };
 
-  const handleSortChange = (value: string) => {
+  const handleSortChange = (value: any) => {
     setSelectedSort(value);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    // Create a new URLSearchParams object from the current search parameters
     const params = new URLSearchParams(searchParams.toString());
-
-    // Update the parameters with the new values
 
     params.set("minPrice", minPrice);
     params.set("maxPrice", maxPrice);
     params.set("selectedSort", selectedSort);
+    params.set("category", selectedCategory);
 
-    // Construct the new URL with the updated parameters
     const url = `${pathname}?${params.toString()}`;
-
-    // Use replace instead of push to avoid duplicating entries in history
     router.replace(url);
   };
 
@@ -65,7 +70,7 @@ const PriceRangeSelector = () => {
               onChange={handleMinPriceChange}
               placeholder="Min"
               min={minPriceLimit}
-              className="w-20 px-2 py-1 border border-gray-300 rounded text-center mx-1"
+              className="w-28 px-2 py-1 border border-gray-300 rounded text-center mx-1"
             />
             <span className="mx-2">-</span>
             <input
@@ -74,35 +79,49 @@ const PriceRangeSelector = () => {
               onChange={handleMaxPriceChange}
               placeholder="Max"
               min={minPriceLimit}
-              className="w-20 px-2 py-1 border border-gray-300 rounded text-center mx-1"
+              className="w-28 px-2  py-1 border border-gray-300 rounded text-center mx-1"
             />
           </div>
         </div>
 
         <div>
           <h1 className="mt-6 mb-2 font-bold">Sort</h1>
-
           <RadioGroup value={selectedSort} onValueChange={handleSortChange}>
             <div className="flex items-center space-x-2 text-lg">
               <RadioGroupItem value="highest price" id="r1" />
-              <Label htmlFor="r1" className="text-base">
-                Highest price
-              </Label>
+              <Label htmlFor="r1" className="text-base">Highest price</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="lowest price" id="r2" />
-              <Label htmlFor="r2" className="text-base">
-                Lowest Price
-              </Label>
+              <Label htmlFor="r2" className="text-base">Lowest Price</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="most popular" id="r3" />
-              <Label htmlFor="r3" className="text-base">
-                Popularity
-              </Label>
+              <Label htmlFor="r3" className="text-base">Popularity</Label>
             </div>
           </RadioGroup>
         </div>
+
+        <div>
+          <h1 className="mt-6 mb-2 font-bold">Category</h1>
+          <RadioGroup value={selectedCategory} onValueChange={handleCategoryChange}>
+            <div key={"allProduct"} className="flex items-center space-x-3">
+              <RadioGroupItem value={""} id={"allProduct"} />
+              <Label htmlFor={"allProduct"} className="text-base">All Product</Label>
+            </div>
+            {getMenuList("")
+              .filter((group) => group.groupLabel === "Category")
+              .map((group) =>
+                group.menus.map((menu) => (
+                  <div key={menu.label} className="flex items-center space-x-3">
+                    <RadioGroupItem value={menu.label} id={menu.label} />
+                    <Label htmlFor={menu.label} className="text-base">{menu.label}</Label>
+                  </div>
+                ))
+              )}
+          </RadioGroup>
+        </div>
+
         <Button
           variant={"default"}
           type="submit"
@@ -111,8 +130,6 @@ const PriceRangeSelector = () => {
           Apply
         </Button>
       </form>
-      <SideProducts heading="Street Comformts" />
-
     </div>
   );
 };
