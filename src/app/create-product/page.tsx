@@ -61,7 +61,13 @@ const formSchema = z.object({
   blurImage: z.string().nonempty({ message: "blur Image string is required." })
 });
 
-export function ProductForm() {
+
+export default function CreateProduct() {
+  return <React.Suspense>
+    <ProductForm />
+  </React.Suspense>
+}
+function ProductForm() {
   const [isFetchingImage, setIsFetchingImage] = useState(false);
   const [quillIsFocus, setQuillIsFocus] = useState(false);
   const searchParams = useSearchParams()
@@ -373,12 +379,6 @@ export function ProductForm() {
     </ContentLayout>
   );
 }
-export default function CreateProduct() {
-  return <React.Suspense>
-    <ProductForm />
-  </React.Suspense>
-}
-
 type Submenu = {
   href: string;
   label: string;
