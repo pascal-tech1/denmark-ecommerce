@@ -13,16 +13,14 @@ import { Separator } from "@radix-ui/react-select";
 const footerData: any = [
   {
     section: "POPULAR CATEGORIES",
-    items: ["Fashion", "Electronic", "Cosmetic", "Health", "Watches"]
+    items: ["Street Comfort", "Shoes", "Pants", "Analog watches", "Watches"]
   },
   {
     section: "PRODUCTS",
     items: [
-      "Prices Drop",
       "New Products",
       "Best Sales",
       "Contact Us",
-      "Sitemap"
     ]
   },
   {
@@ -30,17 +28,17 @@ const footerData: any = [
     items: [
       {
         type: "address",
-        text: "419 State 414 Rte Beaver Dams, New York(NY), 14812, USA",
+        text: "denmark physical address",
         icon: MapPin
       },
       {
         type: "phone",
-        text: "(607) 936-8058",
+        text: "+2347035226775",
         icon: Phone
       },
       {
         type: "email",
-        text: "Example@Gmail.Com",
+        text: "denmarkmultibuzltd.com",
         icon: Mail
       }
     ]
@@ -61,7 +59,7 @@ const brandDirectory = [
       "Casual",
       "Cowboy Shoes",
       "Safety Shoes",
-      "Party Wear Shoes",
+      "Party Shoes",
       "Branded",
       "Firstcopy",
       "Long Shoes"
