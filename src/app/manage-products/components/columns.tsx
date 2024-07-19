@@ -1,20 +1,6 @@
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ColumnDef } from "@tanstack/react-table";
-
+import React, { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,20 +12,115 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import Link from "next/link";
-import moment from "moment";
-import { DataTablePagination } from "./data-table-pagination";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
-import { AlertDialogDel } from "@/components/admin-panel/alartDialog";
+import moment from "moment";
+import { ColumnDef } from "@tanstack/react-table";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowUpDown } from "lucide-react";
+
+const handleDelete = async (id: string) => {
+  try {
+    const response = await axios.delete(`/routes/deleteProduct?productId=${id}`);
+    console.log(response);
+    if (response.data.message) return "success";
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    return "failed";
+  }
+};
+
+const CellActions = ({ row }: any) => {
+  const SelectedProduct = row.original;
+  const { toast } = useToast();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const openDialog = () => setIsDialogOpen(true);
+  const closeDialog = () => setIsDialogOpen(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  if (isDeleted) queryClient.invalidateQueries({ queryKey: ["AllProductTable"] });
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted sticky right-0"
+          >
+            <DotsHorizontalIcon className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-[160px]">
+          <Link href={`/create-product?id=${SelectedProduct._id}`}>
+            <DropdownMenuItem>Edit</DropdownMenuItem>
+          </Link>
+          <DropdownMenuItem
+            onClick={() => {
+              navigator.clipboard.writeText(SelectedProduct._id);
+              toast({
+                description: "Product Id copied successfully",
+              });
+              console.log("Product Id copied successfully");
+            }}
+          >
+            Copy id
+          </DropdownMenuItem>
+          <Link href={`/productdetail/${SelectedProduct._id}`}>
+            <DropdownMenuItem>View</DropdownMenuItem>
+          </Link>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem className="text-red-600" onClick={openDialog}>
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete this
+              product and remove the data from the servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={closeDialog}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={async () => {
+                const deleted = await handleDelete(SelectedProduct._id);
+                setIsDeleted(deleted === "success" ? true : false);
+                if (deleted === "success") {
+                  toast({
+                    description: "Product is Deleted successfully",
+                  });
+                } else {
+                  toast({
+                    description: "Error in deleting Product",
+                    variant: "destructive",
+                  });
+                }
+                closeDialog();
+              }}
+            >
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
 
 export type Product = {
   _id: string;
@@ -52,16 +133,6 @@ export type Product = {
   user: { id: string; first_name: string };
 };
 
-const handleDelete = async (id: string) => {
-  try {
-    const response = await axios.delete(`/routes/deleteProduct?productId=${id}`);
-    console.log(response);
-    if (response.data.message) return "success";
-  } catch (error) {
-    console.error("Error deleting product:", error);
-    return "failed";
-  }
-};
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -222,88 +293,6 @@ export const columns: ColumnDef<Product>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const SelectedProduct = row.original;
-      const { toast } = useToast();
-      const [isDialogOpen, setIsDialogOpen] = useState(false);
-      const queryClient = useQueryClient();
-      const openDialog = () => setIsDialogOpen(true);
-      const closeDialog = () => setIsDialogOpen(false);
-      const [isDeleted, setIsDeleted] = useState(false);
-      isDeleted && queryClient.invalidateQueries({ queryKey: ["AllProductTable"] });
-
-
-      return (
-        <>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex h-8 w-8 p-0 data-[state=open]:bg-muted sticky right-0"
-              >
-                <DotsHorizontalIcon className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-[160px]">
-              <Link href={`/create-product?id=${SelectedProduct._id}`}>
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-              </Link>
-              <DropdownMenuItem
-                onClick={() => {
-                  navigator.clipboard.writeText(SelectedProduct._id);
-                  toast({
-                    description: "Product Id copied successfully",
-                  });
-                  console.log("Product Id copied successfully");
-                }}
-              >
-                Copy id
-              </DropdownMenuItem>
-              <Link href={`/productdetail/${SelectedProduct._id}`}>
-                <DropdownMenuItem>View</DropdownMenuItem>
-              </Link>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600" onClick={openDialog}>
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete this
-                  product and remove the data from the servers.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel onClick={closeDialog}>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={async () => {
-                    const deleted = await handleDelete(SelectedProduct._id);
-                    setIsDeleted(deleted === "success" ? true : false);
-                    if (deleted === "success") {
-                      toast({
-                        description: "Product is Deleted successfully",
-                      });
-                    } else {
-                      toast({
-                        description: "Error in deleting Product",
-                        variant: "destructive",
-                      });
-                    }
-                    closeDialog();
-                  }}
-                >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </>
-      );
-    },
+    cell: (props) => <CellActions {...props} />,
   },
 ];
