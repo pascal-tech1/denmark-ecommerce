@@ -7,8 +7,8 @@ const ShareButton = ({ title, text, url }: any) => {
         if (navigator.share) {
             try {
                 await navigator.share({
-                    title,
-                    text,
+                    // title,
+                    // text,
                     url,
                 });
                 console.log('Content shared successfully');
