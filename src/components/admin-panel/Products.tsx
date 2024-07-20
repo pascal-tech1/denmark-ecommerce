@@ -1,4 +1,3 @@
-
 import React, { Suspense, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import { SkeletonCard } from "./productLoadingSkeleton";
@@ -14,7 +13,6 @@ export default function ProductsList() {
     </Suspense>
   );
 }
-
 
 const SkeletonLoading = () => {
   const SkeletonLength = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
@@ -95,26 +93,24 @@ const Products = () => {
           pageStart={0}
           loadMore={() => fetchNextPage()}
           hasMore={hasNextPage}
-         loader={
-          
-            <div>
-            
-         SkeletonLength.map((_, index) => <SkeletonCard key={index} />)
-           </div>
+          loader={
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg">
+              {SkeletonLength.map((_, index) => (
+                <SkeletonCard key={index} />
+              ))}
+            </div>
           }
         >
-          
           {data.pages.map((page, pageIndex) =>
-            page.products.map((product:any, productIndex:any) => (
+            page.products.map((product: any, productIndex: any) => (
               <ProductItem key={product._id} {...product} />
             ))
           )}
-         {!hasNextPage && isSuccess && data?.pages[0]?.products?.length > 0 && (
-        <h1 className="ml-10">No more products.</h1>
-      )}
+          {!hasNextPage && isSuccess && data?.pages[0]?.products?.length > 0 && (
+            <h1 className="ml-10">No more products.</h1>
+          )}
         </InfiniteScroll>
       )}
-
     </div>
   );
 };
