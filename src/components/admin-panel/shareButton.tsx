@@ -6,6 +6,7 @@ const ShareButton = ({ title, text, url }: any) => {
     const handleShare = async () => {
         if (navigator.share) {
             try {
+
                 await navigator.share({
                     // title,
                     // text,

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: "/",
-    title: "Men's Fashion Store",
+    title: "Denmark Men's Fashion Store",
     description:
       "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
     type: "website",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
       "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
     images: [
       {
-        url: "/images/twitter-card.jpg",
+        url: "https://www.denmarkmultibuzltd.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerone.f814d19f.png&w=3840&q=75",
         alt: "Men's Fashion Store"
       }
     ]

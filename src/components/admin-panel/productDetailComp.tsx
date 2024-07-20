@@ -13,17 +13,20 @@ import { ContentLayout } from "@/components/admin-panel/content-layout";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Head from "next/head";
+import { useStore } from "zustand";
+import { useCartStore } from "@/hooks/use-cart";
 
 const ProductDetail = () => {
     const [quantity, setQuantity] = useState(1);
     const pathname = usePathname();
     const id = pathname.split("/").pop();
     const [showFeatures, setShowFeatures] = useState(false);
-
+    const { addToCart, updateQuantity, } = useStore(useCartStore, (state) => state);
+    const router = useRouter()
     const { isPending, error, data } = useQuery({
         queryKey: [id],
         queryFn: () => axios(`/routes/fetchSingleProduct?productId=${id}`).then(res => res.data),
@@ -43,12 +46,15 @@ const ProductDetail = () => {
     }, []);
 
     const handleAddToCart = () => {
-        console.log(`Added ${quantity} of ${data?.product?.title} to cart`);
+        console.log(data?.product?._id)
+        addToCart({ imageUrl: data?.product?.imageUrl, title: data?.product?.title, _id: data?.product?._id, price: data?.product?.price, blurImage: data?.product?.blurImage })
+        updateQuantity(data?.product?._id, quantity)
     };
 
     const handleCheckout = () => {
-        console.log(`Added ${quantity} of ${data?.product?.title} to cart`);
-        console.log("Proceeding to checkout");
+        addToCart({ imageUrl: data?.product?.imageUrl, title: data?.product?.title, _id: data?.product?._id, price: data?.product?.price, blurImage: data?.product?.blurImage })
+        router.push('/cart');
+        updateQuantity(data?.product?._id, quantity)
     };
 
     if (isPending) {
@@ -58,15 +64,6 @@ const ProductDetail = () => {
 
     return (
         <ContentLayout title="Product Detail">
-
-            <Head>
-                <title>{data?.product?.title}</title>
-                <meta property="og:title" content={`${data?.product?.title}`} />
-                <meta property="og:description" content={`${data?.product?.description}`} />
-                <meta property="og:image" content={`${data?.product?.imageUrl}`} />
-                <meta property="og:url" content={`https://www.denmarkmultibuzltd.com/productdetail/${data?.product?._id}`} />
-                <meta property="og:type" content="product" />
-            </Head>
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
