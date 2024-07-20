@@ -253,9 +253,7 @@ export function GetMenuList(pathname: string): Group[] {
   useEffect(() => {
     if (isSignedIn && user.publicMetadata.admin === true) {
       generalMenuList.push(adminMenuList)
-    } else {
-      generalMenuList.pop()
-    }
+    } 
   }, [isSignedIn])
   return generalMenuList
 
