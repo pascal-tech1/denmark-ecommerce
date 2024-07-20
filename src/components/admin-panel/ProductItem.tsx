@@ -63,7 +63,8 @@ const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage,
           <p className="text-gray-800 font-bold dark:text-neutral-200">
             &#8358; {price}
           </p>
-          <ShareButton title="this is just a title" text="bg-accent hover:bg-background text-accent-foreground border border-opacity-30 border-yellow-700 whitespace-nowrap" url='http://localhost:3000/productdetail/6696e7691043a84424903d29' />
+          <ShareButton title="this is just a title" text="bg-accent hover:bg-background text-accent-foreground border border-opacity-30 border-yellow-700 whitespace-nowrap"
+            url={`https://www.denmarkmultibuzltd.com/productdetail/${_id}`} />
         </div>
 
       </div>
