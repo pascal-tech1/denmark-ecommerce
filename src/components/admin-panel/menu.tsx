@@ -6,7 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
-import { getMenuList } from "@/lib/menu-list";
+import { GetMenuList } from "@/lib/menu-list";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CollapseMenuButton } from "@/components/admin-panel/collapse-menu-button";
@@ -32,7 +32,7 @@ export function Menu({ isOpen }: MenuProps) {
     const params = searchParams.toString();
     setActivePath(`${pathname}${params ? `?${params}` : ""}`);
   }, [pathname, searchParams]);
-  const menuList = getMenuList(activePath);
+  const menuList = GetMenuList(activePath);
   const router = useRouter();
 
 

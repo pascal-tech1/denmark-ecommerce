@@ -1,4 +1,6 @@
+import { useCartStore } from '@/hooks/use-cart';
 import React from 'react';
+import { useStore } from 'zustand';
 
 interface OrderSummaryProps {
     subtotal: number;
@@ -6,8 +8,23 @@ interface OrderSummaryProps {
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal, total }) => {
+    const { cartItems } = useStore(useCartStore, (state) => state);
+
+    const handleCheckout = () => {
+        const adminWhatsAppNumber = '+2349095606300'; // Replace with the admin's WhatsApp number
+        const cartItemsText = cartItems.map(item => (
+            `*${item.title}* \nPrice: ₦${item.price.toFixed(2)} \nQuantity: ${item.quantity}\n`
+        )).join('\n');
+
+        const message = encodeURIComponent(
+            `from your website denmarkmultibuzltd.com\n\ni have the following orders\n\nOrder Summary:\n\n${cartItemsText}\nSubtotal: ₦${subtotal.toFixed(2)}\nTotal: ₦${total.toFixed(2)}`
+        );
+
+        window.location.href = `https://wa.me/${adminWhatsAppNumber}?text=${message}`;
+    };
+
     return (
-        <div className="  p-6 rounded-lg shadow-lg sticky left-0 top-10 ">
+        <div className="p-6 rounded-lg shadow-lg sticky left-0 top-10">
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
             <div className="flex justify-between mb-2">
                 <span>Subtotal</span>
@@ -25,7 +42,10 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal, total }) => {
                 <span>Total</span>
                 <span>&#8358; {total.toFixed(2)}</span>
             </div>
-            <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+            <button
+                onClick={handleCheckout}
+                className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+            >
                 Checkout
             </button>
         </div>

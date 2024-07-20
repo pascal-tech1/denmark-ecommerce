@@ -65,10 +65,12 @@ const Products = () => {
     staleTime: 0,
   })
 
-
+  console.log(data?.pages, data?.pages.length)
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] t-10  md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max  rounded-lg" >
       {error && <h1 className=" ml-10">failed to fetch Products try again </h1>}
+      {/* {data?.pages[0].products?.length === 0 && <h1>No Product found</h1>}
+      {!hasNextPage && data?.pages[0].products?.length > 0 && <h1>No More Product</h1>} */}
       {isPending
         ?
         SkeletonLength.map((_, index) => <SkeletonCard key={index} />)

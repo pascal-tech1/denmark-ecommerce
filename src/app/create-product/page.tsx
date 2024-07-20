@@ -28,7 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { getMenuList } from "@/lib/menu-list";
+import { GetMenuList } from "@/lib/menu-list";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Dynamically import React Quill
@@ -309,7 +309,7 @@ function ProductForm() {
                             }}
                             className="overflow-y-auto h-[40vh] overflow-x-hidden"
                           >
-                            {getMenuList("")
+                            {GetMenuList("")
                               .filter(
                                 (group) => group.groupLabel === "Category"
                               )

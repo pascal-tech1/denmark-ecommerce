@@ -1,3 +1,4 @@
+import { useUser } from "@clerk/nextjs";
 import {
   Tag,
   Users,
@@ -13,6 +14,7 @@ import {
   PencilLine,
   Wrench
 } from "lucide-react";
+import { useEffect } from "react";
 
 type Submenu = {
   href: string;
@@ -33,8 +35,28 @@ type Group = {
   menus: Menu[];
 };
 
-export function getMenuList(pathname: string): Group[] {
-  return [
+export function GetMenuList(pathname: string): Group[] {
+  const adminMenuList = {
+    groupLabel: "Admin Tools",
+    menus: [
+      {
+        href: "/manage-products",
+        label: "Manage Products",
+        active: pathname.includes("/manage-product"),
+        icon: Wrench,
+        submenus: []
+      },
+      {
+        href: "/create-product",
+        label: "Create Product",
+        active: pathname.includes("/account"),
+        icon: PencilLine,
+        submenus: []
+      }
+    ]
+  }
+
+  const generalMenuList = [
     {
       groupLabel: "",
       menus: [
@@ -224,24 +246,17 @@ export function getMenuList(pathname: string): Group[] {
         }
       ]
     },
-    {
-      groupLabel: "Admin Tools",
-      menus: [
-        {
-          href: "/manage-products",
-          label: "Manage Products",
-          active: pathname.includes("/manage-product"),
-          icon: Wrench,
-          submenus: []
-        },
-        {
-          href: "/create-product",
-          label: "Create Product",
-          active: pathname.includes("/account"),
-          icon: PencilLine,
-          submenus: []
-        }
-      ]
+  ]; generalMenuList
+
+  const { isSignedIn, user } = useUser();
+
+  useEffect(() => {
+    if (isSignedIn && user.publicMetadata.admin === true) {
+      generalMenuList.push(adminMenuList)
+    } else {
+      generalMenuList.pop()
     }
-  ];
+  }, [isSignedIn])
+  return generalMenuList
+
 }
