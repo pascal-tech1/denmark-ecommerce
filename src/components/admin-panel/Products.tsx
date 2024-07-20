@@ -92,9 +92,7 @@ const Products = () => {
           pageStart={0}
           loadMore={() => fetchNextPage()}
           hasMore={hasNextPage}
-          loader={
-            SkeletonLength.map((_, index) => <SkeletonCard key={index} />)
-          }
+         
         >
           {data.pages.map((page, pageIndex) =>
             page.products.map((product, productIndex) => (
@@ -104,7 +102,7 @@ const Products = () => {
         </InfiniteScroll>
       )}
 
-      {isFetchingNextPage && SkeletonLength.map((_, index) => <SkeletonCard key={index} />)}
+      {isFetchingNextPage && <SkeletonLoading/>}
 
       {!hasNextPage && isSuccess && data?.pages[0]?.products?.length > 0 && (
         <h1 className="ml-10">No more products.</h1>
