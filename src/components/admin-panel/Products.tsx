@@ -94,11 +94,11 @@ const Products = () => {
           loadMore={() => fetchNextPage()}
           hasMore={hasNextPage}
           loader={
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg">
+    
               {SkeletonLength.map((_, index) => (
                 <SkeletonCard key={index} />
               ))}
-            </div>
+           
           }
         >
           {data.pages.map((page, pageIndex) =>
