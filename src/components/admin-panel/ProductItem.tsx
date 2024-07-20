@@ -32,13 +32,7 @@ const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage,
 
   return (
     <div className="flex flex-col gap-4 justify-between max-w-[300px] p-2 md:p-4 relative group">
-      <Head>
-        <title>{title}</title>
-        <meta property="og:title" content={title} />
-        <meta property="og:image" content={imageUrl} />
-        <meta property="og:url" content={`https://www.denmarkmultibuzltd.com/productdetail/${[_id]}`} />
-        <meta property="og:type" content="product" />
-      </Head>
+
       <div onClick={handleCardClick} className="overflow-hidden cursor-pointer rounded-md relative h-[10rem]">
         <Image
           src={imageUrl}
@@ -63,7 +57,7 @@ const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage,
           <p className="text-gray-800 font-bold dark:text-neutral-200">
             &#8358; {price}
           </p>
-          <ShareButton title="this is just a title" text="bg-accent hover:bg-background text-accent-foreground border border-opacity-30 border-yellow-700 whitespace-nowrap"
+          <ShareButton title={title} text="check out this wonder product from www.denmarkmultibuzltd.com"
             url={`https://www.denmarkmultibuzltd.com/productdetail/${_id}`} />
         </div>
 

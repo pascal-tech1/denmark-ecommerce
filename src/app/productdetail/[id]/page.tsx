@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Head from "next/head";
 
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
@@ -58,6 +59,13 @@ const ProductDetail = () => {
 
   return (
     <ContentLayout title="Product Detail">
+      <Head>
+        <title>{data?.data?.product?.title}</title>
+        <meta property="og:title" content={data?.data?.product?.title} />
+        <meta property="og:image" content={data?.data?.product?.imageUrl} />
+        <meta property="og:url" content={`https://www.denmarkmultibuzltd.com/productdetail/${[data?.data?.product?._id]}`} />
+        <meta property="og:type" content="product" />
+      </Head>
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
