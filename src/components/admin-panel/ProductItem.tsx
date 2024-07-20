@@ -10,13 +10,14 @@ import { Button } from "../ui/button";
 import { Tooltip } from "@radix-ui/react-tooltip";
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import ShareButton from "./shareButton";
+import Head from "next/head";
 
 const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage, _id }: any) => {
   const router = useRouter();
   const { addToCart, cartItems } = useStore(useCartStore, (state) => state);
 
   const handleCardClick = () => {
-    router.push(`/productdetail/${[_id]}`);
+    router.push(`https://www.denmarkmultibuzltd.com/productdetail/${[_id]}`);
   };
 
   useEffect(() => {
@@ -31,6 +32,13 @@ const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage,
 
   return (
     <div className="flex flex-col gap-4 justify-between max-w-[300px] p-2 md:p-4 relative group">
+      <Head>
+        <title>{title}</title>
+        <meta property="og:title" content={title} />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:url" content={`https://www.denmarkmultibuzltd.com/productdetail/${[_id]}`} />
+        <meta property="og:type" content="product" />
+      </Head>
       <div onClick={handleCardClick} className="overflow-hidden cursor-pointer rounded-md relative h-[10rem]">
         <Image
           src={imageUrl}
