@@ -96,9 +96,9 @@ const Products = () => {
           loadMore={() => fetchNextPage()}
           hasMore={hasNextPage}
          loader={
-            <div className="w-full flex justify-center" key={0}>
-              SkeletonLength.map((_, index) => <SkeletonCard key={index} />)
-            </div>
+            
+         SkeletonLength.map((_, index) => <SkeletonCard key={index} />)
+           
           }
         >
           
