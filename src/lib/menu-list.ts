@@ -1,3 +1,4 @@
+
 import { useUser } from "@clerk/nextjs";
 import {
   Tag,
@@ -14,7 +15,7 @@ import {
   PencilLine,
   Wrench
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Submenu = {
   href: string;
@@ -49,14 +50,14 @@ export function GetMenuList(pathname: string): Group[] {
       {
         href: "/create-product",
         label: "Create Product",
-        active: pathname.includes("/account"),
+        active: pathname.includes("/create-product"),
         icon: PencilLine,
         submenus: []
       }
     ]
-  }
+  };
 
-  const generalMenuList = [
+  const baseMenuList = [
     {
       groupLabel: "",
       menus: [
@@ -245,16 +246,21 @@ export function GetMenuList(pathname: string): Group[] {
           submenus: []
         }
       ]
-    },
-  ];
+    }
+  ]; 
 
   const { isSignedIn, user } = useUser();
+  const [menuList, setMenuList] = useState(baseMenuList);
 
   useEffect(() => {
-    if (isSignedIn && user.publicMetadata.admin === true) {
-      generalMenuList.push(adminMenuList)
-    } 
-  }, [isSignedIn])
-  return generalMenuList
+    if (isSignedIn) {
+      if (user.publicMetadata.admin === true) {
+        setMenuList([...baseMenuList, adminMenuList]);
+      } else {
+        setMenuList(baseMenuList);
+      }
+    }
+  }, [isSignedIn, user]);
 
+  return menuList;
 }
