@@ -94,19 +94,18 @@ const Products = () => {
           hasMore={hasNextPage}
          loader= {<SkeletonLoading/>}
         >
+          
           {data.pages.map((page, pageIndex) =>
             page.products.map((product:any, productIndex:any) => (
               <ProductItem key={product._id} {...product} />
             ))
           )}
+         {!hasNextPage && isSuccess && data?.pages[0]?.products?.length > 0 && (
+        <h1 className="ml-10">No more products.</h1>
+      )}
         </InfiniteScroll>
       )}
 
-      
-
-      {!hasNextPage && isSuccess && data?.pages[0]?.products?.length > 0 && (
-        <h1 className="ml-10">No more products.</h1>
-      )}
     </div>
   );
 };
