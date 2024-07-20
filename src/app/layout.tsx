@@ -7,14 +7,13 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
 import { Toaster } from "@/components/ui/toaster";
 
-
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.APP_URL
       ? `${process.env.APP_URL}`
       : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : `http://localhost:${process.env.PORT || 3000}`
+      ? `https://${process.env.VERCEL_URL}`
+      : `http://localhost:${process.env.PORT || 3000}`
   ),
   title: "Men's Fashion Store",
   description:
@@ -30,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "@/images/bannerone.png",
+        url: "/src/images/bannerone.png",
         width: 1200,
         height: 630,
         alt: "Men's Fashion Store"
@@ -44,7 +43,7 @@ export const metadata: Metadata = {
       "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
     images: [
       {
-        url: "/images/twitter-card.jpg",
+        url: "/src/images/bannerone.png",
         alt: "Men's Fashion Store"
       }
     ]
@@ -60,11 +59,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={GeistSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AdminPanelLayout>
-
-
-            {children}
-          </AdminPanelLayout>
+          <AdminPanelLayout>{children}</AdminPanelLayout>
         </ThemeProvider>
         <Toaster />
       </body>

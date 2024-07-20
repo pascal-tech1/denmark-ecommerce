@@ -6,7 +6,7 @@ async function fetchProductData(productId: string) {
   return {
     title: "Product Title",
     description: "Detailed view of the product",
-    imageUrl: "/og-image.png", // Replace with dynamic URL
+    imageUrl: "/src/images/bannerone.png" // Replace with dynamic URL
   };
 }
 
@@ -25,16 +25,16 @@ export async function generateMetadata({ params }: any) {
           url: productData.imageUrl,
           width: 800,
           height: 600,
-          alt: 'Product Image',
-        },
-      ],
+          alt: "Product Image"
+        }
+      ]
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: productData.title,
       description: productData.description,
-      images: [productData.imageUrl],
-    },
+      images: [productData.imageUrl]
+    }
   };
 }
 
