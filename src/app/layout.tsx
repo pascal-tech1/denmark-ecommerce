@@ -6,8 +6,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
 import { Toaster } from "@/components/ui/toaster";
-import bannerone from "@/images/bannerone.png";
-import Image from "next/image";
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "bannerone.png",
+        url: "https://www.denmarkmultibuzltd.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerone.f814d19f.png&w=3840&q=75",
         width: 1200,
         height: 630,
         alt: "Men's Fashion Store"

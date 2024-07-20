@@ -9,17 +9,17 @@ export const metadata: Metadata = {
         ? `https://${process.env.VERCEL_URL}`
         : `http://localhost:${process.env.PORT || 3000}`
   ),
-  title: "Men's Fashion Store",
+  title: "Denmark Single Product Page",
   description:
-    "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
+    "just found this wonderfull product available on denmarkmulbizltd.",
   alternates: {
     canonical: "/"
   },
   openGraph: {
     url: "/",
-    title: "Men's Fashion Store",
+    title: "title in openGraph",
     description:
-      "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
+      " accessories, and more, all with free shipping.",
     type: "website",
     images: [
       {
