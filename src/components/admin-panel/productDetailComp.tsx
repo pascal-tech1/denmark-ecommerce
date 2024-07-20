@@ -61,9 +61,7 @@ const ProductDetail = () => {
         addToCart({ imageUrl: data?.product?.imageUrl, title: data?.product?.title, _id: data?.product?._id, price: data?.product?.price, blurImage: data?.product?.blurImage })
         router.push('/cart');
         updateQuantity(data?.product?._id, quantity)
-        toast({
-            description: "Product added to cart Successfully"
-        });
+
     };
 
     if (isPending) {
