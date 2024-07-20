@@ -10,12 +10,13 @@ import { Button } from "../ui/button";
 import { Tooltip } from "@radix-ui/react-tooltip";
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import ShareButton from "./shareButton";
+import { useToast } from "../ui/use-toast";
 
 
 const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage, _id }: any) => {
   const router = useRouter();
   const { addToCart, cartItems } = useStore(useCartStore, (state) => state);
-
+  const { toast } = useToast()
   const handleCardClick = () => {
     router.push(`/productdetail/${[_id]}`);
   };
@@ -26,6 +27,9 @@ const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage,
 
   const addToCartHandler = (product: any) => {
     addToCart(product);
+    toast({
+      description: "Product added to cart Successfully"
+    });
   };
 
   const blurdata = `data:image/jpeg;base64,${blurImage}`;

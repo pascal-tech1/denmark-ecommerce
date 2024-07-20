@@ -24,17 +24,18 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: "/",
-    title: "Denmark Men's Fashion Store",
+    title: "Men's Fashion Store",
     description:
       "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
     type: "website",
-    images:
-    {
-      url: "https://www.denmarkmultibuzltd.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerone.f814d19f.png&w=3840&q=75",
-      width: 1200,
-      height: 630,
-      alt: "Men's Fashion Store"
-    }
+    images: [
+      {
+        url: "@/images/bannerone.png",
+        width: 1200,
+        height: 630,
+        alt: "Men's Fashion Store"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
       "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
     images: [
       {
-        url: "https://www.denmarkmultibuzltd.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerone.f814d19f.png&w=3840&q=75",
+        url: "/images/twitter-card.jpg",
         alt: "Men's Fashion Store"
       }
     ]

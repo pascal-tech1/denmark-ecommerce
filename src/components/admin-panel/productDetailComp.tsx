@@ -19,6 +19,8 @@ import axios from "axios";
 import Head from "next/head";
 import { useStore } from "zustand";
 import { useCartStore } from "@/hooks/use-cart";
+import { useToast } from "@/components/ui/use-toast";
+
 
 const ProductDetail = () => {
     const [quantity, setQuantity] = useState(1);
@@ -26,6 +28,7 @@ const ProductDetail = () => {
     const id = pathname.split("/").pop();
     const [showFeatures, setShowFeatures] = useState(false);
     const { addToCart, updateQuantity, } = useStore(useCartStore, (state) => state);
+    const { toast } = useToast();
     const router = useRouter()
     const { isPending, error, data } = useQuery({
         queryKey: [id],
@@ -49,12 +52,18 @@ const ProductDetail = () => {
         console.log(data?.product?._id)
         addToCart({ imageUrl: data?.product?.imageUrl, title: data?.product?.title, _id: data?.product?._id, price: data?.product?.price, blurImage: data?.product?.blurImage })
         updateQuantity(data?.product?._id, quantity)
+        toast({
+            description: "Product added to cart Successfully"
+        });
     };
 
     const handleCheckout = () => {
         addToCart({ imageUrl: data?.product?.imageUrl, title: data?.product?.title, _id: data?.product?._id, price: data?.product?.price, blurImage: data?.product?.blurImage })
         router.push('/cart');
         updateQuantity(data?.product?._id, quantity)
+        toast({
+            description: "Product added to cart Successfully"
+        });
     };
 
     if (isPending) {

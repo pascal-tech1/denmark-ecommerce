@@ -4,8 +4,6 @@ import type { Metadata } from "next";
 
 
 export default function ProductDetailPage() {
-
-
   const metadata: Metadata = {
     metadataBase: new URL(
       process.env.APP_URL
@@ -35,8 +33,6 @@ export default function ProductDetailPage() {
       }
 
     },
-
-
 
   };
   return (
