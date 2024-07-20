@@ -95,7 +95,11 @@ const Products = () => {
           pageStart={0}
           loadMore={() => fetchNextPage()}
           hasMore={hasNextPage}
-         loader= {<SkeletonLoading/>}
+         loader={
+            <div className="w-full flex justify-center" key={0}>
+              <Loader2 className="animate-spin" />
+            </div>
+          }
         >
           
           {data.pages.map((page, pageIndex) =>
