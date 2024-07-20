@@ -95,7 +95,7 @@ const Products = () => {
          
         >
           {data.pages.map((page, pageIndex) =>
-            page.products.map((product, productIndex) => (
+            page.products.map((product:any, productIndex:any) => (
               <ProductItem key={product._id} {...product} />
             ))
           )}
