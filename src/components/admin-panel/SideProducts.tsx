@@ -60,24 +60,12 @@ const SideProducts = ({ heading }: { heading: string }) => {
                 />
               </div>
               <div className=" flex flex-col gap-2 justify-between ">
-                <TooltipProvider>
-                  <Tooltip delayDuration={100}>
-                    <TooltipTrigger className="">
-                      <div className="">
-                        <h2
-                          onClick={() => handleCardClick(product._id)}
-                          className=" hover:text-yellow-500 self-start items-start dark:hover:text-yellow-100 cursor-pointer transition-transform duration-300 truncate whitespace-nowrap overflow-hidden text-ellipsis"
-                        >
-                          {product.title}
-                        </h2>
-
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent side="top">
-                      {product.title}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <h2
+                  onClick={() => handleCardClick(product._id)}
+                  className=" hover:text-yellow-500 self-start items-start dark:hover:text-yellow-100 cursor-pointer transition-transform duration-300 truncate whitespace-nowrap overflow-hidden text-ellipsis"
+                >
+                  {product.title}
+                </h2>
                 <p className=" whitespace-nowrap text-gray-800 dark:text-neutral-400">
                   Price: &#8358; {product.price}
                 </p>

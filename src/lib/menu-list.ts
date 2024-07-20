@@ -1,5 +1,4 @@
 
-import { useUser } from "@clerk/nextjs";
 import {
   Tag,
   Users,
@@ -36,7 +35,7 @@ type Group = {
   menus: Menu[];
 };
 
-export function GetMenuList(pathname: string): Group[] {
+export function getMenuList(pathname: string): Group[] {
   const adminMenuList = {
     groupLabel: "Admin Tools",
     menus: [
@@ -231,36 +230,11 @@ export function GetMenuList(pathname: string): Group[] {
             }
           ]
         },
-        {
-          href: "/category?category=bags",
-          label: "Bags",
-          active: pathname.includes("/category?category=bags"),
-          icon: Luggage,
-          submenus: []
-        },
-        {
-          href: "/category?category=others",
-          label: "Others",
-          active: pathname.includes("/category?category=others"),
-          icon: ListCollapse,
-          submenus: []
-        }
+
       ]
     }
-  ]; 
+  ];
 
-  const { isSignedIn, user } = useUser();
-  const [menuList, setMenuList] = useState(baseMenuList);
 
-  useEffect(() => {
-    if (isSignedIn) {
-      if (user.publicMetadata.admin === true) {
-        setMenuList([...baseMenuList, adminMenuList]);
-      } else {
-        setMenuList(baseMenuList);
-      }
-    }
-  }, [isSignedIn, user]);
-
-  return menuList;
+  return baseMenuList;
 }

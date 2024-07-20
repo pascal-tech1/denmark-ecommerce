@@ -36,7 +36,7 @@ export default function DashboardPage() {
     <ContentLayout title="Home">
       <Banner />
       <div className=" pt-5">
-        <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 ")}>
+        <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 pt-4 relative ")}>
           <CategorySuggestionSheet />
         </div>
         <div className="grid place-content-between  grid-cols-2 md:grid-cols-11 gap-16  justify-between  pr-2 top-div dark:text-gray-400 ">

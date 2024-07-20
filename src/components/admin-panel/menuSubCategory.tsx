@@ -1,7 +1,7 @@
-import { GetMenuList } from "@/lib/menu-list";
+import { getMenuList } from "@/lib/menu-list";
 
 export function subcategoryToCategoryMap(submenuLabel: string): string {
-    const menuList = GetMenuList("/");
+    const menuList = getMenuList("/");
     console.log(menuList)
     for (const group of menuList) {
         for (const menu of group.menus) {

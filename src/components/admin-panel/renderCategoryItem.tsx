@@ -17,6 +17,7 @@ type Menu = {
 
 
 export const renderCategoryItems = (groupLabel: string, menus: Menu[]) => {
+    
     return (
         <>
             {menus.map((menu) => (

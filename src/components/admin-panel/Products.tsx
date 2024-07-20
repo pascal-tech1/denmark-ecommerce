@@ -80,11 +80,11 @@ const Products = () => {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] t-10 md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg">
       {error && <h1 className="ml-10">Failed to fetch products, try again.</h1>}
-      
+
       {isPending && SkeletonLength.map((_, index) => <SkeletonCard key={index} />)}
-      
+
       {isSuccess && data?.pages[0]?.products?.length === 0 && (
-        <h1 className="ml-10">No products found.</h1>
+        <h1 className="ml-10 text-yellow-600 my-4">No products found.</h1>
       )}
 
       {isSuccess && data?.pages[0]?.products?.length > 0 && (
@@ -93,7 +93,7 @@ const Products = () => {
           pageStart={0}
           loadMore={() => fetchNextPage()}
           hasMore={hasNextPage}
-          
+
         >
           {data.pages.map((page, pageIndex) =>
             page.products.map((product: any, productIndex: any) => (
@@ -101,7 +101,7 @@ const Products = () => {
             ))
           )}
           {!hasNextPage && isSuccess && data?.pages[0]?.products?.length > 0 && (
-            <h1 className="ml-10">No more products.</h1>
+            <h1 className="ml-10 text-yellow-600 my-4">No more products.</h1>
           )}
           {isFetchingNextPage && SkeletonLength.map((_, index) => <SkeletonCard key={index} />)}
         </InfiniteScroll>

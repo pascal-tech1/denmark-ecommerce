@@ -28,7 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { GetMenuList } from "@/lib/menu-list";
+import { getMenuList } from "@/lib/menu-list";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Dynamically import React Quill
@@ -109,6 +109,7 @@ function ProductForm() {
   const beforeDivRef = useRef<HTMLDivElement>(null);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values)
     mutate(values);
   };
   useEffect(() => {
@@ -302,14 +303,16 @@ function ProductForm() {
                               setSelectedCategory(value);
                               const parentCategory =
                                 subcategoryToCategoryMap(value);
+                              console.log(value)
                               form.setValue("category", parentCategory);
                               if (parentCategory !== value) {
+                                console.log(value)
                                 form.setValue("subCategory", value);
                               }
                             }}
                             className="overflow-y-auto h-[40vh] overflow-x-hidden"
                           >
-                            {GetMenuList("")
+                            {getMenuList("")
                               .filter(
                                 (group) => group.groupLabel === "Category"
                               )

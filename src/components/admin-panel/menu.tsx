@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Ellipsis, } from "lucide-react";
+import { Ellipsis, ListCollapse, Luggage, PencilLine, Wrench, } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
-import { GetMenuList } from "@/lib/menu-list";
+import { getMenuList } from "@/lib/menu-list";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CollapseMenuButton } from "@/components/admin-panel/collapse-menu-button";
@@ -17,6 +17,7 @@ import {
   TooltipProvider
 } from "@/components/ui/tooltip";
 import { ModeToggle } from "../mode-toggle";
+import { useUser } from "@clerk/nextjs";
 
 
 interface MenuProps {
@@ -32,10 +33,40 @@ export function Menu({ isOpen }: MenuProps) {
     const params = searchParams.toString();
     setActivePath(`${pathname}${params ? `?${params}` : ""}`);
   }, [pathname, searchParams]);
-  const menuList = GetMenuList(activePath);
+  const baseMenuList = getMenuList(activePath);
   const router = useRouter();
 
+  const adminMenuList = {
+    groupLabel: "Admin Tools",
+    menus: [
+      {
+        href: "/manage-products",
+        label: "Manage Products",
+        active: pathname.includes("/manage-product"),
+        icon: Wrench,
+        submenus: []
+      },
+      {
+        href: "/create-product",
+        label: "Create Product",
+        active: pathname.includes("/create-product"),
+        icon: PencilLine,
+        submenus: []
+      }
+    ]
+  };
+  const { isSignedIn, user } = useUser();
+  const [menuList, setMenuList] = useState(baseMenuList);
 
+  useEffect(() => {
+    if (isSignedIn) {
+      if (user.publicMetadata.admin === true) {
+        setMenuList([...baseMenuList, adminMenuList]);
+      } else {
+        setMenuList(baseMenuList);
+      }
+    }
+  }, [isSignedIn, user]);
 
 
   return (

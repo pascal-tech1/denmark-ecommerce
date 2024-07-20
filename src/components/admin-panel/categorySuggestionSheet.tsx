@@ -2,7 +2,7 @@
 
 import PriceRangeSelector from "./PriceRangeSelector";
 import { ScrollArea } from "../ui/scroll-area";
-import { Filter } from "lucide-react";
+import { Filter, ShieldQuestion } from "lucide-react";
 import {
     Sheet,
     SheetClose,
@@ -20,9 +20,9 @@ export function CategorySuggestionSheet() {
 
     return (
         <Sheet>
-            <SheetTrigger asChild>
-                <Button variant="outline" className=" flex gap-2 items-center">
-                    More Suggestions <Filter size={15} />
+            <SheetTrigger asChild className=" fixed  border-yellow-600 border-opacity-20 -mt-4 z-50 ">
+                <Button variant="outline" size={'lg'} className="  gap-2 items-center">
+                Trending products <ShieldQuestion size={15} />
                 </Button>
             </SheetTrigger>
             <ScrollArea>

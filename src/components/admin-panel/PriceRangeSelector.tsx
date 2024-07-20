@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { GetMenuList } from "@/lib/menu-list";
+import { getMenuList } from "@/lib/menu-list";
 
 const PriceRangeSelector = () => {
   const searchParams = useSearchParams();
@@ -109,7 +109,7 @@ const PriceRangeSelector = () => {
               <RadioGroupItem value={""} id={"allProduct"} />
               <Label htmlFor={"allProduct"} className="text-base">All Product</Label>
             </div>
-            {GetMenuList("")
+            {getMenuList("")
               .filter((group) => group.groupLabel === "Category")
               .map((group) =>
                 group.menus.map((menu) => (
