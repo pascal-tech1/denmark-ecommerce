@@ -96,9 +96,11 @@ const Products = () => {
           loadMore={() => fetchNextPage()}
           hasMore={hasNextPage}
          loader={
+          
+            <div>
             
          SkeletonLength.map((_, index) => <SkeletonCard key={index} />)
-           
+           </div>
           }
         >
           
