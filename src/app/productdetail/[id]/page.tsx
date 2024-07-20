@@ -1,4 +1,6 @@
+import { Footer } from "@/components/admin-panel/footer";
 import ProductDetail from "@/components/admin-panel/productDetailComp";
+import ProductsList from "@/components/admin-panel/Products";
 
 // Dummy function to simulate fetching product data
 async function fetchProductData(productId: string) {

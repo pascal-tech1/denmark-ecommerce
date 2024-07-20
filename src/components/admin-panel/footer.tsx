@@ -1,5 +1,13 @@
 import React from "react";
-import { MapPin, Phone, Mail, ArrowUp01, ArrowUp, Bold, AlignEndHorizontal } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  ArrowUp01,
+  ArrowUp,
+  Bold,
+  AlignEndHorizontal
+} from "lucide-react";
 import {
   Drawer,
   DrawerClose,
@@ -9,6 +17,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "../ui/button";
 import { Separator } from "@radix-ui/react-select";
+import Link from "next/link";
 
 const footerData: any = [
   {
@@ -17,11 +26,7 @@ const footerData: any = [
   },
   {
     section: "PRODUCTS",
-    items: [
-      "New Products",
-      "Best Sales",
-      "Contact Us",
-    ]
+    items: ["New Products", "Best Sellers"]
   },
   {
     section: "CONTACT",
@@ -38,7 +43,7 @@ const footerData: any = [
       },
       {
         type: "email",
-        text: "denmarkmultibuzltd.com",
+        text: "denmarkmultibuzltd@gmail.com",
         icon: Mail
       }
     ]
@@ -48,7 +53,7 @@ const footerData: any = [
 const brandDirectory = [
   {
     category: "FASHION",
-    items: ["T-Shirt", "Shirts", "Shorts & Jeans", "Jacket", "Innerwear"]
+    items: ["T Shirt", "Shirts", "Shorts & Jeans", "Jacket", "Innerwear"]
   },
   {
     category: "FOOTWEAR",
@@ -60,8 +65,7 @@ const brandDirectory = [
       "Cowboy Shoes",
       "Safety Shoes",
       "Party Shoes",
-      "Branded",
-      "Firstcopy",
+
       "Long Shoes"
     ]
   },
@@ -76,7 +80,6 @@ export function Footer() {
     <footer className="  mt-16 px-10 dark:bg-neutral-900 border-t rounded-t-md border-opacity-10  ">
       <div className="">
         <div className=" flex flex-col py-4 md:py-10">
-
           <h1 className="font-bold pl-3 text-yellow-500">Brand Category</h1>
           {brandDirectory.map((category, index) => (
             <div key={index}>
@@ -89,7 +92,7 @@ export function Footer() {
                     key={idx}
                     className="border-r my-4 px-3 border-neutral-700"
                   >
-                    {item}
+                    <Link href={`/category?query=${item}`}>{item}</Link>
                   </li>
                 ))}
               </ul>
@@ -100,21 +103,26 @@ export function Footer() {
           {footerData.map((section: any, index: number) => (
             <div key={index} className="pt-4">
               <div className="flex mt-3 drop-shadow-lg font-bold flex-col">
-                <h2 className="text-lg font-bold mb-2">
-                  {section.section}
-                </h2>
+                <h2 className="text-lg font-bold mb-2">{section.section}</h2>
                 <div className="border-b border-b-yellow-400 w-28 mt-2 mb-6"></div>
               </div>
               {section.items.map((item: any, idx: any) => (
                 <div key={idx} className="py-2 flex ">
-                  {section.section === "CONTACT" &&
-                    typeof item !== "string" ? (
+                  {section.section === "CONTACT" && typeof item !== "string" ? (
                     <div className="flex  gap-4 my-2">
                       <item.icon className="w-6 h-6 mr-2" />
                       <span>{item.text}</span>
                     </div>
                   ) : (
-                    <span>{item}</span>
+                    <Link
+                      href={`${
+                        section.section === "PRODUCTS"
+                          ? `/category?heading=${item}`
+                          : `/category?query=${item}`
+                      }`}
+                    >
+                      {item}
+                    </Link>
                   )}
                 </div>
               ))}

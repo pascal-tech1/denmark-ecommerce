@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { CategorySheet } from "@/components/admin-panel/categorySheet";
 import { useQuery } from "@tanstack/react-query";
 import Products from "@/components/admin-panel/Products";
+import { Footer } from "@/components/admin-panel/footer";
 
 function Searchparam() {
   const searchParams = useSearchParams();
@@ -60,7 +61,6 @@ function Searchparam() {
     setQuerytate(query || "");
   }, [category, subcategory, query]);
 
-
   return (
     <ContentLayout title={subcategoryState || categoryState}>
       <div className=" flex items-center flex-wrap  ">
@@ -91,7 +91,6 @@ function Searchparam() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-
       </div>
       <div>{query && `All results matching your query ${query}`}</div>
       <div className=" relative">
@@ -123,15 +122,10 @@ function Searchparam() {
           </div>
         </div>
       </div>
+      <Footer />
     </ContentLayout>
   );
 }
-
-
-
-
-
-
 
 export default function CategoryPage() {
   return (

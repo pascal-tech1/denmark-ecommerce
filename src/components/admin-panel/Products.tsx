@@ -19,7 +19,10 @@ const SkeletonLoading = () => {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg">
       {SkeletonLength.map((_, index) => (
-        <div key={index} className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg">
+        <div
+          key={index}
+          className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg"
+        >
           <SkeletonCard />
         </div>
       ))}
@@ -35,6 +38,7 @@ const Products = () => {
   const maxPrice = searchParams?.get("maxPrice");
   const minPrice = searchParams?.get("minPrice");
   const selectedSort = searchParams?.get("selectedSort");
+  const heading = searchParams?.get("heading");
   const [categoryState, setCategoryState] = useState<string | undefined>(
     category as string
   );
@@ -49,11 +53,17 @@ const Products = () => {
     setCategoryState(category || "");
     setSubcategoryState(subcategory || "");
     setQueryState(query || "");
-  }, [category, subcategory, query, minPrice, maxPrice, selectedSort]);
+  }, [category, subcategory, query, minPrice, maxPrice, selectedSort, heading]);
 
   const fetchProjects = async ({ pageParam }: { pageParam: any }) => {
     const res = await fetch(
-      `/routes/fetchAllProducts?category=${category || ""}&subcategory=${subcategory || ""}&query=${query || ""}&maxPrice=${maxPrice || ""}&minPrice=${minPrice || ""}&selectedSort=${selectedSort || ""}&cursor=${pageParam}`
+      `/routes/fetchAllProducts?category=${category || ""}&subcategory=${
+        subcategory || ""
+      }&query=${query || ""}&maxPrice=${maxPrice || ""}&minPrice=${
+        minPrice || ""
+      }&selectedSort=${
+        selectedSort || ""
+      }&cursor=${pageParam}&heading=${heading}`
     );
     return res.json();
   };
@@ -66,13 +76,21 @@ const Products = () => {
     isFetching,
     isFetchingNextPage,
     isPending,
-    isSuccess,
+    isSuccess
   } = useInfiniteQuery({
-    queryKey: ['products', category, subcategory, query, maxPrice, minPrice, selectedSort],
+    queryKey: [
+      "products",
+      category,
+      subcategory,
+      query,
+      maxPrice,
+      minPrice,
+      selectedSort
+    ],
     queryFn: fetchProjects,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
-    staleTime: 0,
+    staleTime: 0
   });
 
   const SkeletonLength = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
@@ -81,7 +99,8 @@ const Products = () => {
     <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] t-10 md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg">
       {error && <h1 className="ml-10">Failed to fetch products, try again.</h1>}
 
-      {isPending && SkeletonLength.map((_, index) => <SkeletonCard key={index} />)}
+      {isPending &&
+        SkeletonLength.map((_, index) => <SkeletonCard key={index} />)}
 
       {isSuccess && data?.pages[0]?.products?.length === 0 && (
         <h1 className="ml-10 text-yellow-600 my-4">No products found.</h1>
@@ -93,17 +112,19 @@ const Products = () => {
           pageStart={0}
           loadMore={() => fetchNextPage()}
           hasMore={hasNextPage}
-
         >
           {data.pages.map((page, pageIndex) =>
             page.products.map((product: any, productIndex: any) => (
               <ProductItem key={product._id} {...product} />
             ))
           )}
-          {!hasNextPage && isSuccess && data?.pages[0]?.products?.length > 0 && (
-            <h1 className="ml-10 text-yellow-600 my-4">No more products.</h1>
-          )}
-          {isFetchingNextPage && SkeletonLength.map((_, index) => <SkeletonCard key={index} />)}
+          {!hasNextPage &&
+            isSuccess &&
+            data?.pages[0]?.products?.length > 0 && (
+              <h1 className="ml-10 text-yellow-600 my-4">No more products.</h1>
+            )}
+          {isFetchingNextPage &&
+            SkeletonLength.map((_, index) => <SkeletonCard key={index} />)}
         </InfiniteScroll>
       )}
     </div>
