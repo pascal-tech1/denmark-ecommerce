@@ -17,13 +17,16 @@ export default function ProductsList() {
 
 const SkeletonLoading = () => {
   const SkeletonLength = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-  return (
+  return  (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg">
       {SkeletonLength.map((_, index) => (
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2 md:gap-4 h-max rounded-lg">
         <SkeletonCard key={index} />
-      ))}
+      </div>
+    ))}
     </div>
-  );
+  )
+
 };
 
 const Products = () => {
