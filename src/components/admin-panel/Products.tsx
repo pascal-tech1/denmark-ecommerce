@@ -97,7 +97,7 @@ const Products = () => {
           hasMore={hasNextPage}
          loader={
             <div className="w-full flex justify-center" key={0}>
-              <Loader2 className="animate-spin" />
+              SkeletonLength.map((_, index) => <SkeletonCard key={index} />)
             </div>
           }
         >
