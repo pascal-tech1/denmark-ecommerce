@@ -246,7 +246,7 @@ export function GetMenuList(pathname: string): Group[] {
         }
       ]
     },
-  ]; generalMenuList
+  ];
 
   const { isSignedIn, user } = useUser();
 
