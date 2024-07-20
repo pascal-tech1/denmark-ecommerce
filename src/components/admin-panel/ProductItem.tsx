@@ -10,14 +10,14 @@ import { Button } from "../ui/button";
 import { Tooltip } from "@radix-ui/react-tooltip";
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import ShareButton from "./shareButton";
-import Head from "next/head";
+
 
 const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage, _id }: any) => {
   const router = useRouter();
   const { addToCart, cartItems } = useStore(useCartStore, (state) => state);
 
   const handleCardClick = () => {
-    router.push(`https://www.denmarkmultibuzltd.com/productdetail/${[_id]}`);
+    router.push(`/productdetail/${[_id]}`);
   };
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const ProductItem = ({ imageUrl, title, price, subCategory, category, blurImage,
           <p className="text-gray-800 font-bold dark:text-neutral-200">
             &#8358; {price}
           </p>
-          <ShareButton title={title} text="check out this wonder product from www.denmarkmultibuzltd.com"
+          <ShareButton title={`${title}`} text="check out this wonder product"
             url={`https://www.denmarkmultibuzltd.com/productdetail/${_id}`} />
         </div>
 

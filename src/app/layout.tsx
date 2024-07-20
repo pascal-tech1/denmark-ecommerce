@@ -6,6 +6,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
 import { Toaster } from "@/components/ui/toaster";
+import bannerone from "@/images/bannerone.png";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -29,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "bannerone.png",
         width: 1200,
         height: 630,
         alt: "Men's Fashion Store"
@@ -60,6 +62,8 @@ export default function RootLayout({
       <body className={GeistSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AdminPanelLayout>
+
+
             {children}
           </AdminPanelLayout>
         </ThemeProvider>

@@ -11,10 +11,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import Link from "next/link";
-import Products from "@/components/admin-panel/Products";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Head from "next/head";
@@ -22,13 +21,12 @@ import Head from "next/head";
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const id = pathname.split("/").pop();
   const [showFeatures, setShowFeatures] = useState(false);
 
   const { isPending, error, data } = useQuery({
     queryKey: [id],
-    queryFn: () => axios(`/routes/fetchSingleProduct?productId=${id}`)
+    queryFn: () => axios(`/routes/fetchSingleProduct?productId=${id}`).then(res => res.data),
   });
 
   useEffect(() => {
@@ -45,11 +43,11 @@ const ProductDetail = () => {
   }, []);
 
   const handleAddToCart = () => {
-    console.log(`Added ${quantity} of ${data?.data?.product?.title} to cart`);
+    console.log(`Added ${quantity} of ${data?.product?.title} to cart`);
   };
 
   const handleCheckout = () => {
-    console.log(`Added ${quantity} of ${data?.data?.product?.title} to cart`);
+    console.log(`Added ${quantity} of ${data?.product?.title} to cart`);
     console.log("Proceeding to checkout");
   };
 
@@ -60,10 +58,11 @@ const ProductDetail = () => {
   return (
     <ContentLayout title="Product Detail">
       <Head>
-        <title>{data?.data?.product?.title}</title>
-        <meta property="og:title" content={data?.data?.product?.title} />
-        <meta property="og:image" content={data?.data?.product?.imageUrl} />
-        <meta property="og:url" content={`https://www.denmarkmultibuzltd.com/productdetail/${[data?.data?.product?._id]}`} />
+        <title>{data?.product?.title}</title>
+        <meta property="og:title" content={`${data?.product?.title}`} />
+        <meta property="og:description" content={`${data?.product?.description}`} />
+        <meta property="og:image" content={`${data?.product?.imageUrl}`} />
+        <meta property="og:url" content={`https://www.denmarkmultibuzltd.com/productdetail/${data?.product?._id}`} />
         <meta property="og:type" content="product" />
       </Head>
       <Breadcrumb>
@@ -94,20 +93,20 @@ const ProductDetail = () => {
               )}
             >
               <Image
-                src={data?.data?.product?.imageUrl}
-                alt={data?.data?.product?.title}
+                src={data?.product?.imageUrl}
+                alt={data?.product?.title}
                 height={400}
                 width={400}
-                blurDataURL={`data:image/jpeg;base64,${data?.data?.product?.blurImage}`}
+                blurDataURL={`data:image/jpeg;base64,${data?.product?.blurImage}`}
                 placeholder="blur"
                 className="object-cover h-full w-full rounded-md transition-transform group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
             <div className="flex flex-col my-2 gap-6">
-              <h1 className="text-2xl">{data?.data?.product?.title}</h1>
+              <h1 className="text-2xl">{data?.product?.title}</h1>
               <h2 className="text-lg font-semibold">
-                &#8358; {data?.data?.product?.price}
+                &#8358; {data?.product?.price}
               </h2>
               <div>
                 <label className="block">
@@ -143,7 +142,7 @@ const ProductDetail = () => {
             <h3 className="text-xl font-semibold mb-2">Description</h3>
             <div
               dangerouslySetInnerHTML={{
-                __html: data?.data?.product.description
+                __html: data?.product.description
               }}
             />
           </div>
