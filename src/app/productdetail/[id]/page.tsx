@@ -41,9 +41,6 @@ export async function generateMetadata({ params }: any) {
 }
 
 export default async function ProductDetailPage({ params }: any) {
-  const { productId } = params;
-  const productData = await fetchProductData(productId);
-
   return (
     <div>
       <ProductDetail />
