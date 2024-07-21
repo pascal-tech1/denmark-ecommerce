@@ -29,10 +29,7 @@ export const uptimizeCloudinaryImage = async (
     const restOfString = originalImageurl.substring(baseUrlEndIndex);
 
     // Return the optimized URL
-    console.log(
-      "original opti",
-      `${baseUrl}${optimizationStr}/${restOfString}`
-    );
+
     return `${baseUrl}${optimizationStr}/${restOfString}`;
   } catch (error) {
     console.error("Error fetching image metadata:", error);

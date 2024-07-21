@@ -67,7 +67,9 @@ export function Navbar() {
             onMouseEnter={(e) => e.currentTarget.classList.add("paused")}
             onMouseLeave={(e) => e.currentTarget.classList.remove("paused")}
           >
-            <span className="mr-4">Welcome to DenmarkMultibuz Ltd!</span>
+            <span className="mr-4 text-yellow-600">
+              Welcome to DenmarkMultibuz Ltd!
+            </span>
             <a
               href="https://wa.me/+2349095606300"
               target="_blank"
@@ -78,8 +80,8 @@ export function Navbar() {
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
                 y="0px"
-                width="25"
-                height="25"
+                width="20"
+                height="20"
                 viewBox="0 0 48 48"
               >
                 <path
@@ -171,8 +173,8 @@ export function Navbar() {
             )}
           >
             <Link href="/cart" className="relative">
-              <div className="absolute left-2 -top-3 text-yellow-500 animate-slideUp">
-                {cartItems.length}
+              <div className="absolute left-2 -top-3 text-yellow-400 animate-slideUp">
+                <h1 className=" text-sm font-bold"> {cartItems.length}</h1>
               </div>
               <ShoppingCartIcon />
             </Link>

@@ -27,6 +27,7 @@ const ProductItem = ({
   const handleCardClick = () => {
     router.push(`/productdetail/${[_id]}`);
   };
+  console.log(imageUrl);
 
   useEffect(() => {
     console.log(cartItems);
