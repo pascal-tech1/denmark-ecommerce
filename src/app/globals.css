@@ -72,8 +72,8 @@
 .cl-internal-11ttlho {
   display: none;
 }
-.cl-internal-16rjnjd{
-  display: none
+.cl-internal-16rjnjd {
+  display: none;
 }
 @layer base {
   * {
@@ -82,4 +82,25 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  animation: marquee 15s linear infinite;
+}
+
+.paused {
+  animation-play-state: paused;
 }

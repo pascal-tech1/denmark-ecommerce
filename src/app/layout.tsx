@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   ),
   title: "Men's Fashion Store",
   description:
-    "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
+    "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
   alternates: {
     canonical: "/"
   },
@@ -25,28 +25,24 @@ export const metadata: Metadata = {
     url: "/",
     title: "Men's Fashion Store",
     description:
-      "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
+      "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
     type: "website",
-    images: [
-      {
-        url: "/src/images/bannerone.png",
-        width: 1200,
-        height: 630,
-        alt: "Men's Fashion Store"
-      }
-    ]
+    images: {
+      url: "/src/images/bannerone.png",
+      width: 1200,
+      height: 630,
+      alt: "Men's Fashion Store"
+    }
   },
   twitter: {
     card: "summary_large_image",
     title: "Men's Fashion Store",
     description:
-      "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping.",
-    images: [
-      {
-        url: "/src/images/bannerone.png",
-        alt: "Men's Fashion Store"
-      }
-    ]
+      "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
+    images: {
+      url: "/src/images/bannerone.png",
+      alt: "Men's Fashion Store"
+    }
   }
 };
 

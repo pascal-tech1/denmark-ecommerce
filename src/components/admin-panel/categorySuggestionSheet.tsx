@@ -17,7 +17,7 @@ export function CategorySuggestionSheet() {
     <Sheet>
       <SheetTrigger
         asChild
-        className=" fixed  border-yellow-600 border-opacity-20  -mt-4 z-50 "
+        className="   border-yellow-600 border-opacity-20  -mt-4 z-50 "
       >
         <Button variant="outline" size={"lg"} className="  gap-2 items-center">
           Trending products <ShieldQuestion size={15} />
