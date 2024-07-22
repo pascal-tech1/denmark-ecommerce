@@ -1,46 +1,47 @@
-import { Footer } from "@/components/admin-panel/footer";
 import ProductDetail from "@/components/admin-panel/productDetailComp";
-import ProductsList from "@/components/admin-panel/Products";
+import { Metadata } from "next";
 
-// Dummy function to simulate fetching product data
-async function fetchProductData(productId: string) {
-  // Replace this with your actual data fetching logic
-  return {
-    title: "Product Title",
-    description: "Detailed view of the product",
-    imageUrl: "/src/images/bannerone.png" // Replace with dynamic URL
-  };
-}
-
-export async function generateMetadata({ params }: any) {
-  const { productId } = params;
-  const productData = await fetchProductData(productId);
-
-  return {
-    title: productData.title,
-    description: productData.description,
+export default async function ProductDetailPage({ params }: any) {
+  const metadata: Metadata = {
+    metadataBase: new URL(
+      process.env.APP_URL
+        ? `${process.env.APP_URL}`
+        : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : `http://localhost:${process.env.PORT || 3000}`
+    ),
+    title: "Product detail",
+    description:
+      "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
+    alternates: {
+      canonical: "/"
+    },
     openGraph: {
-      title: productData.title,
-      description: productData.description,
-      images: [
-        {
-          url: productData.imageUrl,
-          width: 800,
-          height: 600,
-          alt: "Product Image"
-        }
-      ]
+      url: "/",
+      title: "Men's Fashion Store",
+      description:
+        "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
+      type: "website",
+      images: {
+        url: "https://www.denmarkmultibuzltd.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerone.f814d19f.png&w=3840&q=75",
+        width: 1200,
+        height: 630,
+        alt: "Men's Fashion Store"
+      }
     },
     twitter: {
       card: "summary_large_image",
-      title: productData.title,
-      description: productData.description,
-      images: [productData.imageUrl]
+      title: "Men's Fashion Store",
+      description:
+        "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
+      images: {
+        url: "https://www.denmarkmultibuzltd.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerone.f814d19f.png&w=3840&q=75",
+        width: 1200,
+        height: 630,
+        alt: "Men's Fashion Store"
+      }
     }
   };
-}
-
-export default async function ProductDetailPage({ params }: any) {
   return (
     <div>
       <ProductDetail />

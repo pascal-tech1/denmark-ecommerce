@@ -1,3 +1,9 @@
+# *
 User-agent: *
 Allow: /
+
+# Host
+Host: https://denmarkmultibuzltd.com
+
+# Sitemaps
 Sitemap: https://denmarkmultibuzltd.com/sitemap.xml
