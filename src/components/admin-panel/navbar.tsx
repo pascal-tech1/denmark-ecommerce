@@ -107,13 +107,13 @@ export function Navbar() {
                   clipRule="evenodd"
                 ></path>
               </svg>
-              +2349095606300
+              +2347035226775
             </a>
             <span className="flex gap-2 items-center justify-center ">
               <span>
                 <Phone size={14} />
               </span>
-              09046779214
+              07035226775
             </span>
             <a
               href="mailto:admin@example.com"
