@@ -8,16 +8,31 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import bannerone from "@/images/bannerone.png";
 import bannertwo from "@/images/bannertwo.png";
-import bannerthree from "@/images/bannerthree.jpg";
+import bannerthree from "@/images/bannerthree.png";
 
 import Slider from "react-slick";
 import { useSidebarToggle } from "../../hooks/use-sidebar-toggle";
 import { useStore } from "zustand";
 import { cn } from "../../lib/utils";
+import { useEffect, useState } from "react";
 
 const Banner = () => {
   const sidebar = useStore(useSidebarToggle, (state) => state);
+  const [showFeatures, setShowFeatures] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      const topDiv = document.querySelector(".top-div") as HTMLElement | null;
+      if (topDiv) {
+        setShowFeatures(topDiv.offsetWidth >= 1024);
+      }
+    };
 
+    // Initialize the check
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   if (!sidebar) return null;
 
   const NextArrow = (props: any) => {
@@ -47,7 +62,12 @@ const Banner = () => {
     dots: false,
     infinite: true,
     autoplay: true,
+    centerMode: showFeatures ? true : false,
+
+    centerPadding: "200px",
+
     slidesToShow: 1,
+    speed: 500,
     slidesToScroll: 1,
     arrows: true,
     nextArrow: <NextArrow />,
@@ -58,7 +78,7 @@ const Banner = () => {
   return (
     <div
       className={cn(
-        "relative  w-full h-full lg:max-h-[400px]    flex justify-center items-center overflow-hidden ",
+        "relative  w-full h-full      flex justify-center items-center overflow-hidden ",
         sidebar?.isOpen === false
           ? "lg:w-[calc(95vw-90px)]"
           : "lg:w-[calc(95vw-18rem)]"
@@ -78,7 +98,7 @@ const Banner = () => {
         <Slider {...settings}>
           <div
             className={cn(
-              " w-full h-full lg:max-h-[400px]   relative ",
+              " w-full h-full     relative ",
               sidebar?.isOpen === false
                 ? "lg:w-[calc(95vw-90px)]"
                 : "lg:w-[calc(95vw-18rem)]"
@@ -88,7 +108,7 @@ const Banner = () => {
               src={bannerone}
               alt="bannerone"
               className={cn(
-                " w-full h-full lg:max-h-[400px]   relative object-cover ",
+                " w-full h-full   relative  ",
                 sidebar?.isOpen === false
                   ? "lg:w-[calc(95vw-90px)]"
                   : "lg:w-[calc(95vw-18rem)]"
@@ -99,7 +119,7 @@ const Banner = () => {
           </div>
           <div
             className={cn(
-              " w-full h-full lg:max-h-[400px]   relative ",
+              " w-full h-full    relative  ",
               sidebar?.isOpen === false
                 ? "lg:w-[calc(95vw-90px)]"
                 : "lg:w-[calc(95vw-18rem)]"
@@ -109,7 +129,7 @@ const Banner = () => {
               src={bannertwo}
               alt="bannertwo"
               className={cn(
-                " w-full h-full lg:max-h-[400px]   relative ",
+                " w-full h-full     relative ",
                 sidebar?.isOpen === false
                   ? "lg:w-[calc(95vw-90px)]"
                   : "lg:w-[calc(95vw-18rem)]"
@@ -119,7 +139,7 @@ const Banner = () => {
           </div>
           <div
             className={cn(
-              " w-full h-full lg:max-h-[400px]   relative ",
+              " w-full h-full     relative ",
               sidebar?.isOpen === false
                 ? "lg:w-[calc(95vw-90px)]"
                 : "lg:w-[calc(95vw-18rem)]"
@@ -129,7 +149,7 @@ const Banner = () => {
               src={bannerthree}
               alt="bannerthree"
               className={cn(
-                " w-full h-full lg:max-h-[400px]   relative ",
+                " w-full h-full     relative  ",
                 sidebar?.isOpen === false
                   ? "lg:w-[calc(95vw-90px)]"
                   : "lg:w-[calc(95vw-18rem)]"
