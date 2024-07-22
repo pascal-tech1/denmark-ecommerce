@@ -66,6 +66,7 @@ export function Menu({ isOpen }: MenuProps) {
         setMenuList(baseMenuList);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignedIn, user]);
 
 
