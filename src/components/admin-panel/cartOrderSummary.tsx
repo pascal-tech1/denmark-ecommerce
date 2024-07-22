@@ -11,7 +11,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ subtotal, total }) => {
     const { cartItems } = useStore(useCartStore, (state) => state);
 
     const handleCheckout = () => {
-        const adminWhatsAppNumber = '+2349095606300'; // Replace with the admin's WhatsApp number
+        const adminWhatsAppNumber = '+2347035226775'; // Replace with the admin's WhatsApp number
         const cartItemsText = cartItems.map(item => (
             `*${item.title}* \nPrice: ₦${item.price.toFixed(2)} \nQuantity: ${item.quantity}\n`
         )).join('\n');

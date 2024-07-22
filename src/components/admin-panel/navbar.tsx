@@ -68,10 +68,10 @@ export function Navbar() {
             onMouseLeave={(e) => e.currentTarget.classList.remove("paused")}
           >
             <span className="mr-4 text-yellow-600">
-              Welcome to DenmarkMultibuz Ltd!
+              Welcome to DenmarkMultibuz Ltd! your home for Perfect Outfits
             </span>
             <a
-              href="https://wa.me/+2349095606300"
+              href="https://wa.me/+2347035226775"
               target="_blank"
               rel="noopener noreferrer"
               className="flex gap-2 items-center justify-center text-green-600  "
