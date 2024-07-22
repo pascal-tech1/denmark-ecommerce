@@ -58,13 +58,13 @@ const Banner = () => {
   };
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     autoplay: true,
     centerMode: showFeatures ? true : false,
-    centerPadding: "200px",
+    centerPadding: "300px",
     slidesToShow: 1,
-    speed: 500,
+    speed: 400,
     slidesToScroll: 1,
     arrows: true,
     nextArrow: <NextArrow />,
@@ -74,22 +74,8 @@ const Banner = () => {
   };
 
   return (
-    <div
-      className={cn(
-        "relative w-full h-full flex justify-center items-center overflow-hidden",
-        sidebar?.isOpen === false
-          ? "lg:w-[calc(95vw-90px)]"
-          : "lg:w-[calc(95vw-18rem)]"
-      )}
-    >
-      <div
-        className={cn(
-          "relative w-full rounded-lg bg-gradient-to-tr dark:from-[#252525] dark:to-[#0a0a0a] from-[#e0e0e0] to-[#808081b7] bg-opacity-5 shadow-xl backdrop-filter backdrop-blur-lg lg:border border-black dark:border-white border-opacity-10 dark:border-opacity-10",
-          sidebar?.isOpen === false
-            ? "lg:w-[calc(95vw-90px)]"
-            : "lg:w-[calc(95vw-18rem)]"
-        )}
-      >
+    <div>
+      <div>
         <div className="absolute w-[4rem] h-[3rem] lg:w-[7rem] md:h-[12rem] rounded-xl -z-50 bg-gradient-to-tr top-0 left-0 from-[#fff566fb] to-[#1e1c36] bg-opacity-30 shadow-xl border rotate-[30deg] dark:border-opacity-30 blur-3xl"></div>
         <div className="absolute w-[4rem] h-[3rem] lg:w-[5rem] md:h-[12rem] rounded-xl -z-50 bg-gradient-to-tr bottom-0 right-0 from-[#ebf37ffb] to-[#1e1c36] bg-opacity-30 shadow-xl border border-white rotate-[30deg] dark:border-opacity-30 blur-3xl"></div>
 
@@ -98,8 +84,10 @@ const Banner = () => {
             <div
               key={index}
               className={cn(
-                "w-full h-full relative transition-all duration-500",
-                currentSlide === index ? " rounded-md" : "blur-sm opacity-30 "
+                "w-full h-full flex justify-between relative transition-all duration-500",
+                currentSlide === index
+                  ? " "
+                  : "blur-sm opacity-30 "
               )}
             >
               <Image
