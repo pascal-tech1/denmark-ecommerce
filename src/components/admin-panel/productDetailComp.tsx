@@ -22,6 +22,9 @@ import { useCartStore } from "@/hooks/use-cart";
 import { useToast } from "@/components/ui/use-toast";
 import ProductsList from "./Products";
 import { Footer } from "./footer";
+import ShareButton from "./shareButton";
+import { Edit } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
@@ -34,6 +37,19 @@ const ProductDetail = () => {
   );
   const { toast } = useToast();
   const router = useRouter();
+
+  const { isSignedIn, user } = useUser();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      if (user.publicMetadata.admin === true) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    }
+  }, [isSignedIn, user]);
   const { isPending, error, data } = useQuery({
     queryKey: [id],
     queryFn: () =>
@@ -158,6 +174,20 @@ const ProductDetail = () => {
                 >
                   Checkout
                 </Button>
+              </div>
+              <div className=" flex gap-4 items-center">
+                <ShareButton
+                  title={`${data?.product?.title}`}
+                  text="Check out this wonderful product"
+                  url={`/productdetail/${data?.product?._id}`}
+                />
+                {isAdmin && (
+                  <Link href={`/create-product?id=${data?.product?._id}`}>
+                    <Button variant={"outline"} className="">
+                      <Edit size={18} />
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

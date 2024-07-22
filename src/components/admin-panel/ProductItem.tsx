@@ -100,22 +100,24 @@ const ProductItem = ({
           {title}
         </h2>
 
-        <div className=" flex justify-between items-center">
+        <div className=" flex flex-wrap  justify-between items-center">
           <p className="text-gray-800 font-bold dark:text-neutral-200">
             &#8358; {price}
           </p>
-          <ShareButton
-            title={`${title}`}
-            text="Check out this wonderful product"
-            url={`/productdetail/${_id}`}
-          />
-          {isAdmin && (
-            <Link href={`/create-product?id=${_id}`}>
-              <Button variant={"outline"} className="">
-                <Edit size={18} />
-              </Button>
-            </Link>
-          )}
+          <div className=" mt-1 flex gap-4 ">
+            <ShareButton
+              title={`${title}`}
+              text="Check out this wonderful product"
+              url={`/productdetail/${_id}`}
+            />
+            {isAdmin && (
+              <Link href={`/create-product?id=${_id}`}>
+                <Button variant={"outline"} className="">
+                  <Edit size={18} />
+                </Button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
       <Button

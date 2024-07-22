@@ -8,7 +8,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import bannerone from "@/images/bannerone.png";
 import bannertwo from "@/images/bannertwo.png";
-import bannerthree from "@/images/bannerthree.png";
+import bannerthree from "@/images/bannerthree.jpg";
 
 import Slider from "react-slick";
 import { useSidebarToggle } from "../../hooks/use-sidebar-toggle";
