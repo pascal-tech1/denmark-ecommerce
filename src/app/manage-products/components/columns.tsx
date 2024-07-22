@@ -10,14 +10,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
@@ -27,10 +27,18 @@ import moment from "moment";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowUpDown } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider
+} from "@/components/ui/tooltip";
+import { TooltipTrigger } from "@radix-ui/react-tooltip";
 
 const handleDelete = async (id: string) => {
   try {
-    const response = await axios.delete(`/routes/deleteProduct?productId=${id}`);
+    const response = await axios.delete(
+      `/routes/deleteProduct?productId=${id}`
+    );
     console.log(response);
     if (response.data.message) return "success";
   } catch (error) {
@@ -47,7 +55,8 @@ const CellActions = ({ row }: any) => {
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
   const [isDeleted, setIsDeleted] = useState(false);
-  if (isDeleted) queryClient.invalidateQueries({ queryKey: ["AllProductTable"] });
+  if (isDeleted)
+    queryClient.invalidateQueries({ queryKey: ["AllProductTable"] });
 
   return (
     <>
@@ -68,7 +77,7 @@ const CellActions = ({ row }: any) => {
             onClick={() => {
               navigator.clipboard.writeText(SelectedProduct._id);
               toast({
-                description: "Product Id copied successfully",
+                description: "Product Id copied successfully"
               });
               console.log("Product Id copied successfully");
             }}
@@ -102,12 +111,12 @@ const CellActions = ({ row }: any) => {
                 setIsDeleted(deleted === "success" ? true : false);
                 if (deleted === "success") {
                   toast({
-                    description: "Product is Deleted successfully",
+                    description: "Product is Deleted successfully"
                   });
                 } else {
                   toast({
                     description: "Error in deleting Product",
-                    variant: "destructive",
+                    variant: "destructive"
                   });
                 }
                 closeDialog();
@@ -133,7 +142,6 @@ export type Product = {
   user: { id: string; first_name: string };
 };
 
-
 export const columns: ColumnDef<Product>[] = [
   {
     id: "select",
@@ -155,7 +163,7 @@ export const columns: ColumnDef<Product>[] = [
       />
     ),
     enableSorting: false,
-    enableHiding: false,
+    enableHiding: false
   },
   {
     accessorKey: "title",
@@ -171,10 +179,20 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
     cell: ({ row }) => (
-      <Link href={`/productdetail/${row.original._id}`} className=" min-w-[48rem]">
-        {row.getValue("title")}
-      </Link>
-    ),
+      <TooltipProvider disableHoverableContent>
+        <Tooltip delayDuration={100}>
+          <TooltipTrigger asChild>
+            <Link
+              href={`/productdetail/${row.original._id}`}
+              className=" !max-w-[15rem] block truncate whitespace-nowrap overflow-hidden text-ellipsis"
+            >
+              {row.getValue("title")}
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent>{row.getValue("title")}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    )
   },
   {
     accessorKey: "price",
@@ -194,11 +212,11 @@ export const columns: ColumnDef<Product>[] = [
 
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: "NGN",
+        currency: "NGN"
       }).format(amount);
 
       return <div className="">{formatted}</div>;
-    },
+    }
   },
   {
     accessorKey: "numView",
@@ -216,7 +234,7 @@ export const columns: ColumnDef<Product>[] = [
     cell: ({ row }) => {
       const numView = parseFloat(row.getValue("numView"));
       return <div className=" ml-6">{numView}</div>;
-    },
+    }
   },
   {
     accessorKey: "user",
@@ -234,7 +252,7 @@ export const columns: ColumnDef<Product>[] = [
     cell: ({ row }) => {
       const user: any = row.getValue("user");
       return <div className=" ml-6">{user.first_name}</div>;
-    },
+    }
   },
   {
     accessorKey: "updatedAt",
@@ -253,7 +271,7 @@ export const columns: ColumnDef<Product>[] = [
       const updatedAt = moment(row.getValue("updatedAt"));
       const formattedDate = updatedAt.format("DD MMM, YYYY");
       return <div className="">{formattedDate}</div>;
-    },
+    }
   },
   {
     accessorKey: "category",
@@ -269,7 +287,7 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
     cell: ({ row }) => <div className=" ml-6">{row.getValue("category")}</div>,
-    enableHiding: true,
+    enableHiding: true
   },
   {
     accessorKey: "subCategory",
@@ -288,11 +306,11 @@ export const columns: ColumnDef<Product>[] = [
     cell: ({ row }) => (
       <div className="ml-6">{row.getValue("subCategory") || "----"}</div>
     ),
-    enableHiding: true,
+    enableHiding: true
   },
   {
     id: "actions",
     enableHiding: false,
-    cell: (props) => <CellActions {...props} />,
-  },
+    cell: (props) => <CellActions {...props} />
+  }
 ];
