@@ -67,7 +67,7 @@ export function Navbar() {
             onMouseEnter={(e) => e.currentTarget.classList.add("paused")}
             onMouseLeave={(e) => e.currentTarget.classList.remove("paused")}
           >
-            <span className="mr-4 text-yellow-600">
+            <span className="mr-4 text-yellow-300">
               Welcome to DenmarkMultibuz Ltd! your home for Perfect Outfits
             </span>
             <a

@@ -1,16 +1,19 @@
 "use client";
 import { useCartStore } from "@/hooks/use-cart";
 import { cn } from "@/lib/utils";
-import { Ellipsis, ShoppingCartIcon } from "lucide-react";
+import { Edit, Ellipsis, ShoppingCartIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "zustand";
 import { Button } from "../ui/button";
 import { Tooltip } from "@radix-ui/react-tooltip";
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import ShareButton from "./shareButton";
 import { useToast } from "../ui/use-toast";
+import Link from "next/link";
+import { uptimizeCloudinaryImage } from "@/hooks/imageCloudinaryOptimizer";
+import { useUser } from "@clerk/nextjs";
 
 const ProductItem = ({
   imageUrl,
@@ -24,23 +27,53 @@ const ProductItem = ({
   const router = useRouter();
   const { addToCart, cartItems } = useStore(useCartStore, (state) => state);
   const { toast } = useToast();
+  const [optimizedImageUrl, setOptimizedImageUrl] = useState(imageUrl);
+
   const handleCardClick = () => {
-    router.push(`/productdetail/${[_id]}`);
+    router.push(`/productdetail/${_id}`);
   };
-  console.log(imageUrl);
 
   useEffect(() => {
     console.log(cartItems);
   }, [cartItems]);
 
+  useEffect(() => {
+    const fetchOptimizedImage = async () => {
+      try {
+        const optimizedUrl = await uptimizeCloudinaryImage(
+          "q_auto,f_auto,w_300",
+          imageUrl
+        );
+        setOptimizedImageUrl(optimizedUrl);
+      } catch (error) {
+        console.error("Failed to optimize image:", error);
+      }
+    };
+
+    fetchOptimizedImage();
+  }, [imageUrl]);
+  console.log(imageUrl);
   const addToCartHandler = (product: any) => {
     addToCart(product);
     toast({
-      description: "Product added to cart Successfully"
+      description: "Product added to cart successfully"
     });
   };
 
   const blurdata = `data:image/jpeg;base64,${blurImage}`;
+
+  const { isSignedIn, user } = useUser();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      if (user.publicMetadata.admin === true) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    }
+  }, [isSignedIn, user]);
 
   return (
     <div className="flex flex-col gap-4 justify-between max-w-[300px] p-2 md:p-4 relative group">
@@ -49,7 +82,7 @@ const ProductItem = ({
         className="overflow-hidden cursor-pointer rounded-md relative h-[10rem]"
       >
         <Image
-          src={imageUrl}
+          src={optimizedImageUrl}
           alt={title}
           layout="fill"
           blurDataURL={blurdata}
@@ -73,9 +106,16 @@ const ProductItem = ({
           </p>
           <ShareButton
             title={`${title}`}
-            text="check out this wonderfull product"
-            url={`https://www.denmarkmultibuzltd.com/productdetail/${_id}`}
+            text="Check out this wonderful product"
+            url={`/productdetail/${_id}`}
           />
+          {isAdmin && (
+            <Link href={`/create-product?id=${_id}`}>
+              <Button variant={"outline"} className="">
+                <Edit size={18} />
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
       <Button

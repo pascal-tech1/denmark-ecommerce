@@ -33,7 +33,7 @@ const footerData: any = [
     items: [
       {
         type: "address",
-        text: "denmark physical address",
+        text: "Opp unity bank at ayinrin complex adebayo ado Ekiti",
         icon: MapPin
       },
       {

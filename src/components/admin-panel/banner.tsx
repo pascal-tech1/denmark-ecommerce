@@ -58,7 +58,7 @@ const Banner = () => {
   return (
     <div
       className={cn(
-        "relative  w-full h-full    flex justify-center items-center overflow-hidden ",
+        "relative  w-full h-full lg:max-h-[400px]    flex justify-center items-center overflow-hidden ",
         sidebar?.isOpen === false
           ? "lg:w-[calc(95vw-90px)]"
           : "lg:w-[calc(95vw-18rem)]"
@@ -78,7 +78,7 @@ const Banner = () => {
         <Slider {...settings}>
           <div
             className={cn(
-              " w-full h-full   relative ",
+              " w-full h-full lg:max-h-[400px]   relative ",
               sidebar?.isOpen === false
                 ? "lg:w-[calc(95vw-90px)]"
                 : "lg:w-[calc(95vw-18rem)]"
@@ -88,7 +88,7 @@ const Banner = () => {
               src={bannerone}
               alt="bannerone"
               className={cn(
-                " w-full h-full   relative object-cover ",
+                " w-full h-full lg:max-h-[400px]   relative object-cover ",
                 sidebar?.isOpen === false
                   ? "lg:w-[calc(95vw-90px)]"
                   : "lg:w-[calc(95vw-18rem)]"
@@ -99,17 +99,17 @@ const Banner = () => {
           </div>
           <div
             className={cn(
-              " w-full h-full   relative ",
+              " w-full h-full lg:max-h-[400px]   relative ",
               sidebar?.isOpen === false
                 ? "lg:w-[calc(95vw-90px)]"
                 : "lg:w-[calc(95vw-18rem)]"
             )}
           >
             <Image
-              src={bannerone}
+              src={bannertwo}
               alt="bannertwo"
               className={cn(
-                " w-full h-full   relative ",
+                " w-full h-full lg:max-h-[400px]   relative ",
                 sidebar?.isOpen === false
                   ? "lg:w-[calc(95vw-90px)]"
                   : "lg:w-[calc(95vw-18rem)]"
@@ -119,17 +119,17 @@ const Banner = () => {
           </div>
           <div
             className={cn(
-              " w-full h-full   relative ",
+              " w-full h-full lg:max-h-[400px]   relative ",
               sidebar?.isOpen === false
                 ? "lg:w-[calc(95vw-90px)]"
                 : "lg:w-[calc(95vw-18rem)]"
             )}
           >
             <Image
-              src={bannerone}
+              src={bannerthree}
               alt="bannerthree"
               className={cn(
-                " w-full h-full   relative ",
+                " w-full h-full lg:max-h-[400px]   relative ",
                 sidebar?.isOpen === false
                   ? "lg:w-[calc(95vw-90px)]"
                   : "lg:w-[calc(95vw-18rem)]"
