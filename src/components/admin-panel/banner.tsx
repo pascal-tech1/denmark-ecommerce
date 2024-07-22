@@ -99,7 +99,7 @@ const Banner = () => {
               key={index}
               className={cn(
                 "w-full h-full relative transition-all duration-500",
-                currentSlide === index ? " rounded-md" : "blur-sm opacity-70 "
+                currentSlide === index ? " rounded-md" : "blur-sm opacity-30 "
               )}
             >
               <Image

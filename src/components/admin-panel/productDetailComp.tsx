@@ -195,17 +195,17 @@ const ProductDetail = () => {
             <h3 className="text-xl font-semibold mb-2">Description</h3>
             <div
               dangerouslySetInnerHTML={{
-                __html: data?.product.description
+                __html: data?.product?.description
               }}
             />
           </div>
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-4">More Products</h3>
-            <div className="">{/* <Products images={imageData} /> */}</div>
+            <ProductsList />
           </div>
         </div>
       </div>
-      <ProductsList />
+
       <Footer />
     </ContentLayout>
   );
