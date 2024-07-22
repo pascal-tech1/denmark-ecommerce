@@ -61,35 +61,37 @@ const formSchema = z.object({
   blurImage: z.string().nonempty({ message: "blur Image string is required." })
 });
 
-
 export default function CreateProduct() {
-  return <React.Suspense>
-    <ProductForm />
-  </React.Suspense>
+  return (
+    <React.Suspense>
+      <ProductForm />
+    </React.Suspense>
+  );
 }
 function ProductForm() {
   const [isFetchingImage, setIsFetchingImage] = useState(false);
   const [quillIsFocus, setQuillIsFocus] = useState(false);
-  const searchParams = useSearchParams()
-  const id = searchParams.get("id")
-  console.log
-  const url = id ? `/routes/edit-product?productId=${id}` : "/routes/create-product"
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  console.log;
+  const url = "/routes/create-product";
 
-
-  const { isPending: fetchEditIsPending, error: fetchEditIsError, data: fetchEditIsData, isSuccess: fetchEditIsSuccess } = useQuery({
+  const {
+    isPending: fetchEditIsPending,
+    error: fetchEditIsError,
+    data: fetchEditIsData,
+    isSuccess: fetchEditIsSuccess
+  } = useQuery({
     queryKey: [id],
     queryFn: () => axios(`/routes/fetchSingleProduct?productId=${id}`)
   });
 
-
   const { toast } = useToast();
 
-
-  const { data, error, isSuccess, mutate, isPending } = useUploadMutation(
-    url,
-    ["newProduct", "featuredProduct"]
-  );
-
+  const { data, error, isSuccess, mutate, isPending } = useUploadMutation(url, [
+    "newProduct",
+    "featuredProduct"
+  ]);
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const form = useForm<z.infer<typeof formSchema>>({
@@ -109,13 +111,15 @@ function ProductForm() {
   const beforeDivRef = useRef<HTMLDivElement>(null);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    console.log(values);
     mutate(values);
   };
   useEffect(() => {
     isSuccess &&
       toast({
-        description: id ? "Product updated successfully" : "Product created successfully"
+        description: id
+          ? "Product updated successfully"
+          : "Product created successfully"
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
@@ -148,11 +152,8 @@ function ProductForm() {
     form.setValue("image", imageUrl);
   };
 
-
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const modules = useMemo(() => modulesObject, []);
-
 
   const editing = (
     content: string,
@@ -199,7 +200,7 @@ function ProductForm() {
         image: product.imageUrl,
         category: product.category,
         subCategory: product.subCategory,
-        blurImage: product.imageUrl,
+        blurImage: product.imageUrl
       });
       setImagePreview(product.imageUrl);
       setEditorContent(product.description);
@@ -303,10 +304,10 @@ function ProductForm() {
                               setSelectedCategory(value);
                               const parentCategory =
                                 subcategoryToCategoryMap(value);
-                              console.log(value)
+                              console.log(value);
                               form.setValue("category", parentCategory);
                               if (parentCategory !== value) {
-                                console.log(value)
+                                console.log(value);
                                 form.setValue("subCategory", value);
                               }
                             }}
@@ -356,10 +357,11 @@ function ProductForm() {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl
-                    className={`${quillIsFocus
-                      ? "h-[75vh]  relative top-0 z-50"
-                      : "h-[30vh]"
-                      }`}
+                    className={`${
+                      quillIsFocus
+                        ? "h-[75vh]  relative top-0 z-50"
+                        : "h-[30vh]"
+                    }`}
                   >
                     <ReactQuill
                       value={editorContent}
