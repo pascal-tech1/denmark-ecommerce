@@ -1,4 +1,3 @@
-
 import {
   Tag,
   Users,
@@ -229,12 +228,10 @@ export function getMenuList(pathname: string): Group[] {
                 "/category?category=glasses&subcategory=contact lenses"
             }
           ]
-        },
-
+        }
       ]
     }
   ];
-
 
   return baseMenuList;
 }
