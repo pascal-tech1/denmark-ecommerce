@@ -71,7 +71,7 @@ export default function RootLayout({
           />
           <meta
             property="og:image"
-            content="https://img.freepik.com/premium-vector/psd-man-fashion-banner-template-with-premium-colour_758367-28.jpg?w=740"
+            content="https://cdn-user-public.veed.io/animatedProjectThumbnails/040c767f-cab2-4715-962a-919e7d4c0557.gif"
           />
         </Head>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
