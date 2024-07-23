@@ -10,20 +10,20 @@ export default async function ProductDetailPage({ params }: any) {
         ? `https://${process.env.VERCEL_URL}`
         : `http://localhost:${process.env.PORT || 3000}`
     ),
-    title: "Product detail",
+    title: "Denmark single Product page",
     description:
-      "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
+      "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria, ekiti, Ado ekiti, lagos, Portharcourt, Abuja, enugu delivering nation wide.",
     alternates: {
       canonical: "/"
     },
     openGraph: {
       url: "/",
-      title: "Men's Fashion Store",
+      title: "denmark single product page",
       description:
         "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
       type: "website",
       images: {
-        url: "https://www.denmarkmultibuzltd.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerone.f814d19f.png&w=3840&q=75",
+        url: "https://ucarecdn.com/6d6f99f7-f783-4768-8504-40f889527280/thumnail.png",
         width: 1200,
         height: 630,
         alt: "Men's Fashion Store"
@@ -31,11 +31,11 @@ export default async function ProductDetailPage({ params }: any) {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Men's Fashion Store",
+      title: "denmark single product page",
       description:
         "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
       images: {
-        url: "https://www.denmarkmultibuzltd.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbannerone.f814d19f.png&w=3840&q=75",
+        url: "https://ucarecdn.com/6d6f99f7-f783-4768-8504-40f889527280/thumnail.png",
         width: 1200,
         height: 630,
         alt: "Men's Fashion Store"
