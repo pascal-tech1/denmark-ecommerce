@@ -71,7 +71,7 @@ export default function RootLayout({
           />
           <meta
             property="og:image"
-            content="https://example.com/images/cool-page.jpg"
+            content="https://img.freepik.com/premium-vector/psd-man-fashion-banner-template-with-premium-colour_758367-28.jpg?w=740"
           />
         </Head>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
