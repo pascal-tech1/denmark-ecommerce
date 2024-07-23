@@ -4,6 +4,7 @@ export const uptimizeCloudinaryImage = async (
   optimizationStr,
   originalImageurl
 ) => {
+  console.log(originalImageurl);
   const cloudinaryBaseUrl =
     "https://res.cloudinary.com/dztt3ldiy/image/upload/";
 

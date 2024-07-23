@@ -28,7 +28,7 @@ export const metadata: Metadata = {
       "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
     type: "website",
     images: {
-      url: "https://cdn-user-public.veed.io/animatedProjectThumbnails/040c767f-cab2-4715-962a-919e7d4c0557.gif",
+      url: "https://ucarecdn.com/6d6f99f7-f783-4768-8504-40f889527280/thumnail.png",
       width: 1200,
       height: 630,
       alt: "Men's Fashion Store"
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     description:
       "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria ekiti Ado ekiti.",
     images: {
-      url: "https://cdn-user-public.veed.io/animatedProjectThumbnails/040c767f-cab2-4715-962a-919e7d4c0557.gif",
+      url: "https://ucarecdn.com/6d6f99f7-f783-4768-8504-40f889527280/thumnail.png",
       width: 1200,
       height: 630,
       alt: "Men's Fashion Store"
