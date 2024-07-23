@@ -9,8 +9,13 @@ export const DELETE = async (req: NextRequest) => {
     // Check if the request method is DELETE and handle accordingly
     if (req.method === "DELETE") {
       // Get the request body
-      const { productIds } = await req.json();
-
+      const body = await req.json(); // Parse the request body to get productIds
+      const productIds = body?.productIds;
+      console.log(
+        body,
+        productIds,
+        "........................................."
+      );
       if (productIds && productIds.length > 0) {
         // If productIds is an array and has elements, delete multiple products
         const deleteResults = await Product.deleteMany({
@@ -25,7 +30,7 @@ export const DELETE = async (req: NextRequest) => {
         }
 
         return new NextResponse(
-          JSON.stringify({ message: "Products deleted successfully" }),
+          JSON.stringify({ message: "Selected Products deleted successfully" }),
           { status: 200 }
         );
       } else {
@@ -61,7 +66,7 @@ export const DELETE = async (req: NextRequest) => {
       );
     }
   } catch (error) {
-    console.error("Error deleting product:", error);
+    // console.error("Error deleting product:", error);
     return new NextResponse(
       JSON.stringify({ message: "Internal Server Error" }),
       { status: 500 }

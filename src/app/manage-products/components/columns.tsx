@@ -37,7 +37,10 @@ import { TooltipTrigger } from "@radix-ui/react-tooltip";
 const handleDelete = async (id: string) => {
   try {
     const response = await axios.delete(
-      `/routes/deleteProduct?productId=${id}`
+      `/routes/deleteProduct?productId=${id}`,
+      {
+        data: { productIds: [] }
+      }
     );
     console.log(response);
     if (response.data.message) return "success";
@@ -54,9 +57,16 @@ const CellActions = ({ row }: any) => {
   const queryClient = useQueryClient();
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
-  const [isDeleted, setIsDeleted] = useState(false);
-  if (isDeleted)
-    queryClient.invalidateQueries({ queryKey: ["AllProductTable"] });
+
+  const removeProductFromCache = () => {
+    queryClient.setQueryData(["AllProductTable"], (oldData: any) => {
+      const newdata = oldData.allProducts.filter(
+        (product: any) => product._id !== SelectedProduct._id
+      );
+      console.log(newdata);
+      return { ...oldData, allProducts: newdata };
+    });
+  };
 
   return (
     <>
@@ -108,8 +118,9 @@ const CellActions = ({ row }: any) => {
             <AlertDialogAction
               onClick={async () => {
                 const deleted = await handleDelete(SelectedProduct._id);
-                setIsDeleted(deleted === "success" ? true : false);
+
                 if (deleted === "success") {
+                  removeProductFromCache();
                   toast({
                     description: "Product is Deleted successfully"
                   });
