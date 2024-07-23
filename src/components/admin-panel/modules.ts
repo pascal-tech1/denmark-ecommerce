@@ -59,16 +59,9 @@ export const modulesObject = {
         ],
         handlers: {
             image: imageHandler,
-            video: videoHandler
+            
         }
     }
 };
 
-// Example video handler function
-function videoHandler() {
-    const range = this.quill.getSelection();
-    const url = prompt('Enter video URL:');
-    if (url) {
-        this.quill.insertEmbed(range.index, 'video', url, Quill.sources.USER);
-    }
-}
+
