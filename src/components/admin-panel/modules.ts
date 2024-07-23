@@ -55,10 +55,20 @@ export const modulesObject = {
                 { indent: "+1" }
             ],
             [{ direction: "rtl" }, { align: [] }],
-            ["link", "image", "clean"]
+            ["link", "image", "video", "clean"]
         ],
         handlers: {
-            image: imageHandler
+            image: imageHandler,
+            video: videoHandler
         }
     }
 };
+
+// Example video handler function
+function videoHandler() {
+    const range = this.quill.getSelection();
+    const url = prompt('Enter video URL:');
+    if (url) {
+        this.quill.insertEmbed(range.index, 'video', url, Quill.sources.USER);
+    }
+}
