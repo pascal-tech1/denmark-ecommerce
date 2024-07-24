@@ -20,6 +20,9 @@ export const metadata: Metadata = {
 
   description:
     "Discover the latest in men's fashion at our online store. Shop a wide range of clothing, accessories, and more, all with free shipping in nigeria, ekiti, Ado ekiti, lagos, Portharcourt, Abuja, enugu delivering nation wide.",
+  verification: {
+    google: "3KwE-w0MRMSRzOG9BBHlhdPev9wFzRGKcw8k295OoLk"
+  },
   alternates: {
     canonical: "/"
   },
@@ -47,10 +50,6 @@ export const metadata: Metadata = {
       height: 630,
       alt: "Men's Fashion Store"
     }
-  },
-  other: {
-    name: "google-site-verification",
-    content: "3KwE-w0MRMSRzOG9BBHlhdPev9wFzRGKcw8k295OoLk"
   }
 };
 
