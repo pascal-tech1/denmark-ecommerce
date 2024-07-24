@@ -56,6 +56,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <meta
+          name="google-site-verification"
+          content="3KwE-w0MRMSRzOG9BBHlhdPev9wFzRGKcw8k295OoLk"
+        />
+      </Head>
       <body className={GeistSans.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AdminPanelLayout>{children}</AdminPanelLayout>
