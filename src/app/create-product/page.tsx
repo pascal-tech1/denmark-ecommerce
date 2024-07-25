@@ -74,7 +74,9 @@ function ProductForm() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   console.log;
-  const url = "/routes/create-product";
+  const url = id
+    ? `/routes/edit-product?productId=${id}`
+    : "/routes/create-product";
 
   const {
     isPending: fetchEditIsPending,
@@ -176,7 +178,7 @@ function ProductForm() {
   useEffect(() => {
     if (beforeDivRef) {
       const beforeDivHeight =
-        (beforeDivRef?.current?.clientHeight as number) + 30 ?? 0;
+        (beforeDivRef?.current?.clientHeight as number) + 30 || 0;
       const formContent = document.querySelector(
         ".form-content"
       ) as HTMLDivElement;

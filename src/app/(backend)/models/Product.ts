@@ -19,7 +19,7 @@ const ProductSchema: Schema<IProduct> = new Schema(
   {
     title: { type: String, required: true },
     price: { type: Number, required: true },
-    description: { type: String, required: true },
+    description: { type: String },
     imageUrl: { type: String, required: true },
     numView: { type: Number, required: true },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
