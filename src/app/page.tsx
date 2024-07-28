@@ -31,12 +31,15 @@ export default function DashboardPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
   return (
     <ContentLayout title="Home">
       <Banner />
       <div className=" pt-5">
-        <div className={cn(showFeatures ? "hidden  " : "items-center mb-4 pt-4 relative ")}>
+        <div
+          className={cn(
+            showFeatures ? "hidden  " : "items-center mb-4 pt-4 relative "
+          )}
+        >
           <CategorySuggestionSheet />
         </div>
         <div className="grid place-content-between  grid-cols-2 md:grid-cols-11 gap-16  justify-between  pr-2 top-div dark:text-gray-400 ">
@@ -49,7 +52,6 @@ export default function DashboardPage() {
             )}
           >
             <Products />
-
           </div>
           <div
             className={cn(
@@ -58,12 +60,8 @@ export default function DashboardPage() {
                 : "hidden"
             )}
           >
-            <div className="sticky mx-auto top-16 left-0 flex rounded-lg flex-col gap-4">
-              <div className=" p-3 mx-auto">
-                <div className="sticky top-16 left-0 flex rounded-lg flex-col gap-4 mx-auto">
-                  <CategorySuggestion />
-                </div>
-              </div>
+            <div className="sticky top-16  max-w-full  flex rounded-lg flex-col gap-4 mx-auto">
+              <CategorySuggestion />
             </div>
           </div>
         </div>
