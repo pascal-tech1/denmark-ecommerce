@@ -65,7 +65,7 @@ const SideProducts = ({ heading }: { heading: string }) => {
                       onClick={() => handleCardClick(product._id)}
                       className="dark:text-neutral-200  mb-2 hover:text-yellow-500 dark:hover:text-yellow-100 cursor-pointer transition-transform duration-300 truncate whitespace-nowrap overflow-hidden text-ellipsis"
                     >
-                      {product.title}
+                      {/* {product.title} */}
                     </h2>
                   </div>
                   <p className=" whitespace-nowrap text-gray-800 dark:text-neutral-400">
