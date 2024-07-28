@@ -76,8 +76,8 @@ const Banner = () => {
   return (
     <div>
       <div>
-        <div className="absolute w-[4rem] h-[3rem] lg:w-[7rem] md:h-[12rem] rounded-xl -z-50 bg-gradient-to-tr top-0 left-0 from-[#fff566fb] to-[#1e1c36] bg-opacity-30 shadow-xl border rotate-[30deg] dark:border-opacity-30 blur-3xl"></div>
-        <div className="absolute w-[4rem] h-[3rem] lg:w-[5rem] md:h-[12rem] rounded-xl -z-50 bg-gradient-to-tr bottom-0 right-0 from-[#ebf37ffb] to-[#1e1c36] bg-opacity-30 shadow-xl border border-white rotate-[30deg] dark:border-opacity-30 blur-3xl"></div>
+        {/* <div className="absolute w-[4rem] h-[3rem] lg:w-[7rem] md:h-[12rem] rounded-xl -z-50 bg-gradient-to-tr top-0 left-0 from-[#fff566fb] to-[#1e1c36] bg-opacity-30 shadow-xl border rotate-[30deg] dark:border-opacity-30 blur-3xl"></div>
+        <div className="absolute w-[4rem] h-[3rem] lg:w-[5rem] md:h-[12rem] rounded-xl -z-50 bg-gradient-to-tr bottom-0 right-0 from-[#ebf37ffb] to-[#1e1c36] bg-opacity-30 shadow-xl border border-white rotate-[30deg] dark:border-opacity-30 blur-3xl"></div> */}
 
         <Slider {...settings}>
           {[bannerone, bannertwo, bannerthree].map((banner, index) => (
@@ -85,9 +85,7 @@ const Banner = () => {
               key={index}
               className={cn(
                 "w-full h-full flex justify-between relative transition-all duration-500",
-                currentSlide === index
-                  ? " "
-                  : "blur-sm opacity-30 "
+                currentSlide === index ? " " : "blur-sm opacity-30 "
               )}
             >
               <Image
