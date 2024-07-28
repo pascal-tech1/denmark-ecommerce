@@ -1,10 +1,10 @@
 "use client";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SideProductSkeletonLoading } from "./sideProductSkeletonLoading";
 import useFetchAllProductPaginated from "@/hooks/useFetchAllProductPaginated";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   Tooltip,
   TooltipContent,
@@ -26,12 +26,12 @@ const SideProducts = ({ heading }: { heading: string }) => {
         `/routes/fetchAllProducts?cursor=${pageParam}&limit=4&heading=${heading}`
       ).then((res) => res.json()),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
     staleTime: 0
   });
 
   return (
-    <div className=" overflow-x-hidden">
+    <div className="overflow-x-hidden">
       {isPending ? (
         <SideProductSkeletonLoading heading={heading} />
       ) : (
@@ -40,7 +40,7 @@ const SideProducts = ({ heading }: { heading: string }) => {
             {heading}
             <div className="border-b border-b-yellow-400 border-opacity-15 w-28 pt-2"></div>
           </div>
-          <div className="">
+          <div>
             {data?.pages[0]?.products?.map((product: any, index: number) => (
               <div
                 key={index}
@@ -59,16 +59,17 @@ const SideProducts = ({ heading }: { heading: string }) => {
                     className="object-cover group-hover:scale-105 rounded-md"
                   />
                 </div>
-                <div className=" flex flex-col gap-2 justify-between ">
+                <div className="flex flex-col gap-2 justify-between w-full">
                   <div>
                     <h2
                       onClick={() => handleCardClick(product._id)}
-                      className="dark:text-neutral-200  mb-2 hover:text-yellow-500 dark:hover:text-yellow-100 cursor-pointer transition-transform duration-300 truncate whitespace-nowrap overflow-hidden text-ellipsis"
+                      className="dark:text-neutral-200 mb-2 hover:text-yellow-500 dark:hover:text-yellow-100 cursor-pointer transition-transform duration-300 truncate whitespace-nowrap overflow-hidden text-ellipsis"
+                      style={{ maxWidth: "100%" }}
                     >
-                      {/* {product.title} */}
+                      {product.title}
                     </h2>
                   </div>
-                  <p className=" whitespace-nowrap text-gray-800 dark:text-neutral-400">
+                  <p className="whitespace-nowrap text-gray-800 dark:text-neutral-400">
                     Price: &#8358; {product.price}
                   </p>
                 </div>
@@ -76,7 +77,7 @@ const SideProducts = ({ heading }: { heading: string }) => {
             ))}
           </div>
           {error && (
-            <h1 className=" ml-10">failed to fetch Products try again </h1>
+            <h1 className="ml-10">Failed to fetch products, try again</h1>
           )}
         </div>
       )}
