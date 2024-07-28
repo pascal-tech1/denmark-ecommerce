@@ -3,14 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SideProductSkeletonLoading } from "./sideProductSkeletonLoading";
-import useFetchAllProductPaginated from "@/hooks/useFetchAllProductPaginated";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from "../ui/tooltip";
 
 const SideProducts = ({ heading }: { heading: string }) => {
   const router = useRouter();
@@ -20,7 +13,7 @@ const SideProducts = ({ heading }: { heading: string }) => {
   };
 
   const { data, error, isPending } = useInfiniteQuery({
-    queryKey: ["sidePrducts", heading],
+    queryKey: ["sideProducts", heading],
     queryFn: ({ pageParam }: { pageParam: any }) =>
       fetch(
         `/routes/fetchAllProducts?cursor=${pageParam}&limit=4&heading=${heading}`
@@ -60,11 +53,15 @@ const SideProducts = ({ heading }: { heading: string }) => {
                   />
                 </div>
                 <div className="flex flex-col gap-2 justify-between w-full">
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h2
                       onClick={() => handleCardClick(product._id)}
-                      className="dark:text-neutral-200 mb-2 hover:text-yellow-500 dark:hover:text-yellow-100 cursor-pointer transition-transform duration-300 truncate whitespace-nowrap overflow-hidden text-ellipsis"
-                      style={{ maxWidth: "100%" }}
+                      className="dark:text-neutral-200 mb-2 hover:text-yellow-500 dark:hover:text-yellow-100 cursor-pointer transition-transform duration-300 truncate"
+                      style={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                      }}
                     >
                       {product.title}
                     </h2>
