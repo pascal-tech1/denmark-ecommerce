@@ -5,6 +5,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getMenuList } from "@/lib/menu-list";
+// Adding dynamic configuration
+export const dynamic = "force-dynamic";
 
 const PriceRangeSelector = () => {
   const searchParams = useSearchParams();

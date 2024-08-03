@@ -18,6 +18,9 @@ import {
   SheetTrigger
 } from "../ui/sheet";
 import { Button } from "../ui/button";
+// Adding dynamic configuration
+export const dynamic = "force-dynamic";
+
 
 export function CategorySheet({ images }: any) {
 

@@ -20,6 +20,10 @@ import { CategorySheet } from "@/components/admin-panel/categorySheet";
 import { useQuery } from "@tanstack/react-query";
 import Products from "@/components/admin-panel/Products";
 import { Footer } from "@/components/admin-panel/footer";
+// Adding dynamic configuration
+export const dynamic = "force-dynamic";
+
+
 
 function Searchparam() {
   const searchParams = useSearchParams();

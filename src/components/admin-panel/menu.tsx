@@ -19,6 +19,8 @@ import {
 import { ModeToggle } from "../mode-toggle";
 import { useUser } from "@clerk/nextjs";
 
+// Adding dynamic configuration
+export const dynamic = "force-dynamic";
 
 interface MenuProps {
   isOpen: boolean | undefined;

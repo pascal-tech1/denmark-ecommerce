@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroller";
 import { Loader2 } from "lucide-react";
+// Adding dynamic configuration
+export const dynamic = "force-dynamic";
 
 export default function ProductsList() {
   return (

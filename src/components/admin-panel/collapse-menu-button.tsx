@@ -26,7 +26,7 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
-import { usePathname, useSearchParams } from "next/navigation";
+
 
 type Submenu = {
   href: string;
