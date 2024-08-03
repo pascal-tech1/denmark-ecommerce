@@ -5,7 +5,7 @@ import { useEffect, useState, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import Quill from "quill";
 import Resizer from "react-image-file-resizer";
@@ -31,12 +31,8 @@ import {
 import { getMenuList } from "@/lib/menu-list";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Adding dynamic configuration
-export const dynamic = "force-dynamic";
-
 // Dynamically import React Quill
-
-import ReactQuill from "react-quill";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 import { handleImageUpload } from "@/hooks/handleImageUpload";
 import { Loader2 } from "lucide-react";
