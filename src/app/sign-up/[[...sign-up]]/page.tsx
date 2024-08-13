@@ -1,4 +1,4 @@
-import { SignUp } from "@clerk/nextjs";
+import { SignUp, useUser } from "@clerk/nextjs";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import PlaceholderContent from "@/components/demo/placeholder-content";
 import {
@@ -29,7 +29,7 @@ export default function Page() {
         </BreadcrumbList>
       </Breadcrumb>
       <PlaceholderContent>
-        <SignUp path="/sign-up" routing="path" signInUrl="/sign-in" />
+        <SignUp signInUrl="/sign-in" />
       </PlaceholderContent>
     </ContentLayout>
   );
