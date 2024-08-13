@@ -29,12 +29,7 @@ export default function Page() {
         </BreadcrumbList>
       </Breadcrumb>
       <PlaceholderContent>
-        <SignUp
-          path="/sign-up"
-          routing="path"
-          signInUrl="/sign-in"
-          signInForceRedirectUrl={"/"}
-        />
+        <SignUp path="/sign-up" routing="path" signInUrl="/sign-in" />
       </PlaceholderContent>
     </ContentLayout>
   );
