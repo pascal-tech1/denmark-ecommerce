@@ -58,7 +58,6 @@ const Banner = () => {
   };
 
   const settings = {
-    dots: true,
     infinite: true,
     autoplay: true,
     centerMode: showFeatures ? true : false,
