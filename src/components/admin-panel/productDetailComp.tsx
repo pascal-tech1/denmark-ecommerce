@@ -163,14 +163,14 @@ const ProductDetail = () => {
                 <Button
                   variant="default"
                   onClick={handleAddToCart}
-                  className="bg-yellow-300 rounded-md"
+                  className="bg-[#f3d745] rounded-md"
                 >
                   Add to Cart
                 </Button>
                 <Button
                   variant="outline"
                   onClick={handleCheckout}
-                  className="border border-yellow-300 rounded-md"
+                  className="border border-[#f3d745] rounded-md"
                 >
                   Checkout
                 </Button>
@@ -191,16 +191,17 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
-          <div className="mt-8 text-gray-700 dark:text-gray-400 max-w-[900px]">
-            <h3 className="text-xl font-semibold mb-2">Description</h3>
+          <div className="mt-8 text-gray-700 dark:text-gray-400 max-w-[900px] product-description">
+            <h3 className="text-xl font-semibold mb-2 ">Description</h3>
             <div
               dangerouslySetInnerHTML={{
                 __html: data?.product?.description
               }}
+              className='flex flex-col gap-4'
             />
           </div>
-          <div className="mt-8">
-            <h3 className="text-xl font-semibold mb-4">More Products</h3>
+          <div className="mt-[5rem]">
+            <h3 className="text-3xl font-bold mb-4 text-center">More Products</h3>
             <ProductsList />
           </div>
         </div>

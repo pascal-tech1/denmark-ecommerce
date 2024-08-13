@@ -104,3 +104,52 @@
 .paused {
   animation-play-state: paused;
 }
+
+/* React quill custom styles */
+
+.ql-toolbar.ql-snow {
+  background: #bfcbda;
+  color: white !important;
+  border: none;
+}
+.product-description p {
+  padding: 20px 0;
+}
+.product-description h1 {
+  padding: 20px 0;
+}
+ol {
+  list-style-type: decimal; /* Use 'decimal' for normal numbers, 'lower-alpha' for lowercase letters, etc. */
+  margin-left: 20px;
+}
+
+/* Set unordered lists to have dots */
+ul {
+  list-style-type: disc; /* Use 'disc' for filled dots, 'circle' for hollow circles, etc. */
+  margin-left: 14px;
+}
+ul li {
+  padding-left: 8px;
+}
+ol li {
+  padding-left: 15px;
+}
+@media (hover: hover) {
+  .ql-syntax::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    cursor: grab;
+  }
+
+  .ql-syntax::-webkit-scrollbar-thumb {
+    background-color: #c8c8c8;
+    border-radius: 7px;
+    height: 7px;
+  }
+
+  .ql-syntax::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 6px;
+  }
+}
+/* ///////////////////////////////////////////////////////////////////////////////////////////////// */
