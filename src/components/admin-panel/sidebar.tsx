@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { PanelsTopLeft } from "lucide-react";
 
@@ -13,7 +13,7 @@ import Image from "next/image";
 
 export function Sidebar() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
-
+  // just a comment
   if (!sidebar) return null;
 
   return (
