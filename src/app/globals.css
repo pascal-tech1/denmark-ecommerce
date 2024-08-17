@@ -118,20 +118,20 @@
 .product-description h1 {
   padding: 20px 0;
 }
-ol {
+.product-description ol {
   list-style-type: decimal; /* Use 'decimal' for normal numbers, 'lower-alpha' for lowercase letters, etc. */
   margin-left: 20px;
 }
 
 /* Set unordered lists to have dots */
-ul {
+.product-description ul {
   list-style-type: disc; /* Use 'disc' for filled dots, 'circle' for hollow circles, etc. */
   margin-left: 14px;
-}
-ul li {
+} 
+.product-description ul li {
   padding-left: 8px;
 }
-ol li {
+.product-description ol li {
   padding-left: 15px;
 }
 @media (hover: hover) {

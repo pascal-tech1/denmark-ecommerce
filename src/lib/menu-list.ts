@@ -84,6 +84,12 @@ export function getMenuList(pathname: string): Group[] {
                 pathname === "/category?category=clothes&subcategory=shirts"
             },
             {
+              href: "/category?category=clothes&subcategory=jalamia",
+              label: "Jalamia",
+              active:
+                pathname === "/category?category=clothes&subcategory=jalamia"
+            },
+            {
               href: "/category?category=clothes&subcategory=shorts",
               label: "Shorts",
               active:
