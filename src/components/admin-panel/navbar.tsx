@@ -68,7 +68,9 @@ export function Navbar() {
             onMouseLeave={(e) => e.currentTarget.classList.remove("paused")}
           >
             <span className="mr-4 text-yellow-300">
-              Welcome to DenmarkMultibuz Ltd! your home for Perfect Outfits
+              Welcome to DenmarkMultibuz Ltd! your home for quality men outfits
+              inlcluding shirts, sandals , shoes, caps etc. in Ado, Ekiti state
+              nigeria
             </span>
             <a
               href="https://wa.me/+2347035226775"
